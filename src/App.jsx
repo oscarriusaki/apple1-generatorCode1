@@ -12,14 +12,26 @@ import { DataBaseDelete,
 import { useForm } from './hooks/useForm';
 import { GeneradorTextoCodigo } from './ui/GeneradorTextoCodigo';
 
-
 export const App = () => {
-
-  const { columna1, columna2, active, onInputChange, inputForm, activeCode, onReset } = useForm({
+ 
+  const inputs = [];
+  const [count, setCount] = useState(1);
+  const [map, setMap] = useState({
     columna1: '',
     columna2: '',
     active: false
   });
+  for( let i = 1; i< count; i++){
+    inputs.push(
+        <input  key={i} 
+                type={'text'} 
+                placeholder={`Column ${i}`}
+                className='inputStyleTabla'
+                />
+    );
+  }
+
+  const { columna1, columna2, active, onInputChange, inputForm, activeCode, onReset } = useForm(map);
 
   var columna11 = '';
   var columna22 = '';
@@ -34,16 +46,6 @@ export const App = () => {
   const { dataBaseGets } = DataBaseGets(columna1.trim() || columna11, columna2.trim() || columna22);
   const { dataBasePost } = DataBasePost(columna1.trim() || columna11, columna2.trim() || columna22);
   const { dataBasePut } = DataBasePut(columna1.trim() || columna11, columna2.trim() || columna22);
-
-  // const [newData, setNewData] = useState({
-  //   nodejsControllers: '',
-  //   nodejsRouter: '',
-  //   dataBaseDelete: '',
-  //   dataBaseGet: '',
-  //   dataBaseGets: '',
-  //   dataBasePost: '',
-  //   dataBasePut: '',
-  // })
   
   const navigate = useNavigate()
   const ref1 = useRef();
@@ -62,23 +64,7 @@ export const App = () => {
     
     localStorage.setItem('columna1', columna1.trim() || columna11);
     localStorage.setItem('columna2', columna2.trim() || columna22);
-    // const { nodejsControllers } = NodejsControllers(columna1.trim(), columna2.trim());
-    // const { nodejsRouter } = NodejsRouter(columna1.trim(), columna2.trim());
-    // const { dataBaseDelete } = DataBaseDelete(columna1.trim(), columna2.trim());
-    // const { dataBaseGet } = DataBaseGet(columna1.trim(), columna2.trim());
-    // const { dataBaseGets } = DataBaseGets(columna1.trim(), columna2.trim());
-    // const { dataBasePost } = DataBasePost(columna1.trim(), columna2.trim());
-    // const { dataBasePut } = DataBasePut(columna1.trim(), columna2.trim());
-    // setNewData({
-    //   ...newData,
-    //   nodejsControllers: nodejsControllers,
-    //   nodejsRouter: nodejsRouter,
-    //   dataBaseDelete: dataBaseDelete,
-    //   dataBaseGet: dataBaseGet,
-    //   dataBaseGets: dataBaseGets,
-    //   dataBasePost: dataBasePost,
-    //   dataBasePut: dataBasePut
-    // })
+ 
     activeCode(true)
   } 
   const clear = () => {
@@ -86,6 +72,8 @@ export const App = () => {
     ref1.current.value='';
     ref2.current.value='';
     ref1.current.focus();
+    setCount(0);
+    inputs.splice(0, inputs.length)
     onReset()
   }  
   useEffect(() => {
@@ -95,10 +83,21 @@ export const App = () => {
     localStorage.setItem('columna2', columna2 || columna22)
   }, [columna2])
   
+  const addColumn = () => {
+    setCount(count+1);
+    console.log(count,'contador')
+    setMap({
+      ...map,
+      [`columna${count}`] : `data${count}`
+    })
+    console.log(map,'columnas') 
+    activeCode(false)
+  }
+
   return (
     <>
-    <form onSubmit={onInputSubmit} autoComplete='off'>
-      <div className='flex flex-row cuerpoBoton'>
+    <div className='cuerpoBoton2'>  
+      <form onSubmit={onInputSubmit} autoComplete='off' className='cuerpoBoton'>
         <input 
           type='text' 
           className='inputStyle'
@@ -116,19 +115,21 @@ export const App = () => {
           value={columna2||columna22}
           onChange={onInputChange}
           ref={ref2}
-        /> 
+          /> 
         <button type='submit' className='botonGenerateStyle'>
           <FontAwesomeIcon icon={faCode} />
           <span style={{paddingLeft:'2%'}}>Generate</span> 
         </button>
-        {/* <button type='submit' className='botonClearStyle' onClick={clear}> */} {/* OJO ESTA ES OTRA OPCION */}
-        <button type='submit' className='botonClearStyle' onClick={clear} disabled={!active}>
-          <FontAwesomeIcon icon={faTrashCan} /> 
-          <span style={{paddingLeft:'2%'}}>Clear</span> 
-        </button>
-      </div>
-      <br />
-    </form>
+      </form>
+      <button type='submit' className='botonAddColumnStyle' onClick={addColumn}>
+        <FontAwesomeIcon icon={faCode} />
+        <span style={{paddingLeft:'2%'}}>Add column</span> 
+      </button> 
+      <button type='submit' className='botonClearStyle' onClick={clear} disabled={!active && count < 0}>
+        <FontAwesomeIcon icon={faTrashCan} /> 
+        <span style={{paddingLeft:'2%'}}>Clear</span> 
+      </button>
+    </div>
     {
       (active ) 
       ? (<>
@@ -141,7 +142,13 @@ export const App = () => {
           <GeneradorTextoCodigo code={dataBaseDelete} textClass={`fn_delete${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1 || columna11).trim().slice(1).toLowerCase() + (columna2 || columna22).trim().charAt(0).toUpperCase() + (columna2 || columna22).trim().slice(1).toLowerCase()}`} typeFile={'Database / Delete'} />
         </>
       )
-      : <p className='MensajeInsert'>Insert data to generate code...</p>
+      : <p className='MensajeInsert'>Insert column to generate code...</p>
+    }
+    {
+    (count >= 0) &&
+    <form autoComplete='off' className='tabla'>
+      {inputs}
+    </form>
     }
     </>
   )
