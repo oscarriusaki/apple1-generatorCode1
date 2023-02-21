@@ -1,0 +1,207 @@
+.inputStyle{
+    background: white;
+    outline: none;
+    border: none;
+    font-size: 130%;
+    width: 99%;
+    height: 50px;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    padding-left: 1%;
+    border: 1px solid rgb(108, 108, 108);
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.inputStyle:focus{
+    border: 1px solid rgb(0, 30, 255) !important;
+}
+.clipBoardButton{
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: white; 
+    background-color: rgb(69, 69, 69);
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    /* padding-bottom: 1px; */
+}  
+.tarjetaCodigo{
+    border-radius: 5px;
+    border-bottom-left-radius: 5%;
+    border-bottom-left-radius: 5%;
+}
+ 
+.codigoTarjetaCabeza{
+    width: 100%;
+    color: white; 
+    justify-content: end;
+    align-items: end;
+    text-align: end;
+    padding: 1%;
+   
+}
+.codigoTarjetaCuerpo{
+    border-radius: 5px;
+}
+.t{
+    background-color: red;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.agrandarTextoCodigo{
+    font-size: 150%;
+    border-radius: 5px;
+}
+.agrandarTextoCodigo2{
+    font-size: 100%;
+    border-radius: 5px;
+    font-size: 125%;
+}
+.botonGenerateStyle{
+    background: blue;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+.botonGenerateStyle:hover{
+    background-color: rgb(46, 46, 255);
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+.botonGenerateStyle:focus{
+    background-color: rgb(64, 64, 253);
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    outline: 1px solid rgb(0, 0, 255);
+}
+.botonClearStyle{
+    background: red;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+}
+.botonClearStyle:hover{
+    background-color: rgb(249, 60, 60);
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2d2d2d;
+    border-radius: 10px;
+        
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #393939;
+    border-radius: 10px;
+        
+}
+::-webkit-scrollbar-track {
+    background: #acacac;
+    border-radius: 10px;
+  } 
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 5px;
+    /* background-color: red; */
+  }
+  
+.botonClearStyle:focus{
+    background-color: rgb(255, 50, 50);
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    outline: 1px solid rgb(255, 255, 255);
+}
+.cuerpoBoton{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    position: fixed;
+    width: 98%;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    box-shadow: 5px 5px 5px rgba(255, 0, 0, 0.25);
+    border-radius: 5px;
+    
+}
+.cuerpoBoton input{
+    flex: 0 0 40%;
+}
+.cuerpoBoton button{
+    flex: 0 0 10%;
+}
+.MensajeInsert{
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+    width: 98%;
+    background-color: blue;
+    padding: 1%;
+    border-radius: 5px;
+    font-size: 120%;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.codigoTarjetaTipoCodigo{
+    color: white; 
+    text-align: start;
+    padding: 1%;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+}
+.codigoTarjetaTipoCodigoCenter{
+    color: white; 
+    text-align: center;
+    padding: 1%;
+    margin: 0 auto;
+    /* max-width: 50%; */
+    /* overflow-x: auto;  */
+}
+.padreCabeceraCopyTypeCode{
+    display: flex;
+    border-radius: 5px;
+    background-color: rgb(69, 69, 69);
+    width: 100%;
+} 
+.textoClaseCopy{
+    display: flex;
+    max-width: 70%;
+    width: 500px;
+    margin: 0 auto;
+    align-items: center;
+    height: 15px;
+    padding-top: .5%;
+    justify-content: center;
+    text-align: center;
+    /* position: relative; */
+    /* overflow-x: auto; */
+    /* overflow-y: hidden;  */
+    /* padding-bottom: 1%; */
+}
+.textoUnaFila{
+    white-space: nowrap;
+    height: 10px;
+    padding-bottom: 6%;
+    height: 7px;
+    justify-content: center;
+    align-items: center;
+}
