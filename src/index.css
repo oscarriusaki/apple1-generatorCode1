@@ -18,12 +18,12 @@
     background: white;
     outline: none;
     border: none;
-    font-size: 130%;
+    font-size: 100%;
     width: auto;
     height: 47px;
     color: rgb(0, 0, 0);
     font-weight: 500;
-    padding-left: 1%;
+    padding-left: 3%;
     border: 2px solid rgb(108, 108, 108);
     border-radius: 5px;
     /* margin: auto; */
@@ -72,8 +72,20 @@
 }
 .agrandarTextoCodigo{
     font-size: 150%;
-    border-radius: 5px;
+    border-radius: 5px; 
 }
+.agrandarTextoCodigo::-webkit-scrollbar{
+    height: 8px;
+    /* background: rgb(68, 255, 0); */
+}
+.agrandarTextoCodigo::-webkit-scrollbar-track {
+    background: #2200ff;
+    border-radius: 10px;
+} 
+.agrandarTextoCodigo::-webkit-scrollbar-thumb {
+    background: #3d3d3d;
+    border-radius: 10px;
+} 
 .agrandarTextoCodigo2{
     font-size: 100%;
     border-radius: 5px;
@@ -186,10 +198,7 @@ height: 5px;
     /* z-index: 1; */
     box-shadow: 5px 5px 5px rgba(255, 0, 0, 0.25);
     border-radius: 5px;
-}
-.cuerpoBoton input{
-    flex: 0 0 40%;
-}
+} 
 .cuerpoBoton2{
     display: flex;
     justify-content: end;
@@ -207,7 +216,7 @@ height: 5px;
     flex: 0 0 70%;
 }
 .cuerpoBoton2 form button{
-    flex: 0 0 17%;
+    flex: 0 0 18%;
 }
 .cuerpoBoton2 button{
     flex: 0 0 15%;
@@ -291,3 +300,10 @@ height: 5px;
     background: #3d3d3d;
     border-radius: 10px;
 } 
+.selectStyle{
+    height: 7vh;
+    outline: none;
+    font-size: 2vh;
+    border-radius: 5px;
+    cursor: pointer;
+}

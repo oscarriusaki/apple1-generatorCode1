@@ -1,24 +1,80 @@
-import React from 'react'
+import React from 'react';
 
-export const NodejsRouter = (columna1='', columna2='') => {
-    const nodejsRouter = `
-    const { Router } = require('express');
-    const { get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}s, 
-            get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}, 
-            post${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}, 
-            put${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}, 
-            delete${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()} } = require('../controller/${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}');
+export const NodejsRouter = (data, nombre, data2) => {
 
-    const router = Router();
+    let dataAux = '';
+    let count = 1;
+    let verifyUser = false;
+    for( const n in data2.inputForm ){
+      dataAux += data[`columna${count}`] +', ';
+      console.log(data[`columna${count}`] + ":" + data2[`columna${count}`])
+      count ++;
+    } 
+    
+    let palabra = nombre.split(' ')
+    palabra = palabra.map(resp => {
+        return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
+    })
+    palabra = palabra.join('');
 
-    router.get('/', get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}s)
-    router.get('/:id', get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()})
-    router.post('/', post${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()})
-    router.put('/:id', put${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()})
-    router.delete('/:id', delete${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()})
+    let user='';
+    let nodejsRouter=''
+    if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'){
+      verifyUser = true;
+      user =`
+const { Router } = require('express');
+const { check } = require('express-validator');
+const { get${palabra}s, 
+        get${palabra}, 
+        post${palabra}, 
+        put${palabra}, 
+        delete${palabra} } = require('../controller/${palabra}');
+const { validar } = require('../middlewares/validar');
+const { validarJWT } = require('../middlewares/ValidarJWT');
 
-    module.exports = router;
-    `;
+const router = Router();
+
+router.get('/', get${palabra}s);
+router.get('/:id',[
+    check('id', 'Id no valid').isNumeric(),
+    validar
+], get${palabra});
+router.post('/', post${palabra});
+router.put('/',[
+    validarJWT,
+    validar
+], put${palabra});
+router.delete('/',[
+    validarJWT,
+    validar
+], delete${palabra});
+
+module.exports = router;    
+`;
+}else{
+    nodejsRouter = `
+const { Router } = require('express');
+const { get${palabra}s, 
+        get${palabra}, 
+        post${palabra}, 
+        put${palabra}, 
+        delete${palabra} } = require('../controller/${palabra}');
+
+const router = Router();
+
+router.get('/', get${palabra}s)
+router.get('/:id', get${palabra})
+router.post('/', post${palabra})
+router.put('/:id', put${palabra})
+router.delete('/:id', delete${palabra})
+
+module.exports = router;
+`;
+}
+
+  if(verifyUser){
+    nodejsRouter = user;
+  }
   return {
     nodejsRouter,
   }

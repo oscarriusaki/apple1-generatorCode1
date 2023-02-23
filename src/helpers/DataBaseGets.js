@@ -1,15 +1,35 @@
 import React from 'react'
 
-export const DataBaseGets = (columna1='', columna2='') => {
+export const DataBaseGets = (data, nombre, data2) => {
   
+    let dataAux = '';
+    let count = 1;
+    for(const n in data2.inputForm){
+      dataAux += data[`columna${count}`];
+      // console.log(data[`columna${count}`] +':'+ data2[`columna${count}`])
+      count ++;
+    }
+
+    let palabra = nombre.split(' ');
+    palabra = palabra.map(resp => {
+        return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
+    })
+    palabra = palabra.join('');
+
+    let nombreTabla = nombre.split(' ');
+    nombreTabla = nombreTabla.map(resp => {
+        return resp.toLowerCase();
+    });
+    nombreTabla.join('_')
+
     const dataBaseGets = `
-    -- FUNCTION: public.fn_get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}s()
+    -- FUNCTION: public.fn_get${palabra}s()
 
-    -- DROP FUNCTION IF EXISTS public."fn_get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}s"();
+    -- DROP FUNCTION IF EXISTS public."fn_get${palabra}s"();
 
-    CREATE OR REPLACE FUNCTION public."fn_get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}s"(
+    CREATE OR REPLACE FUNCTION public."fn_get${palabra}s"(
         )
-        RETURNS TABLE(id_${columna1.toLowerCase()}_${columna2.toLowerCase()} integer, id_${columna1.toLowerCase()} integer, id_${columna2.toLowerCase()} integer, estadoeliminar boolean) 
+        RETURNS SETOF ${nombreTabla}
         LANGUAGE 'plpgsql'
         COST 100
         VOLATILE PARALLEL UNSAFE
@@ -19,15 +39,15 @@ export const DataBaseGets = (columna1='', columna2='') => {
     BEGIN
         
         RETURN QUERY
-        SELECT U.* 
-        FROM ${columna1.toLowerCase()}_${columna2.toLowerCase()} u 
-        WHERE u.estadoeliminar = true
-        ORDER BY id_${columna1.toLowerCase()}_${columna2.toLowerCase()} DESC;
+        SELECT *
+        FROM ${nombreTabla}
+        WHERE estadoeliminar = true
+        ORDER BY id_${nombreTabla} DESC;
         
     END;
     $BODY$;
 
-    ALTER FUNCTION public."fn_get${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}s"()
+    ALTER FUNCTION public."fn_get${palabra}s"()
         OWNER TO postgres;
     `;
   return {

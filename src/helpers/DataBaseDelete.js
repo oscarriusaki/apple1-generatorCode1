@@ -1,13 +1,21 @@
 import React from 'react'
 
-export const DataBaseDelete = (columna1='', columna2='') => {
+export const DataBaseDelete = (data, nombre, data2) => {
+    
+    let dataAux = '';
+    let count = 1;
+    for( const n in data2.inputForm ){
+        dataAux += data[`columna${count}`] +', ';
+        // console.log(data[`columna${count}`] +':'+data2[`columna${count}`])
+        count ++;
+    } 
 
     const dataBaseDelete = `
-    -- FUNCTION: public.fn_delete${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}(integer)
+    -- FUNCTION: public.fn_delete${ dataAux}(integer)
 
-    -- DROP FUNCTION IF EXISTS public."fn_delete${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}"(integer);
+    -- DROP FUNCTION IF EXISTS public."fn_delete${ dataAux}"(integer);
     
-    CREATE OR REPLACE FUNCTION public."fn_delete${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}"(
+    CREATE OR REPLACE FUNCTION public."fn_delete${ dataAux}"(
         t_id integer)
         RETURNS character varying
         LANGUAGE 'plpgsql'
@@ -23,7 +31,7 @@ export const DataBaseDelete = (columna1='', columna2='') => {
             WHERE id_${columna1.toLowerCase()}_${columna2.toLowerCase()}  = t_id AND estadoeliminar = true;
             RETURN 'successfully eliminated';
         ELSE
-            RETURN '${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()} not found';
+            RETURN '${ dataAux} not found';
         END IF;
         EXCEPTION
         WHEN OTHERS THEN
@@ -33,7 +41,7 @@ export const DataBaseDelete = (columna1='', columna2='') => {
     END;
     $BODY$;
     
-    ALTER FUNCTION public."fn_delete${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}"(integer)
+    ALTER FUNCTION public."fn_delete${ dataAux}"(integer)
         OWNER TO postgres;
     `;
     return {

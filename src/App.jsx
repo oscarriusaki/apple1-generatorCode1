@@ -17,54 +17,69 @@ export const App = () => {
   const inputs = [];
   const [count, setCount] = useState(1);
   const [map, setMap] = useState({
-    columna1: '',
-    columna2: '',
-    active: false
+    active: false,
+    nombreTabla: ''
   });
+  const [map2, setMap2] = useState({})
+  
+  const { nombreTabla, active, onInputChange, activeCode, onReset, ...resto } = useForm(map);
+  const { onInputChange2 ,...resto2 } = useForm(map2);
+ 
+  
+  let nombreFuncionOriginal = nombreTabla.split(' ');
+  nombreFuncionOriginal = nombreFuncionOriginal.map(resp => {
+      return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
+  })
+  nombreFuncionOriginal = nombreFuncionOriginal.join('');
+
   for( let i = 1; i< count; i++){
     inputs.push(
-        <input  key={i} 
-                type={'text'} 
-                placeholder={`Column ${i}`}
-                className='inputStyleTabla'
-                />
+      <div key={i}>
+        <input   
+          type={'text'} 
+          placeholder={`Column ${i}`}
+          className='inputStyleTabla'
+          name={`columna${i}`}
+          id={`input-${i}`}
+          value={resto[`columna${i}`] ?? ''} 
+          onChange={onInputChange}
+          
+          />
+        <select 
+          name={`columna${i}`}
+          id={`input-${i}`}
+          className='selectStyle'
+          value={resto2[`columna${i}`] ?? ''} 
+          onChange={onInputChange2}
+        >
+          <option value='' hidden>chose a item</option>
+          <option value="integer">integer</option>
+          <option value="boolean">boolean</option>
+          <option value="numeric">numeric</option>
+          <option value="float">float</option>
+          <option value="double precision">double precision</option>
+          <option value="character varying">character varying</option>
+          <option value="date">date</option>
+          <option value="text">text</option>
+          <option value="varchar">varchar</option>
+        </select>  
+      </div>
     );
-  }
-
-  const { columna1, columna2, active, onInputChange, inputForm, activeCode, onReset } = useForm(map);
-
-  var columna11 = '';
-  var columna22 = '';
-  if(localStorage.getItem('columna1') && localStorage.getItem('columna2')){
-    columna11 =localStorage.getItem('columna1').trim() || '';
-    columna22 =localStorage.getItem('columna2').trim() || '';
   } 
-  const { nodejsControllers } = NodejsControllers(columna1.trim() || columna11, columna2.trim() || columna22);
-  const { nodejsRouter } = NodejsRouter(columna1.trim() || columna11, columna2.trim() || columna22);
-  const { dataBaseDelete } = DataBaseDelete(columna1.trim() || columna11, columna2.trim() || columna22);
-  const { dataBaseGet } = DataBaseGet(columna1.trim() || columna11, columna2.trim() || columna22);
-  const { dataBaseGets } = DataBaseGets(columna1.trim() || columna11, columna2.trim() || columna22);
-  const { dataBasePost } = DataBasePost(columna1.trim() || columna11, columna2.trim() || columna22);
-  const { dataBasePut } = DataBasePut(columna1.trim() || columna11, columna2.trim() || columna22);
-  
+  const { nodejsControllers } = NodejsControllers(resto, nombreTabla, resto2);
+  const { nodejsRouter } = NodejsRouter(resto, nombreTabla, resto2);
+  const { dataBaseGet } = DataBaseGet(resto, nombreTabla, resto2);
+  const { dataBaseGets } = DataBaseGets(resto, nombreTabla, resto2);
+  const { dataBasePost } = DataBasePost(resto, nombreTabla, resto2);
+  /* const { dataBasePut } = DataBasePut(resto, nombreTabla, resto2);
+  const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla, resto2); */
+
   const navigate = useNavigate()
   const ref1 = useRef();
   const ref2 = useRef();
   
   const onInputSubmit = (value) => {
     value.preventDefault(); 
-    if((!value.target.columna1.value.trim().length || !value.target.columna2.value.trim().length) && 
-        (localStorage.getItem('columna1').trim().length < 1 || localStorage.getItem('columna2').trim().length < 1) ){
-      activeCode(false)
-      return;
-    } 
-    navigate(`?v1=${columna1 .trim() || columna11}&v2=${columna2 .trim() || columna22}`,{
-      replace: true
-    }) 
-    
-    localStorage.setItem('columna1', columna1.trim() || columna11);
-    localStorage.setItem('columna2', columna2.trim() || columna22);
- 
     activeCode(true)
   } 
   const clear = () => {
@@ -75,47 +90,34 @@ export const App = () => {
     setCount(0);
     inputs.splice(0, inputs.length)
     onReset()
-  }  
-  useEffect(() => {
-    localStorage.setItem('columna1', columna1 || columna11)
-  }, [columna1])
-  useEffect(() => {
-    localStorage.setItem('columna2', columna2 || columna22)
-  }, [columna2])
-  
+  } 
   const addColumn = () => {
     setCount(count+1);
-    console.log(count,'contador')
     setMap({
       ...map,
       [`columna${count}`] : `data${count}`
     })
-    console.log(map,'columnas') 
+    setMap2({
+      ...map2,
+      [`columna${count}`] : `data${count}`
+    })
     activeCode(false)
   }
-
+ 
   return (
     <>
     <div className='cuerpoBoton2'>  
       <form onSubmit={onInputSubmit} autoComplete='off' className='cuerpoBoton'>
         <input 
-          type='text' 
-          className='inputStyle'
-          placeholder='Columna 1'
-          name='columna1'
-          value={columna1||columna11}
-          onChange={onInputChange}
-          ref={ref1}
-        /> 
-        <input 
-          type='text'
-          className='inputStyle'
-          placeholder='Columna 2'
-          name='columna2'
-          value={columna2||columna22}
-          onChange={onInputChange}
-          ref={ref2}
+            type='text' 
+            className='inputStyle'
+            placeholder='Nombre de la tabla separado'
+            name='nombreTabla'
+            value={nombreTabla}
+            onChange={onInputChange}
+            ref={ref1}
           /> 
+
         <button type='submit' className='botonGenerateStyle'>
           <FontAwesomeIcon icon={faCode} />
           <span style={{paddingLeft:'2%'}}>Generate</span> 
@@ -133,22 +135,26 @@ export const App = () => {
     {
       (active ) 
       ? (<>
-          <GeneradorTextoCodigo code={nodejsRouter} textClass={`${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1 || columna11).trim().slice(1).toLowerCase() + (columna2 || columna22).trim().charAt(0).toUpperCase() + (columna2 || columna22).trim().slice(1).toLowerCase()}.js`} typeFile={'Nodejs / Router'} />
-          <GeneradorTextoCodigo code={nodejsControllers} textClass={`${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1||columna11).trim().slice(1).toLowerCase() + (columna2||columna22).trim().charAt(0).toUpperCase() + (columna2||columna22).trim().slice(1).toLowerCase()}.js`} typeFile={'Nodejs / Controller'} />
-          <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1 || columna11).trim().slice(1).toLowerCase() + (columna2 || columna22).trim().charAt(0).toUpperCase() + (columna2 || columna22).trim().slice(1).toLowerCase()}`} typeFile={'Database / Get'} />
-          <GeneradorTextoCodigo code={dataBaseGets} textClass={`fn_gets${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1 || columna11).trim().slice(1).toLowerCase() + (columna2 || columna22).trim().charAt(0).toUpperCase() + (columna2 || columna22).trim().slice(1).toLowerCase()}`} typeFile={'Database / Get / id'} />
-          <GeneradorTextoCodigo code={dataBasePost} textClass={`fn_post${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1 || columna11).trim().slice(1).toLowerCase() + (columna2 || columna22).trim().charAt(0).toUpperCase() + (columna2 || columna22).trim().slice(1).toLowerCase()}`} typeFile={'Database / Post'} />
-          <GeneradorTextoCodigo code={dataBasePut} textClass={`fn_put${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1 || columna11).trim().slice(1).toLowerCase() + (columna2 || columna22).trim().charAt(0).toUpperCase() + (columna2 || columna22).trim().slice(1).toLowerCase()}`} typeFile={'Database / Pust'} />
-          <GeneradorTextoCodigo code={dataBaseDelete} textClass={`fn_delete${(columna1 || columna11).trim().charAt(0).toUpperCase() + (columna1 || columna11).trim().slice(1).toLowerCase() + (columna2 || columna22).trim().charAt(0).toUpperCase() + (columna2 || columna22).trim().slice(1).toLowerCase()}`} typeFile={'Database / Delete'} />
+          <GeneradorTextoCodigo code={nodejsRouter} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Router'} />
+          <GeneradorTextoCodigo code={nodejsControllers} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Controller'} />
+          <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${nombreFuncionOriginal}`} typeFile={'Database / Get'} />
+          <GeneradorTextoCodigo code={dataBaseGets} textClass={`fn_gets${nombreFuncionOriginal}`} typeFile={'Database / Get / id'} />
+          <GeneradorTextoCodigo code={dataBasePost} textClass={`fn_post${nombreFuncionOriginal}`} typeFile={'Database / Post'} />
+          {/* <GeneradorTextoCodigo code={dataBasePut} textClass={`fn_put${palabra}`} typeFile={'Database / Pust'} />
+          <GeneradorTextoCodigo code={dataBaseDelete} textClass={`fn_delete${palabra}`} typeFile={'Database / Delete'} /> */}
+          <br /><br />
         </>
       )
       : <p className='MensajeInsert'>Insert column to generate code...</p>
     }
     {
-    (count >= 0) &&
-    <form autoComplete='off' className='tabla'>
-      {inputs}
-    </form>
+      (!active) && 
+        (
+          (count >= 0) &&
+          <form autoComplete='off' className='tabla'>
+            {inputs}
+          </form>
+        )
     }
     </>
   )

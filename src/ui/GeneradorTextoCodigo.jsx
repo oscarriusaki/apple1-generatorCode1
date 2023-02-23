@@ -8,6 +8,7 @@ import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 
 export const GeneradorTextoCodigo = ({code, textClass, typeFile}) => {
 
+
     const [text, setText] = useState(code);
     const [botonState, setBotonState] = useState(false);
     const [botonState2, setBotonState2] = useState(false);
@@ -74,6 +75,8 @@ export const GeneradorTextoCodigo = ({code, textClass, typeFile}) => {
                 </SyntaxHighlighter>
                 {/* </CopyToClipboard> */}
             </div>
+            {/* <br />
+            <br /> */}
         </div>
     </>
   )
