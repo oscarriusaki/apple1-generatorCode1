@@ -37,13 +37,11 @@ export const DataBaseGets = (data, nombre, data2) => {
 
     AS $BODY$
     BEGIN
-        
         RETURN QUERY
         SELECT *
         FROM ${nombreTabla}
         WHERE estadoeliminar = true
         ORDER BY id_${nombreTabla} DESC;
-        
     END;
     $BODY$;
 

@@ -1,26 +1,89 @@
-import React from 'react'
+import React from 'react';
 
 export const DataBasePut = (data, nombre, data2) => {
 
-    let dataAux = '';
-    let count = 1;
+    let nombreFuncion = nombre.split(' ');
+    nombreFuncion = nombreFuncion.map(resp => {
+        return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
+    })
+    nombreFuncion = nombreFuncion.join('');
+    
+    let nombreTabla = nombre.split(' ');
+    nombreTabla = nombreTabla.map(resp => {
+        return resp.toLowerCase();
+    });
+    nombreTabla = nombreTabla.join('_');
+    
+    let count3 = 1;
+    let columnaRegistrarCampos = '';
+    let columnaRegistrarCamposModify = '';
+    let sqlUpdateColumns = '';
+
     for(const n in data2.inputForm){
-      dataAux += data[`columna${count}`];
-    //   console.log(data[`columna${count}`] +':'+ data2[`columna${count}`])
-      count ++;
+        columnaRegistrarCampos += data[`columna${count3}`] +', ';
+        columnaRegistrarCamposModify += 't_'+data[`columna${count3}`] +', ';
+        sqlUpdateColumns += data[`columna${count3}`] +' = '+ `t_${data[`columna${count3}`]}, `;
+        count3++;
     }
+/* 
+    let sql = `
+            INSERT INTO ${nombreTabla} (${columnaRegistrarCampos} estadoeliminar) 
+            VALUES (${columnaRegistrarCamposModify} true);
+            RETURN 'successfully registered';`; */
+
+    let columnConTypeDate = '';
+    let count = 1;
+    let sqlPrimeraId2 = '';
+    let sqlSegundaId2 = '';
+    let sqlPrimeraCorreo2 = ''; 
+    let sqlMediaCorreo2 = ''; 
+    let sqlSegundaCorreo2 = ''; 
+    let justType = ''; 
+
+    for(const n in data2.inputForm){
+        columnConTypeDate += 't_'+ data[`columna${count}`]+''.trim() + ' '+ data2[`columna${count}`]+''.trim() +', ';
+        justType += data2[`columna${count}`]+''.trim() + ', ';
+        if((data[`columna${count}`]+'').length > 3 ){
+            if((data[`columna${count}`]+''.trim().toLowerCase()).slice(0, 3) === 'id_'){
+                
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
+                sqlSegundaId2 = `
+        ELSE
+            RETURN '${(data[`columna${count}`].trim().toLowerCase()).slice(3)} not found';
+        END IF;`+ sqlSegundaId2;
+
+            }else if((data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 7) === 'correo_'){
+                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(7)} WHERE ${(data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 6)} = e_${(data[`columna${count}`].trim().toLowerCase())}) AND id_${nombreTabla} = t_id_update THEN \n     `; 
+                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 6)} = e_${(data[`columna${count}`].trim().toLowerCase())}) ) THEN \n     `;
+                sqlSegundaCorreo2 = `
+        ELSE
+            RETURN '${(data[`columna${count}`].trim().toLowerCase())} already registered';
+        END IF;` +  sqlSegundaCorreo2;
+            }else if((data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 6) === 'email_') {
+                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(6)} WHERE ${(data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 5)} = e_${(data[`columna${count}`].trim().toLowerCase())}) AND id_${nombreTabla} = t_id_update THEN \n     `; 
+                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 5)} = e_${(data[`columna${count}`].trim().toLowerCase())}) ) THEN \n     `;
+                sqlSegundaCorreo2 =  `
+        ELSE
+            RETURN '${(data[`columna${count}`].trim().toLowerCase())} already registered';
+        END IF;` + sqlSegundaCorreo2;
+            }
+        }
+        count ++;
+    }
+    columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
+    justType = justType.trim().slice(0, -1);
+    sqlUpdateColumns = sqlUpdateColumns.trim().slice(0,-1);
 
     const dataBasePut = `
-    -- FUNCTION: public.fn_put${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}(integer, integer, integer)
+    -- FUNCTION: public.fn_put${nombreFuncion}(${justType})
 
-    -- DROP FUNCTION IF EXISTS public."fn_put${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}"(integer, integer, integer);
+    -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType});
     
-    CREATE OR REPLACE FUNCTION public."fn_put${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}"(
-        t_id_${columna1.toLowerCase()} integer,
-        t_id_${columna2.toLowerCase()} integer,
+    CREATE OR REPLACE FUNCTION public."fn_put${nombreFuncion}"(
+        ${columnConTypeDate},
         t_id_update integer)
-        RETURNS character varying
-        LANGUAGE 'plpgsql'
+        RETURNS character varying                                                                                              
+        LANGUAGE 'plpgsql'                                        
         COST 100
         VOLATILE PARALLEL UNSAFE
     AS $BODY$
@@ -28,22 +91,23 @@ export const DataBasePut = (data, nombre, data2) => {
     DECLARE error_code character varying;
     
     BEGIN
-        IF EXISTS (SELECT 1 FROM ${columna1.toLowerCase()}_${columna2.toLowerCase()}  WHERE id_${columna1.toLowerCase()}_${columna2.toLowerCase()}  = t_id AND estadoeliminar = true )THEN
-            IF EXISTS (SELECT 1 FROM ${columna1.toLowerCase()} WHERE id_${columna1.toLowerCase()} = t_id_${columna1.toLowerCase()} AND estadoeliminar = true )THEN
-                IF (SELECT 1 FROM ${columna2.toLowerCase()} WHERE id_${columna2.toLowerCase()} = t_id_${columna2.toLowerCase()} AND estadoeliminar = true) THEN
-                    UPDATE ${columna1.toLowerCase()}_${columna2.toLowerCase()}  
-                    SET id_${columna1.toLowerCase()} = t_id_${columna1.toLowerCase()}, id_${columna2.toLowerCase()}= t_id_${columna2.toLowerCase()}, estadoeliminar= true
-                    WHERE id_${columna1.toLowerCase()}_${columna2.toLowerCase()}  = t_id_update AND estadoeliminar = true;
+        
+            IF (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true) THEN
+                ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
+                    UPDATE ${nombreTabla}  
+                    SET ${sqlUpdateColumns}
+                    WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
                     RETURN 'successfully updated';
-                ELSE
-                    RETURN '${columna2.toLowerCase()} not found';
-                END IF;
+                ${(sqlMediaCorreo2) && (sqlMediaCorreo2)}
+                    UPDATE ${nombreTabla}  
+                    SET ${sqlUpdateColumns}
+                    WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+                    RETURN 'successfully updated';
+                ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
             ELSE
-                RETURN '${columna1.toLowerCase()} not found';
-            END IF;	
-        ELSE
-            RETURN '${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()} not found';
-        END IF;
+                RETURN '${nombreFuncion.trim().toLowerCase()} not found';
+            END IF;
+        
         EXCEPTION
         WHEN OTHERS THEN
             error_code = SQLSTATE;
@@ -52,10 +116,13 @@ export const DataBasePut = (data, nombre, data2) => {
     END;
     $BODY$;
     
-    ALTER FUNCTION public."fn_put${columna1.charAt(0).toUpperCase() + columna1.slice(1).toLowerCase() + columna2.charAt(0).toUpperCase() + columna2.slice(1).toLowerCase()}"(integer, integer, integer)
+    ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType})
         OWNER TO postgres;
     `;
     return {
         dataBasePut,
     }
 }
+/* POR SI ACASO SE ENCESITA
+${(sqlPrimeraId2) && (sqlPrimeraId2)} 
+${(sqlSegundaId2) && sqlSegundaId2} */

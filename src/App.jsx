@@ -71,8 +71,8 @@ export const App = () => {
   const { dataBaseGet } = DataBaseGet(resto, nombreTabla, resto2);
   const { dataBaseGets } = DataBaseGets(resto, nombreTabla, resto2);
   const { dataBasePost } = DataBasePost(resto, nombreTabla, resto2);
-  /* const { dataBasePut } = DataBasePut(resto, nombreTabla, resto2);
-  const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla, resto2); */
+  const { dataBasePut } = DataBasePut(resto, nombreTabla, resto2);
+  const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla, resto2);
 
   const navigate = useNavigate()
   const ref1 = useRef();
@@ -137,11 +137,11 @@ export const App = () => {
       ? (<>
           <GeneradorTextoCodigo code={nodejsRouter} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Router'} />
           <GeneradorTextoCodigo code={nodejsControllers} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Controller'} />
-          <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${nombreFuncionOriginal}`} typeFile={'Database / Get'} />
-          <GeneradorTextoCodigo code={dataBaseGets} textClass={`fn_gets${nombreFuncionOriginal}`} typeFile={'Database / Get / id'} />
+          <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${nombreFuncionOriginal}`} typeFile={'Database / Get / id'} />
+          <GeneradorTextoCodigo code={dataBaseGets} textClass={`fn_get${nombreFuncionOriginal}s`} typeFile={'Database / Get'} />
           <GeneradorTextoCodigo code={dataBasePost} textClass={`fn_post${nombreFuncionOriginal}`} typeFile={'Database / Post'} />
-          {/* <GeneradorTextoCodigo code={dataBasePut} textClass={`fn_put${palabra}`} typeFile={'Database / Pust'} />
-          <GeneradorTextoCodigo code={dataBaseDelete} textClass={`fn_delete${palabra}`} typeFile={'Database / Delete'} /> */}
+          <GeneradorTextoCodigo code={dataBasePut} textClass={`fn_put${nombreFuncionOriginal}`} typeFile={'Database / Put'} />
+          <GeneradorTextoCodigo code={dataBaseDelete} textClass={`fn_delete${nombreFuncionOriginal}`} typeFile={'Database / Delete'} />
           <br /><br />
         </>
       )

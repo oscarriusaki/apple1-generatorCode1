@@ -24,7 +24,7 @@ export const DataBasePost = (data, nombre, data2) => {
     }
 
     let sql = `
-            INSERT INTO ${nombreTabla} (${columnaRegistrarCampos} estadoeliminar) 
+            INSERT INTO ${nombreTabla.trim()} (${columnaRegistrarCampos.trim()} estadoeliminar) 
             VALUES (${columnaRegistrarCamposModify} true);
             RETURN 'successfully registered';`;
 
@@ -42,7 +42,7 @@ export const DataBasePost = (data, nombre, data2) => {
         if((data[`columna${count}`]+'').length > 3 ){
             if((data[`columna${count}`]+''.trim().toLowerCase()).slice(0, 3) === 'id_'){
                 
-                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true )THEN \n     ` ;
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
                 sqlSegundaId2 = `
         ELSE
             RETURN '${(data[`columna${count}`].trim().toLowerCase()).slice(3)} not found';
@@ -83,16 +83,15 @@ export const DataBasePost = (data, nombre, data2) => {
     DECLARE error_code character varying;
 
     BEGIN
-        
-        ${(sqlPrimeraId2) && (sqlPrimeraId2 +'\n')} ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2 +'\n') } 
-            ${ sql +'\n'}
-        ${(sqlSegundaCorreo2) && sqlSegundaCorreo2 +'\n'} ${(sqlSegundaId2) && sqlSegundaId2}
-        
+        ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
+            ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
+                ${ sql }
+            ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
+        ${(sqlSegundaId2) && sqlSegundaId2}
         EXCEPTION
         WHEN OTHERS THEN
             error_code = SQLSTATE;
             RETURN 'Error: '||error_code;
-        
     END;
     $BODY$;
 

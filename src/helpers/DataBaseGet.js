@@ -23,12 +23,12 @@ export const DataBaseGet = (data, nombre, data2) => {
     nombreTabla.join('_')
 
     const dataBaseGet = `
-    -- FUNCTION: public.fn_get${palabra}}(integer)
+    -- FUNCTION: public.fn_get${palabra}(integer)
 
     -- DROP FUNCTION IF EXISTS public."fn_get${palabra}"(integer);
 
     CREATE OR REPLACE FUNCTION public."fn_get${palabra}"(
-        t_id integer)
+        t_id_search integer)
         RETURNS SETOF ${nombreTabla}
         LANGUAGE 'plpgsql'
         COST 100
@@ -37,12 +37,10 @@ export const DataBaseGet = (data, nombre, data2) => {
 
     AS $BODY$
     BEGIN
-        
         RETURN QUERY
         SELECT *
         FROM ${nombreTabla} 
-        WHERE estadoeliminar = true AND id_${nombreTabla} = t_id;
-        
+        WHERE estadoeliminar = true AND id_${nombreTabla} = t_id_search;
     END;
     $BODY$;
 
