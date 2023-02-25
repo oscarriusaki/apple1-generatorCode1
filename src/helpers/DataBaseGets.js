@@ -6,7 +6,6 @@ export const DataBaseGets = (data, nombre, data2) => {
     let count = 1;
     for(const n in data2.inputForm){
       dataAux += data[`columna${count}`];
-      // console.log(data[`columna${count}`] +':'+ data2[`columna${count}`])
       count ++;
     }
 

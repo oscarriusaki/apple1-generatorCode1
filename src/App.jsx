@@ -1,4 +1,4 @@
-import { faCode, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faPlus, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -124,7 +124,7 @@ export const App = () => {
         </button>
       </form>
       <button type='submit' className='botonAddColumnStyle' onClick={addColumn}>
-        <FontAwesomeIcon icon={faCode} />
+        <FontAwesomeIcon icon={faPlus} />
         <span style={{paddingLeft:'2%'}}>Add column</span> 
       </button> 
       <button type='submit' className='botonClearStyle' onClick={clear} disabled={!active && count < 0}>

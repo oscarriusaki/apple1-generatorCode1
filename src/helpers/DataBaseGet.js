@@ -6,7 +6,6 @@ export const DataBaseGet = (data, nombre, data2) => {
     let count = 1;
     for(const n in data2.inputForm){
         dataAux += data[`columna${count}`];
-        console.log(data[`columna${count}`] +':'+data[`columna${count}`])
         count ++;
     }
 
@@ -40,7 +39,7 @@ export const DataBaseGet = (data, nombre, data2) => {
         RETURN QUERY
         SELECT *
         FROM ${nombreTabla} 
-        WHERE estadoeliminar = true AND id_${nombreTabla} = t_id_search;
+        WHERE id_${nombreTabla} = t_id_search AND estadoeliminar = true;
     END;
     $BODY$;
 

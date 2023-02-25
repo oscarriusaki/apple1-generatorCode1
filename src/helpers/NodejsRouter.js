@@ -7,7 +7,6 @@ export const NodejsRouter = (data, nombre, data2) => {
     let verifyUser = false;
     for( const n in data2.inputForm ){
       dataAux += data[`columna${count}`] +', ';
-      console.log(data[`columna${count}`] + ":" + data2[`columna${count}`])
       count ++;
     } 
     
@@ -19,7 +18,9 @@ export const NodejsRouter = (data, nombre, data2) => {
 
     let user='';
     let nodejsRouter=''
-    if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'){
+    if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
+        nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
+        nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
       verifyUser = true;
       user =`
 const { Router } = require('express');
@@ -53,7 +54,44 @@ module.exports = router;
 `;
 }else{
     nodejsRouter = `
-const { Router } = require('express');
+    const { Router } = require('express');
+    const { check } = require('express-validator');
+    const { get${palabra}s, 
+            get${palabra}, 
+            post${palabra}, 
+            put${palabra}, 
+            delete${palabra} } = require('../controller/${palabra}');
+    const { validar } = require('../middlewares/validar');
+    
+    const router = Router();
+    
+    router.get('/', get${palabra}s)
+    router.get('/:id',[
+        check('id', 'The id is not valid').isNumeric(),
+        validar,
+    ], get${palabra})
+    router.post('/', post${palabra})
+    router.put('/:id',[
+        check('id', 'The id is not valid').isNumeric(),
+        validar,
+    ], put${palabra})
+    router.delete('/:id',[
+        check('id', 'The id is not valid').isNumeric(),
+        validar,
+    ], delete${palabra})
+    module.exports = router;
+`;
+}
+
+  if(verifyUser){
+    nodejsRouter = user;
+  }
+  return {
+    nodejsRouter,
+  }
+}
+/* 
+    const { Router } = require('express');
 const { get${palabra}s, 
         get${palabra}, 
         post${palabra}, 
@@ -69,13 +107,4 @@ router.put('/:id', put${palabra})
 router.delete('/:id', delete${palabra})
 
 module.exports = router;
-`;
-}
-
-  if(verifyUser){
-    nodejsRouter = user;
-  }
-  return {
-    nodejsRouter,
-  }
-}
+*/
