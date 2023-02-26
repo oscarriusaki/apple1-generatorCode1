@@ -15,7 +15,7 @@ import { GeneradorTextoCodigo } from './ui/GeneradorTextoCodigo';
 
 export const App = () => {
  
-  let inputs = [];
+  const [inputs, setInputs] = useState([])
   const [count, setCount] = useState(1);
   const [map, setMap] = useState({
     active: false,
@@ -35,46 +35,6 @@ export const App = () => {
   let ref1 = useRef();
   let ref3 = useRef();
   
-  const lastInputRef = useRef(null); 
-
-  for( let i = 1; i< count; i++){ 
-
-    console.log(i + '===' + (count-1))
-
-    inputs.push(
-      <div key={i}>
-        <input   
-          type={'text'} 
-          placeholder={`Column ${i}`}
-          className='inputStyleTabla'
-          name={`columna${i}`}
-          id={`input-${i}`}
-          value={resto[`columna${i}`] ?? ''} 
-          onChange={onInputChange} 
-          ref={ i === (count-1) ? lastInputRef : null}
-          />
-        <select 
-          name={`columna${i}`}
-          id={`input-${i}`}
-          className='selectStyle'
-          value={resto2[`columna${i}`] ?? ''} 
-          onChange={onInputChange2}
-        >
-          <option value='' hidden>chose a item</option>
-          <option value="integer">integer</option>
-          <option value="boolean">boolean</option>
-          <option value="numeric">numeric</option>
-          <option value="float">float</option>
-          <option value="double precision">double precision</option>
-          <option value="character varying">character varying</option>
-          <option value="date">date</option>
-          <option value="text">text</option>
-          <option value="varchar">varchar</option>
-        </select>  
-      </div>
-    );
-  } 
-
   const { nodejsControllers } = NodejsControllers(resto, nombreTabla, resto2);
   const { nodejsRouter } = NodejsRouter(resto, nombreTabla, resto2);
   const { dataBaseGet } = DataBaseGet(resto, nombreTabla, resto2);
@@ -90,17 +50,17 @@ export const App = () => {
   
   const onInputSubmit = (value) => {
     value.preventDefault(); 
+    console.log(value )
 
     if(nombreTabla.trim().length < 1){
       ref4.current.focus();
       return
     }
-
-
     activeCode(true)
   } 
   const clear = () => { 
-    inputs = [];
+    // inputs = [];
+    setInputs([])
     setCount(1) 
     let c = false;
     for (const n in resto2.inputForm) {
@@ -111,21 +71,27 @@ export const App = () => {
       setMap({
         active: false,
         nombreTabla: ''
-      })
-      console.log(map)
+      }) 
     }
     activeCode(false)
     
       
   } 
+  const firstRef = useRef(null)
+
   const addColumn = () => {
+  
+    console.log(inputs) 
+      setInputs((prevInputs) => [
+        ...prevInputs,
+        {
+          id:count, 
+          name: `columna${count}`,
+        },
+      ])
     
-    console.log(inputs)
 
-    if(lastInputRef.current){
-      lastInputRef.current.focus();
-    }
-
+    
     setCount(count+1);
     setMap({
       ...map,
@@ -138,8 +104,13 @@ export const App = () => {
     activeCode(false)
   }
   useEffect(() => {
-    const handleKeyDowm = (event) => {
-      // if(event.ctrlKey && event.key === '.'){
+    if(firstRef.current){ 
+      firstRef.current.focus()
+    }
+  }, [addColumn])
+  
+  useEffect(() => {
+    const handleKeyDowm = (event) => { 
       if(event.ctrlKey && event.key === 'Backspace'){
         clear();
       }
@@ -178,8 +149,7 @@ export const App = () => {
       document.removeEventListener('keydown', handlekeyDowm)
     }
   }, [onInputSubmit])
- 
-
+  
   return (
     <>
     <div className='cuerpoBoton2'>  
@@ -228,7 +198,38 @@ export const App = () => {
         (
           (count > 0) &&
           <form autoComplete='off' className='tabla' ref={ref3}>
-            {inputs}
+            {
+              inputs.map((input, index) => (
+                <div key={input.id}>
+                  <input   
+                    type={'text'} 
+                    placeholder={`Column ${input.id}`}
+                    className='inputStyleTabla'
+                    name={input.name} 
+                    value={resto[input.name] ?? ''} 
+                    onChange={onInputChange}  
+                    ref={index === inputs.length -1 ? firstRef : null}
+                    />
+                  <select 
+                    name={input.name} 
+                    className='selectStyle'
+                    value={resto2[input.name] ?? ''} 
+                    onChange={onInputChange2}
+                  >
+                    <option value='' hidden>chose a item</option>
+                    <option value="integer">integer</option>
+                    <option value="boolean">boolean</option>
+                    <option value="numeric">numeric</option>
+                    <option value="float">float</option>
+                    <option value="double precision">double precision</option>
+                    <option value="character varying">character varying</option>
+                    <option value="date">date</option>
+                    <option value="text">text</option>
+                    <option value="varchar">varchar</option>
+                  </select>  
+              </div>
+              ))
+            }
           </form>
         )
     }
