@@ -86,13 +86,13 @@ export const DataBasePut = (data, nombre, data2) => {
     // if(nombreTabla === 'user' || nombreTabla === 'usuario'){
 
     datoTablaUsuario = `
-    -- FUNCTION: public.fn_put${nombreFuncion}(${justType}, text, integer)
+    -- FUNCTION: public.fn_put${nombreFuncion}(${justType},  integer, text)
 
-    -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, text, integer);
+    -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer ,text );
 
     CREATE OR REPLACE FUNCTION public."fn_put${nombreFuncion}"(
-        ${columnConTypeDate}, t_tokens text, 
-        t_id_update integer)
+        ${columnConTypeDate}, 
+        t_id_update integer, t_tokens text )
         RETURNS character varying                                                                                              
         LANGUAGE 'plpgsql'                                        
         COST 100
@@ -128,7 +128,7 @@ export const DataBasePut = (data, nombre, data2) => {
     END;
     $BODY$;
 
-    ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, text, integer)
+    ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer ,text )
         OWNER TO postgres;
     `;
     }else{

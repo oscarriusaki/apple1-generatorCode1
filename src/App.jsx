@@ -23,7 +23,7 @@ export const App = () => {
   });
   const [map2, setMap2] = useState({})
   
-  const { nombreTabla, active, onInputChange, activeCode, onReset, ...resto } = useForm(map);
+  const { nombreTabla, active, onInputChange,onInputChange3, activeCode, onReset, ...resto } = useForm(map);
   const { onInputChange2 ,...resto2 } = useForm(map2);
  
   
@@ -50,7 +50,7 @@ export const App = () => {
   
   const onInputSubmit = (value) => {
     value.preventDefault(); 
-    console.log(value )
+
 
     if(nombreTabla.trim().length < 1){
       ref4.current.focus();
@@ -59,7 +59,6 @@ export const App = () => {
     activeCode(true)
   } 
   const clear = () => { 
-    // inputs = [];
     setInputs([])
     setCount(1) 
     let c = false;
@@ -80,8 +79,7 @@ export const App = () => {
   const firstRef = useRef(null)
 
   const addColumn = () => {
-  
-    console.log(inputs) 
+
       setInputs((prevInputs) => [
         ...prevInputs,
         {
@@ -103,11 +101,6 @@ export const App = () => {
     })
     activeCode(false)
   }
-  useEffect(() => {
-    if(firstRef.current){ 
-      firstRef.current.focus();
-    }
-  }, [addColumn])
   
   useEffect(() => {
     const handleKeyDowm = (event) => { 
@@ -129,9 +122,9 @@ export const App = () => {
       }
     }
     document.addEventListener('keydown', handleKeyDowm);
-    if(ref1.current){
+   /*  if(ref1.current){
       ref1.current.focus();
-    }
+    } */
     return () => {
       document.removeEventListener('keydown', handleKeyDowm)
     }
@@ -139,8 +132,7 @@ export const App = () => {
   useEffect(() => {
     const handlekeyDowm = (event) =>{
       if(event.key === 'Enter' && ref2.current){
-          onInputSubmit(event);
-          // console.log(ref2, 'etado del formulario')
+          onInputSubmit(event); 
       }
     }
     document.addEventListener('keydown', handlekeyDowm);
@@ -166,16 +158,16 @@ export const App = () => {
 
           <button type='submit' className='botonGenerateStyle' >
             <FontAwesomeIcon icon={faCode} />
-            <span style={{paddingLeft:'2%'}}>Generate</span> 
+            <span style={{paddingLeft:'2%'}}>&#40; Enter &#41;</span> 
           </button>
         </form>
       <button type='submit' className='botonAddColumnStyle' onClick={addColumn}>
         <FontAwesomeIcon icon={faPlus} />
-        <span style={{paddingLeft:'2%'}}  >Add ctrl + .</span> 
+        <span style={{paddingLeft:'2%'}} >&#40; ctrl + . &#41;</span> 
       </button> 
       <button type='submit' className='botonClearStyle' onClick={clear} disabled={!active && count < 0}>
         <FontAwesomeIcon icon={faTrashCan} /> 
-        <span style={{paddingLeft:'2%'}}>Clear ctrl + backspace</span> 
+        <span style={{paddingLeft:'2%'}}> &#40; ctrl + backspace &#41;</span> 
       </button>
     </div>
     {
@@ -191,7 +183,13 @@ export const App = () => {
           <br /><br />
         </>
       )
-      : <p className='MensajeInsert'>Insert column to generate code...</p>
+      : ( ((inputs.length )< 1) && 
+          (
+          <>
+            <p className='MensajeInsert'>Insert column to generate code...</p>
+          </>
+          )
+        )
     }
     {
       (!active) && 
@@ -209,6 +207,7 @@ export const App = () => {
                     value={resto[input.name] ?? ''} 
                     onChange={onInputChange}  
                     ref={index === inputs.length -1 ? firstRef : null}
+                    required
                     />
                   <select 
                     name={input.name} 
@@ -232,6 +231,16 @@ export const App = () => {
             }
           </form>
         )
+    }{
+      (!active) && (
+        <div className='mensaje'>
+            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA"</p>
+            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Tablas especiales con nombre de la tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", son tablas especiales que tiene token y encriptacion de password</p>
+            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado </p>
+            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Una tabla si necesita un correo o password es obligatorio queempieze con esa sintaxis nota1 si tiene mas parametros relacionado con el correo o password se debe poner de una sintaxis diferente a la nota1</p>
+            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo</p>
+          </div>
+      )
     }
     </>
   )

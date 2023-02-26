@@ -99,19 +99,19 @@
     width: 100%;
     height: 50px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 3vh;
     font-weight: 700;
     color: white;
 }
 .botonGenerateStyle:hover{
     background-color: rgb(46, 46, 255);
-    font-size: 20px;
+    font-size: 3vh;
     font-weight: 700;
     color: white;
 }
 .botonGenerateStyle:focus{
     background-color: rgb(64, 64, 253);
-    font-size: 20px;
+    font-size: 3vh;
     font-weight: 700;
     color: white;
     outline: 1px solid rgb(0, 0, 255);
@@ -124,19 +124,19 @@
     width: 100%;
     height: 50px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 3vh;
     font-weight: 700;
     color: white;
 }
 .botonAddColumnStyle:hover{
     background-color:rgb(43, 43, 43);
-    font-size: 20px;
+    font-size: 3vh;
     font-weight: 700;
     color: white;
 }
 .botonAddColumnStyle:focus{
     background-color: rgb(118, 118, 118);
-    font-size: 20px;
+    font-size: 3vh;
     font-weight: 700;
     color: white;
     outline: 1px solid rgb(48, 48, 48);
@@ -149,13 +149,13 @@
     width: 100%;
     height: 50px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 2vh;
     color: white;
     font-weight: 700;
 }
 .botonClearStyle:hover{
     background-color: rgb(249, 60, 60);
-    font-size: 20px;
+    font-size: 2vh;
     font-weight: 700;
     color: white;
 }
@@ -314,4 +314,23 @@ height: 5px;
     background: rgb(47, 47, 47);
     border-radius: 5px;
     cursor: pointer;
+}
+.mensaje{
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    width: 100%;
+    height: auto;
+}
+.tarejetaMensaje{
+    background: rgb(74, 74, 74);
+    padding: 1vh;
+    border: none;
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: start;
+    border-radius: 1vh;
+}
+.tarejetaMensaje span{
+    font-weight: 800;
 }

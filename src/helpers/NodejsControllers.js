@@ -193,7 +193,7 @@ const put${palabra} = async (req, res = response) => {
     ${password_columna}  = bcryptjs.hashSync(${password_columna}, salt);
     const sql = 'SELECT public."fn_put${palabra} "(${putCountDolar})';
 
-    pg.query(sql, [${dataAux2}, tokens, id], async(err, result) => {
+    pg.query(sql, [${dataAux2}, id, tokens ], async(err, result) => {
         if(err){
             return res.status(500).json({
                 code: err.code, 

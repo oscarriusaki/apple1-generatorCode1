@@ -18,6 +18,13 @@ export const useForm = (initialForm = {}) => {
             [name]: value,
         });
     }
+    const onInputChange3 = ({target}, name) => {
+        const { value } = target;
+        setInputForm({
+            ...inputForm,
+            [name]: value,
+        });
+    }
 
     const onReset = () => {
         setInputForm(initialForm);
@@ -38,5 +45,6 @@ export const useForm = (initialForm = {}) => {
         onInputChange2,
         onReset,
         activeCode,
+        onInputChange3,
     }
 }
