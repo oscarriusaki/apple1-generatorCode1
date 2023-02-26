@@ -61,13 +61,13 @@ export const DataBasePost = (data, nombre, data2) => {
         END IF;`+ sqlSegundaId2;
 
             }else if((data[`columna${count}`]+''.trim()+''.toLowerCase()).slice(0, 7) === 'correo_'){
-                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(7)} WHERE ${(data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 6)} = e_${(data[`columna${count}`].trim().toLowerCase())}) THEN \n     `; 
+                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(7)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())}) THEN \n     `; 
                 sqlSegundaCorreo2 = `
         ELSE
             RETURN '${(data[`columna${count}`]+''.trim().toLowerCase())} already registered';
         END IF;` +  sqlSegundaCorreo2;
             }else if((data[`columna${count}`]+''.trim()+''.toLowerCase()).slice(0, 6) === 'email_') {
-                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(6)} WHERE ${(data[`columna${count}`].trim()+''.toLowerCase()).slice(0, 5)} = e_${(data[`columna${count}`].trim().toLowerCase())}) THEN \n     `; 
+                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(6)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())}) THEN \n     `; 
                 sqlSegundaCorreo2 =  `
         ELSE
             RETURN '${(data[`columna${count}`]+''.trim().toLowerCase())} already registered';
@@ -83,7 +83,10 @@ export const DataBasePost = (data, nombre, data2) => {
     let userDateSql = '';
     let dataBasePost = ''; 
 
-    if(nombreTabla === 'user' || nombreTabla === 'usuario') {
+    if(nombreTabla.trim().toLowerCase() === 'user' || nombreTabla.trim().toLowerCase() === 'usuario'||
+        nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
+        nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador'){
+    // if(nombreTabla === 'user' || nombreTabla === 'usuario') {
         userDateSql = `
     -- FUNCTION: public.fn_post${nombreFuncion}(${justType}, text)
 
@@ -151,7 +154,9 @@ export const DataBasePost = (data, nombre, data2) => {
         OWNER TO postgres;
     `;
     }
-    if(nombreTabla === 'user' || nombreTabla === 'usuario'){
+    if(nombreTabla.trim().toLowerCase() === 'user' || nombreTabla.trim().toLowerCase() === 'usuario'||
+        nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
+        nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador'){
         dataBasePost = userDateSql;
     }
   return {

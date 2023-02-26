@@ -19,7 +19,7 @@ export const DataBaseGet = (data, nombre, data2) => {
     nombreTabla = nombreTabla.map(resp => {
         return resp.toLowerCase();
     });
-    nombreTabla.join('_')
+    nombreTabla = nombreTabla.join('_')
 
     const dataBaseGet = `
     -- FUNCTION: public.fn_get${palabra}(integer)

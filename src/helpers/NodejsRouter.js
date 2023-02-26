@@ -21,7 +21,7 @@ export const NodejsRouter = (data, nombre, data2) => {
     if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
-      verifyUser = true;
+    //   verifyUser = true;
       user =`
 const { Router } = require('express');
 const { check } = require('express-validator');
@@ -81,14 +81,16 @@ module.exports = router;
     ], delete${palabra})
     module.exports = router;
 `;
-}
+    }
 
-  if(verifyUser){
-    nodejsRouter = user;
-  }
-  return {
-    nodejsRouter,
-  }
+    if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
+        nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
+        nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
+        nodejsRouter = user;
+    }
+    return {
+        nodejsRouter,
+    }
 }
 /* 
     const { Router } = require('express');

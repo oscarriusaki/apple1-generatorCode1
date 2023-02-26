@@ -77,7 +77,7 @@ export const NodejsControllers = (data, nombre, data2) => {
     if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
-        validarUser = true;
+        // validarUser = true;
         usuario = `    
 const { response } = require("express");
 
@@ -440,8 +440,10 @@ module.exports = {
 }
 `;
 }
-    if(validarUser){
-        nodejsControllers = usuario;    
+    if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
+        nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
+        nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
+                nodejsControllers = usuario;    
     }
     return {
         nodejsControllers,

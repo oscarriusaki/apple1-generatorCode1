@@ -13,8 +13,11 @@ export const DataBaseDelete = (data, nombre, data2) => {
         return resp.toLowerCase();
     });
     nombreTabla = nombreTabla.join('_');
-
+    
+    
     let count3 = 1;
+    let columnaRegistrarCampos = '';
+    let columnaRegistrarCamposModify = '';
     for(const n in data2.inputForm){
         columnaRegistrarCampos += data[`columna${count3}`] +', ';
         columnaRegistrarCamposModify += 't_'+data[`columna${count3}`] +', ';
@@ -29,11 +32,26 @@ export const DataBaseDelete = (data, nombre, data2) => {
 
     let columnConTypeDate = '';
     let count = 1;
+    let sqlPrimeraId2 = '';
+    let sqlSegundaId2 = '';
+    let sqlPrimeraCorreo2 = ''; 
+    let sqlSegundaCorreo2 = ''; 
     let justType = ''; 
 
     for(const n in data2.inputForm){
         columnConTypeDate += 't_'+ data[`columna${count}`]+''.trim() + ' '+ data2[`columna${count}`]+''.trim() +', ';
         justType += data2[`columna${count}`]+''.trim() + ', ';
+        /* if((data[`columna${count}`]+'').length > 3 ){
+            if((data[`columna${count}`]+''.trim().toLowerCase()).slice(0, 3) === 'id_'){
+                
+                sqlPrimeraId2 =`IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN ` ;
+                sqlSegundaId2 = `
+        ELSE
+            RETURN '${(data[`columna${count}`].trim().toLowerCase()).slice(3)} not found';
+        END IF;`;
+
+            }
+        } */
         count ++;
     }
     columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
