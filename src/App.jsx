@@ -105,7 +105,7 @@ export const App = () => {
   }
   useEffect(() => {
     if(firstRef.current){ 
-      firstRef.current.focus()
+      firstRef.current.focus();
     }
   }, [addColumn])
   
