@@ -21,7 +21,7 @@ export const DataBasePost = (data, nombre, data2) => {
     let columnConTypeDate = '';
     let justType = ''; 
     for(const n in data2.inputForm){
-        if(auxNombreTabla != data[`columna${count3}`]){
+        if(auxNombreTabla != data[`columna${count3}`]+''){
             columnaRegistrarCampos += data[`columna${count3}`] +', ';
             columnaRegistrarCamposModify += 't_'+data[`columna${count3}`] +', ';
             columnConTypeDate += 't_'+ data[`columna${count3}`]+''.trim() + ' '+ data2[`columna${count3}`]+''.trim() +', ';
@@ -54,20 +54,20 @@ export const DataBasePost = (data, nombre, data2) => {
         if((data[`columna${count}`]+'').length > 3 ){
             if(((data[`columna${count}`]+''.trim().toLowerCase()).slice(0, 3) === 'id_') && (auxNombreTabla != (data[`columna${count}`]+''.trim().toLowerCase()))){
                 
-                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`]+''.trim().toLowerCase())} = t_${(data[`columna${count}`]+''.trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
                 sqlSegundaId2 = `
         ELSE
             RETURN '${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} not found';
         END IF;`+ sqlSegundaId2;
 
             }else if((data[`columna${count}`]+''.trim()+''.toLowerCase()).slice(0, 7) === 'correo_'){
-                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(7)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())}) THEN \n     `; 
+                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(7)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`]+''.trim().toLowerCase())}) THEN \n     `; 
                 sqlSegundaCorreo2 = `
         ELSE
             RETURN '${(data[`columna${count}`]+''.trim().toLowerCase())} already registered';
         END IF;` +  sqlSegundaCorreo2;
             }else if((data[`columna${count}`]+''.trim()+''.toLowerCase()).slice(0, 6) === 'email_') {
-                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(6)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())}) THEN \n     `; 
+                sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(6)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`]+''.trim().toLowerCase())}) THEN \n     `; 
                 sqlSegundaCorreo2 =  `
         ELSE
             RETURN '${(data[`columna${count}`]+''.trim().toLowerCase())} already registered';

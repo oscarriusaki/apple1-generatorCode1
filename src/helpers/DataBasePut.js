@@ -46,7 +46,7 @@ export const DataBasePut = (data, nombre, data2) => {
         if((data[`columna${count}`]+'').length > 3 ){
             if((data[`columna${count}`]+''.trim().toLowerCase()).slice(0, 3) === 'id_' && ((data[`columna${count}`]+''.trim().toLowerCase()) != nombreTabla2)){
                 
-                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`]+''.trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
                 sqlSegundaId2 = `
         ELSE
             RETURN '${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} not found';

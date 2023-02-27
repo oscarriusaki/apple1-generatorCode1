@@ -37,15 +37,12 @@ export const NodejsControllers = (data, nombre, data2) => {
             || (data[`columna${count}`]+''.trim().toLowerCase().slice(0,7) === 'email_' + tablaAux)){
             email_columna = data[`columna${count}`]+''.trim().toLowerCase();
         }
-        // console.log(data[`columna${count}`]+''.trim().toLowerCase().slice(0,7),' aquiiiiiii correo')
-        // const verify2 = data[`columna${count}`].trim().toLowerCase().inde;
        
         if((data[`columna${count}`]+''.trim().toLowerCase().slice(0,9) === 'password_' + tablaAux)
             || (data[`columna${count}`]+''.trim().toLowerCase().slice(0,4) === 'pas_' + tablaAux)
             || (data[`columna${count}`]+''.trim().toLowerCase().slice(0,11) === 'contrasena_' + tablaAux)){
             password_columna = data[`columna${count}`]+''.trim().toLowerCase();
         }
-        // console.log(data[`columna${count}`]+''.trim().toLowerCase().slice(0,7),' aquiiiiiii password')
         if(data[`columna${count}`]+''.trim().toLowerCase().indexOf('correo_') != -1 
             || data[`columna${count}`]+''.trim().toLowerCase().indexOf('email_') != -1){
             // email_columna = data[`columna${count}`]+''.trim().toLowerCase();

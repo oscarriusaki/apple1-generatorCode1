@@ -22,6 +22,7 @@ export const App = () => {
   });
   const [map2, setMap2] = useState({})
   
+ 
   const { nombreTabla, active, onInputChange,onInputChange3, activeCode, onReset, ...resto } = useForm(map);
   const { onInputChange2 ,...resto2 } = useForm(map2);
  
@@ -45,17 +46,21 @@ export const App = () => {
   const ref4 = useRef();
   const [showError, setShowError] = useState(false)
   
+  
+
   const onInputSubmit = (value) => {
-    resto.inputForm.data = 'ddddddddddd'
-    console.log(resto)
-    console.log(resto2)
-    value.preventDefault(); 
+    value.preventDefault();
     let d = {}
-    d.columna1 = 'nueva1';
-    d.columna2 = 'nueva2';
-    d.columna3 = 'nueva3';
-    d.columna4 = 'nueva4';
-    localStorage.setItem('item', JSON.stringify(d));
+    let dd = {}
+    for(let n in resto.inputForm){
+      d = {...d, [n]: resto.inputForm[n]};
+    }
+    for(let n in resto2.inputForm){
+      dd = {...dd, [n]: resto2.inputForm[n]}
+    }
+    localStorage.setItem('item1', JSON.stringify(d));
+    localStorage.setItem('item2', JSON.stringify(dd));
+    localStorage.setItem('nombreTabla', nombreTabla);
 
     if(nombreTabla.trim().length < 1 || 
       ((Object.keys( resto.inputForm).length - 2) != Object.keys( resto2.inputForm).length) ||
@@ -73,6 +78,7 @@ export const App = () => {
   } 
 
   const clear = () => { 
+    localStorage.clear();
     setInputs([])
     setCount(1) 
     let c = false;
@@ -114,7 +120,41 @@ export const App = () => {
     })
     activeCode(false)
   }
-  
+  /* useEffect(() => {
+    let items1 = JSON.parse( localStorage.getItem('item1') );
+    let items2 = JSON.parse( localStorage.getItem('item2') );
+    if(items1){
+      setMap(items1)
+      for (const key in items1) {
+        resto.setInputForm({
+          ...map, 
+          [key]:items1[key]
+        })
+      }
+      ref4.current.value = resto.nombreTabla;
+    }
+    if(items2){
+      setMap2(items2)
+      let count4 =1;
+      for (const key in items2) {
+        resto2.inputForm = {...resto2.inputForm, [key]: items2[key]};
+        setInputs((e) => [
+          ...e,
+          {
+            id: count4,
+            name: `columna${count4}`
+          }
+        ])
+
+        resto2.setInputForm({
+          [key]:items2[key]
+        })
+        count4++;
+      } 
+    }
+    
+  }, [ ])  */
+
   useEffect(() => {
     const handleKeyDowm = (event) => { 
       if(event.ctrlKey && event.key === 'Backspace'){
@@ -160,10 +200,8 @@ export const App = () => {
       
     }, [ nombreTabla ])
     
-
   return (
     <>
-   
     {showError &&  <p className='MensajeError'>Insert column to generate code...</p>}
     <div className='cuerpoBoton2'>  
         <form onSubmit={onInputSubmit} autoComplete='off' className='cuerpoBoton' ref={ref2}>
@@ -172,7 +210,7 @@ export const App = () => {
               className='inputStyle'
               placeholder='Nombre de la tabla separado'
               name='nombreTabla'
-              value={nombreTabla}
+              value={nombreTabla || resto.inputForm.nombreTabla}
               onChange={onInputChange}
               ref={ref4}
             /> 
@@ -212,6 +250,7 @@ export const App = () => {
           )
         )
     }
+
     {
       (!active) && 
         (
@@ -219,13 +258,13 @@ export const App = () => {
           <form autoComplete='off' className='tabla' ref={ref3}>
             {
               inputs.map((input, index) => (
-                <div key={input.id}>
+                <div key={input.id}> 
                   <input   
                     type={'text'} 
                     placeholder={`Column ${input.id}`}
                     className='inputStyleTabla'
                     name={input.name} 
-                    value={resto[input.name] ?? ''} 
+                    value={resto[input.name] ?? '' } 
                     onChange={onInputChange}  
                     ref={index === inputs.length -1 ? firstRef : null}
                     required
@@ -255,16 +294,14 @@ export const App = () => {
     }{
       (!active) && (
         <div className='mensaje'>
-            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA"</p>
-            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Tablas especiales con nombre de la tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", son tablas especiales que tiene token y encriptacion de password</p>
-            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado </p>
-            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Una tabla si necesita un correo o password es obligatorio queempieze con esa sintaxis nota1 si tiene mas parametros relacionado con el correo o password se debe poner de una sintaxis diferente a la nota1</p>
-            <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo</p>
-          </div>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA"</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Tablas especiales con nombre de la tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", son tablas especiales que tiene token y encriptacion de password</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado </p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Una tabla si necesita un correo o password es obligatorio queempieze con esa sintaxis nota1 si tiene mas parametros relacionado con el correo o password se debe poner de una sintaxis diferente a la nota1</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo</p>
+        </div>
       )
     }
     </>
   )
 }
-
-
