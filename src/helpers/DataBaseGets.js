@@ -20,7 +20,6 @@ export const DataBaseGets = (data, nombre, data2) => {
         return resp.toLowerCase();
     });
     nombreTabla = nombreTabla.join('_');
-    console.log(nombreTabla, 'DESPUES TABLA')
 
     const dataBaseGets = `
     -- FUNCTION: public.fn_get${palabra}s()

@@ -1,7 +1,6 @@
-import { faCode, faPlus, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { DataBaseDelete, 
           DataBaseGet, 
           DataBaseGets, 
@@ -32,9 +31,8 @@ export const App = () => {
       return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
   })
   nombreFuncionOriginal = nombreFuncionOriginal.join('');
-  let ref1 = useRef();
-  let ref3 = useRef();
-  
+  let ref3 = useRef(); 
+   
   const { nodejsControllers } = NodejsControllers(resto, nombreTabla, resto2);
   const { nodejsRouter } = NodejsRouter(resto, nombreTabla, resto2);
   const { dataBaseGet } = DataBaseGet(resto, nombreTabla, resto2);
@@ -43,21 +41,37 @@ export const App = () => {
   const { dataBasePut } = DataBasePut(resto, nombreTabla, resto2);
   const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla, resto2);
 
-  const navigate = useNavigate()
-
   const ref2 = useRef();
   const ref4 = useRef();
+  const [showError, setShowError] = useState(false)
   
   const onInputSubmit = (value) => {
+    resto.inputForm.data = 'ddddddddddd'
+    console.log(resto)
+    console.log(resto2)
     value.preventDefault(); 
+    let d = {}
+    d.columna1 = 'nueva1';
+    d.columna2 = 'nueva2';
+    d.columna3 = 'nueva3';
+    d.columna4 = 'nueva4';
+    localStorage.setItem('item', JSON.stringify(d));
 
-
-    if(nombreTabla.trim().length < 1){
+    if(nombreTabla.trim().length < 1 || 
+      ((Object.keys( resto.inputForm).length - 2) != Object.keys( resto2.inputForm).length) ||
+      (Object.keys( resto.inputForm).length - 2) === 0 ||
+      (Object.keys( resto2.inputForm).length ) === 0
+      ){
       ref4.current.focus();
-      return
+      setShowError(true)
+      return;
     }
+    
+    setShowError(false)
     activeCode(true)
+    
   } 
+
   const clear = () => { 
     setInputs([])
     setCount(1) 
@@ -73,23 +87,22 @@ export const App = () => {
       }) 
     }
     activeCode(false)
-    
-      
+    window.location.reload();
   } 
   const firstRef = useRef(null)
-
+  useEffect(() => {
+    setShowError(false)
+  }, [resto2.inputForm, resto.inputForm])
+  
   const addColumn = () => {
-
-      setInputs((prevInputs) => [
-        ...prevInputs,
-        {
-          id:count, 
-          name: `columna${count}`,
-        },
-      ])
-    
-
-    
+    setShowError(false)
+    setInputs((prevInputs) => [
+      ...prevInputs,
+      {
+        id:count, 
+        name: `columna${count}`,
+      },
+    ]) 
     setCount(count+1);
     setMap({
       ...map,
@@ -136,14 +149,22 @@ export const App = () => {
       }
     }
     document.addEventListener('keydown', handlekeyDowm);
-  
     return () => {
-      document.removeEventListener('keydown', handlekeyDowm)
+      document.removeEventListener('keydown', handlekeyDowm);
     }
-  }, [onInputSubmit])
+  }, [onInputSubmit]);
   
+    useEffect(() => {
+      
+      setShowError(false)
+      
+    }, [ nombreTabla ])
+    
+
   return (
     <>
+   
+    {showError &&  <p className='MensajeError'>Insert column to generate code...</p>}
     <div className='cuerpoBoton2'>  
         <form onSubmit={onInputSubmit} autoComplete='off' className='cuerpoBoton' ref={ref2}>
           <input 
