@@ -9,13 +9,13 @@ export const DataBaseGet = (data, nombre, data2) => {
         count ++;
     }
 
-    let palabra = nombre.split(' ');
+    let palabra = nombre.trim().replace(/\s+/g, ' ').split(' ');
     palabra = palabra.map(resp => {
         return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
     })
     palabra = palabra.join('');
 
-    let nombreTabla = nombre.split(' ');
+    let nombreTabla = nombre.trim().replace(/\s+/g, ' ').split(' ');
     nombreTabla = nombreTabla.map(resp => {
         return resp.toLowerCase();
     });

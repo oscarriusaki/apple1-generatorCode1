@@ -2,13 +2,13 @@ import React from 'react'
 
 export const DataBaseDelete = (data, nombre, data2) => {
     
-    let nombreFuncion = nombre.split(' ');
+    let nombreFuncion = nombre.trim().replace(/\s+/g, ' ').split(' ');
     nombreFuncion = nombreFuncion.map(resp => {
         return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
     })
     nombreFuncion = nombreFuncion.join('');
     
-    let nombreTabla = nombre.split(' ');
+    let nombreTabla = nombre.trim().replace(/\s+/g, ' ').split(' ');
     nombreTabla = nombreTabla.map(resp => {
         return resp.toLowerCase();
     });
@@ -39,12 +39,12 @@ export const DataBaseDelete = (data, nombre, data2) => {
     let justType = ''; 
 
     for(const n in data2.inputForm){
-        columnConTypeDate += 't_'+ data[`columna${count}`]+''.trim() + ' '+ data2[`columna${count}`]+''.trim() +', ';
-        justType += data2[`columna${count}`]+''.trim() + ', ';
-        /* if((data[`columna${count}`]+'').length > 3 ){
-            if((data[`columna${count}`]+''.trim().toLowerCase()).slice(0, 3) === 'id_'){
+        columnConTypeDate += 't_'+ data[`columna${count}`].trim() + ' '+ data2[`columna${count}`].trim() +', ';
+        justType += data2[`columna${count}`].trim() + ', ';
+        /* if((data[`columna${count}`]).length > 3 ){
+            if((data[`columna${count}`].trim().toLowerCase()).slice(0, 3) === 'id_'){
                 
-                sqlPrimeraId2 =`IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`]+''.trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN ` ;
+                sqlPrimeraId2 =`IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN ` ;
                 sqlSegundaId2 = `
         ELSE
             RETURN '${(data[`columna${count}`].trim().toLowerCase()).slice(3)} not found';

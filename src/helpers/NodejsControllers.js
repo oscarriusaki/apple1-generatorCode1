@@ -2,7 +2,7 @@ import React from 'react';
 
 export const NodejsControllers = (data, nombre, data2) => {
     
-    let nombreTabla = nombre.split(' ');
+    let nombreTabla = nombre.trim().replace(/\s+/g, ' ').split(' ');
     nombreTabla = nombreTabla.map(resp => {
         return resp.toLowerCase();
     });
@@ -13,8 +13,7 @@ export const NodejsControllers = (data, nombre, data2) => {
     let dataAux = '';
     let dataAux2 = '';
     let count = 1;
-    let count2 = 1;
-    let validarUser = false;
+    let count2 = 1; 
     let email_columna = '';
     let password_columna = '';
     let cantidadDolar = '';
@@ -25,33 +24,33 @@ export const NodejsControllers = (data, nombre, data2) => {
 
     for( const n in data2.inputForm ){
         cantidadDolar += `$${count}, `;
-        if(data[`columna${count}`]+''.trim().toLowerCase() !== nombreTabla){
-            dataAux2 += data[`columna${count}`]+''.trim().toLowerCase() +', ';
+        if(data[`columna${count}`].trim().toLowerCase() !== nombreTabla){
+            dataAux2 += data[`columna${count}`].trim().toLowerCase() +', ';
             cantidadDolar2 += `$${count2}, `;
             count2++;
             contadorAuxiliarReal ++;
         }
 
-        dataAux += data[`columna${count}`]+''.trim().toLowerCase() +', ';
-        if((data[`columna${count}`]+''.trim().toLowerCase().slice(0,7) === 'correo_' + tablaAux)
-            || (data[`columna${count}`]+''.trim().toLowerCase().slice(0,7) === 'email_' + tablaAux)){
-            email_columna = data[`columna${count}`]+''.trim().toLowerCase();
+        dataAux += data[`columna${count}`].trim().toLowerCase() +', ';
+        if((data[`columna${count}`].trim().toLowerCase().slice(0,7) === 'correo_' + tablaAux)
+            || (data[`columna${count}`].trim().toLowerCase().slice(0,7) === 'email_' + tablaAux)){
+            email_columna = data[`columna${count}`].trim().toLowerCase();
         }
        
-        if((data[`columna${count}`]+''.trim().toLowerCase().slice(0,9) === 'password_' + tablaAux)
-            || (data[`columna${count}`]+''.trim().toLowerCase().slice(0,4) === 'pas_' + tablaAux)
-            || (data[`columna${count}`]+''.trim().toLowerCase().slice(0,11) === 'contrasena_' + tablaAux)){
-            password_columna = data[`columna${count}`]+''.trim().toLowerCase();
+        if((data[`columna${count}`].trim().toLowerCase().slice(0,9) === 'password_' + tablaAux)
+            || (data[`columna${count}`].trim().toLowerCase().slice(0,4) === 'pas_' + tablaAux)
+            || (data[`columna${count}`].trim().toLowerCase().slice(0,11) === 'contrasena_' + tablaAux)){
+            password_columna = data[`columna${count}`].trim().toLowerCase();
         }
-        if(data[`columna${count}`]+''.trim().toLowerCase().indexOf('correo_') != -1 
-            || data[`columna${count}`]+''.trim().toLowerCase().indexOf('email_') != -1){
-            // email_columna = data[`columna${count}`]+''.trim().toLowerCase();
+        if(data[`columna${count}`].trim().toLowerCase().indexOf('correo_') != -1 
+            || data[`columna${count}`].trim().toLowerCase().indexOf('email_') != -1){
+            // email_columna = data[`columna${count}`].trim().toLowerCase();
         }
         
-        if((data[`columna${count}`]+''.trim().toLowerCase().indexOf('password_') != -1)
-        || (data[`columna${count}`]+''.trim().toLowerCase().indexOf('pas_') != -1)
-        || (data[`columna${count}`]+''.trim().toLowerCase().indexOf('contrasena_') != -1)){
-            // password_columna = data[`columna${count}`]+''.trim().toLowerCase();
+        if((data[`columna${count}`].trim().toLowerCase().indexOf('password_') != -1)
+        || (data[`columna${count}`].trim().toLowerCase().indexOf('pas_') != -1)
+        || (data[`columna${count}`].trim().toLowerCase().indexOf('contrasena_') != -1)){
+            // password_columna = data[`columna${count}`].trim().toLowerCase();
         }
         count ++;
     } 
@@ -62,7 +61,7 @@ export const NodejsControllers = (data, nombre, data2) => {
     postCountDolar = cantidadDolar2 + `, $${count2}`;
     count2++;
     putCountDolar  = postCountDolar + `, $${count2}`;
-    let palabra = nombre.split(' ')
+    let palabra = nombre.trim().split(' ')
     palabra = palabra.map(resp => {
         return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
     })
@@ -74,7 +73,6 @@ export const NodejsControllers = (data, nombre, data2) => {
     if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
-        // validarUser = true;
         usuario = `    
 const { response } = require("express");
 

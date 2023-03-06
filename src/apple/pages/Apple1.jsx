@@ -1,7 +1,7 @@
 import { faCode, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
-import { DataBaseDelete, 
+import { CreateTable, DataBaseDelete, 
           DataBaseGet, 
           DataBaseGets, 
           DataBasePost, 
@@ -24,12 +24,16 @@ export const Apple1 = () => {
 
   const { nombreTabla, active, onInputChange,onInputChange3, activeCode, onReset, ...resto } = useForm(map);
   const { onInputChange2 ,...resto2 } = useForm(map2);
-  
-  let nombreFuncionOriginal = nombreTabla.split(' ');
+  let nombreFuncionOriginal = nombreTabla.trim().replace(/\s+/g, ' ').split(' '); /* replace(/\s+/g, ' ') sirve para quitar espacios entre palabras */
   nombreFuncionOriginal = nombreFuncionOriginal.map(resp => {
       return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
   })
   nombreFuncionOriginal = nombreFuncionOriginal.join('');
+  let nombreTableCreate = nombreTabla.trim().replace(/\s+/g, ' ').split(' ');
+  nombreTableCreate = nombreTableCreate.map(resp => {
+    return resp.toLowerCase();
+  })
+  nombreTableCreate = nombreTableCreate.join('_');
    
   const { nodejsControllers } = NodejsControllers(resto, nombreTabla, resto2);
   const { nodejsRouter } = NodejsRouter(resto, nombreTabla, resto2);
@@ -38,6 +42,7 @@ export const Apple1 = () => {
   const { dataBasePost } = DataBasePost(resto, nombreTabla, resto2);
   const { dataBasePut } = DataBasePut(resto, nombreTabla, resto2);
   const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla, resto2);
+  const { createTable } = CreateTable(resto, nombreTabla, resto2);
 
   const ref2 = useRef();
   const ref4 = useRef();
@@ -173,6 +178,7 @@ export const Apple1 = () => {
     {
       (active ) 
       ? (<>
+          <GeneradorTextoCodigo code={createTable} textClass={`${nombreTableCreate}`} typeFile={'Database / Create Table'} />
           <GeneradorTextoCodigo code={nodejsRouter} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Router'} />
           <GeneradorTextoCodigo code={nodejsControllers} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Controller'} />
           <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${nombreFuncionOriginal}`} typeFile={'Database / Get / id'} />

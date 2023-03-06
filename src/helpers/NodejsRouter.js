@@ -4,13 +4,12 @@ export const NodejsRouter = (data, nombre, data2) => {
 
     let dataAux = '';
     let count = 1;
-    let verifyUser = false;
     for( const n in data2.inputForm ){
       dataAux += data[`columna${count}`] +', ';
       count ++;
     } 
     
-    let palabra = nombre.split(' ')
+    let palabra = nombre.trim().replace(/\s+/g, ' ').split(' ')
     palabra = palabra.map(resp => {
         return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
     })
@@ -21,7 +20,6 @@ export const NodejsRouter = (data, nombre, data2) => {
     if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
-    //   verifyUser = true;
       user =`
 const { Router } = require('express');
 const { check } = require('express-validator');
