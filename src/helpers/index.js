@@ -6,3 +6,4 @@ export * from '../helpers/DataBasePut';
 export * from '../helpers/NodejsControllers';
 export * from '../helpers/NodejsRouter';
 export * from '../helpers/RecargaDatos';
+export * from '../helpers/CreateTable';

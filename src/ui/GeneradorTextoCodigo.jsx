@@ -35,18 +35,16 @@ export const GeneradorTextoCodigo = ({code, textClass, typeFile}) => {
                 </div>
                 <div className='codigoTarjetaTipoCodigoCenter'>
                     <div className='textoClaseCopy'>
-                        <SyntaxHighlighter language='javascript' style={monokaiSublime } className='agrandarTextoCodigo2' > 
-                            {textClass} 
-                        </SyntaxHighlighter>
-                        
+                        <SyntaxHighlighter language='javascript' style={ monokaiSublime } className='agrandarTextoCodigo2'> 
+                             {textClass} 
+                        </SyntaxHighlighter>                        
                         <CopyToClipboard text = {textClass}>
-                            <button onClick={changeButtonClass } className='clipBoardButton'>
-                                <p className='textoUnaFila'>{
+                            <button onClick={changeButtonClass } className='styleClassCopy'>
+                                {
                                     (!botonState2)
-                                    ? 'copy to class'
+                                    ? 'copy'
                                     : 'copied!'
                                 }
-                                </p>
                             </button>
                         </CopyToClipboard>
                     </div>
@@ -70,7 +68,7 @@ export const GeneradorTextoCodigo = ({code, textClass, typeFile}) => {
             </div>
             <div className='codigoTarjetaCuerpo'>
                 {/* <CopyToClipboard text={text}> */}
-                <SyntaxHighlighter language='javascript' style={monokaiSublime } className='agrandarTextoCodigo' > 
+                <SyntaxHighlighter language='javascript' style={monokaiSublime} className='agrandarTextoCodigo' > 
                     {text} 
                 </SyntaxHighlighter>
                 {/* </CopyToClipboard> */}
