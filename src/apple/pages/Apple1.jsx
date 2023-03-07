@@ -146,7 +146,7 @@ export const Apple1 = () => {
       document.removeEventListener('keydown', handlekeyDowm);
     }
   }, [onInputSubmit]);
-   
+   let f = nombreTabla.trim();
   return (
     <>
     <div className='cuerpoBoton2'>  
@@ -223,14 +223,14 @@ export const Apple1 = () => {
                   >
                     <option value='' hidden>chose a item</option>
                     <option value="integer">integer</option>
+                    <option value="varchar">varchar &#40;255&#41;</option>
                     <option value="boolean">boolean</option>
                     <option value="numeric">numeric</option>
-                    <option value="float">float</option>
-                    <option value="double precision">double precision</option>
-                    <option value="character varying">character varying</option>
                     <option value="date">date</option>
                     <option value="text">text</option>
-                    <option value="varchar">varchar</option>
+                    <option value="float">float</option>
+                    <option value="character varying">character varying</option>
+                    <option value="double precision">double precision</option>
                   </select>  
               </div>
               ))
@@ -242,11 +242,16 @@ export const Apple1 = () => {
     {
       (!active) && (
         <div className='mensaje'>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA"</p>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Tablas especiales con nombre de la tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", son tablas especiales que tiene token y encriptacion de password</p>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado </p>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Una tabla si necesita un correo o password es obligatorio queempieze con esa sintaxis nota1 si tiene mas parametros relacionado con el correo o password se debe poner de una sintaxis diferente a la nota1</p>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA".</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Unicamente poner el correo con este formato "CORREO_NOMBRE_DE_LA_TABLA" o "EMAIL_NOMBRE_DE_LA_TABLA" para hacer login si no necesita login solo poner "CORREO" o "EMAIL".</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Tablas especiales con nombre de la tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", son tablas especiales que tiene token y encriptacion de password.</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado. </p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  Una tabla si necesita un correo o password es obligatorio que empieze con esa sintaxis nota1 si tiene mas parametros relacionado con el correo o password se debe poner de una sintaxis diferente a la nota1.</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota6:</span>  Tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo, si necesita que una tabla diferente con este nombre necesita login, entonces modificar en el codigo "APPLE1" para generarlo.</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota7:</span>  Generar llaves PRIMARIAS "ID_NOMBRE_TABLA_ACTUAL" y llaves FORNEAS poner "ID_NOMBRE_OTRA_TABLA y se pone automaticamente tipo de valor INTEGER, no poner "ID_" para ningun otra columna que no tenga que ver con un ID de una tabla. </p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota8:</span>  Generar UNIQUE solo para correo poner "CORREO_NOMBRE_DE_LA_TABLA" o para "EMAIL_NOMBRE_DE_LA_TABLA".</p>
+          {/* <p className='tarejetaMensaje'> <span className='notaStyle'>Nota9:</span>  Genera automaticamente "VARCHAR&#40;255&#41;".</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota10:</span>  Poner tipo de valor real que tiene no poner cualquier valor.</p> */}
         </div>
       )
     }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export const CreateTable = (data, nombre, data2) => {
 
@@ -12,28 +12,32 @@ export const CreateTable = (data, nombre, data2) => {
     for (const key in data2.inputForm) {
         if(data.inputForm[key].trim() === 'id_'+nombreTabla){
             createSqlInicio += `${data.inputForm[key].trim()} serial,\n`;
-            createSqlFin =createSqlFin + `constraint pk_${data.inputForm[key].trim()} primary key (${data.inputForm[key].trim()}),\n`;
+            createSqlFin = createSqlFin + `constraint pk_${data.inputForm[key].trim()} primary key (${data.inputForm[key].trim()}),\n`;
 
+        }else if(data.inputForm[key].trim().slice(0,3) === 'id_'){
+
+            createSqlInicio += `${data.inputForm[key].trim()} integer not null,\n`;
+            createSqlFin += `constraint fk_${data.inputForm[key].trim()} foreign key (${data.inputForm[key].trim()}) references ${data.inputForm[key].trim().slice(3)}(${data.inputForm[key].trim()}),\n`;
         }else if(data.inputForm[key].trim() === `correo_${nombreTabla}`|| /* falta para numero de serie de producto  */
+
                 data.inputForm[key].trim() === `email_${nombreTabla}`){   /* y otros columnas unicas */
-            createSqlInicio += `${data.inputForm[key].trim()} varchar(255),\n`;
+            createSqlInicio += `${data.inputForm[key].trim()} varchar(255) not null,\n`;
             createSqlFin = createSqlFin + `constraint unique_${data.inputForm[key].trim()} unique(${data.inputForm[key].trim()}),\n`;
 
         }else if(data2.inputForm[key].trim() === `varchar`) {
-            createSqlInicio += `${data.inputForm[key].trim()} varchar(255),\n`;
+            createSqlInicio += `${data.inputForm[key].trim()} varchar(255) not null,\n`;
 
         }else{
-            createSqlInicio += `${data.inputForm[key].trim()} ${data2.inputForm[key].trim()},\n`;
+            createSqlInicio += `${data.inputForm[key].trim()} ${data2.inputForm[key].trim()} not null,\n`;
         }
-
     }
     let createTable = `
 create table ${nombreTabla} (
-    ${createSqlInicio}
-    ${createSqlFin}
+${createSqlInicio}
+${createSqlFin}
 `;
-        createTable = createTable.trim().slice(0,-1) + '\n);';
-  return {
-    createTable
-  }
+    createTable = createTable.trim().slice(0,-1) + '\n);';
+    return {
+        createTable
+    }
 }
