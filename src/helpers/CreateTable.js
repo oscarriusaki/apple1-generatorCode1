@@ -7,7 +7,6 @@ export const CreateTable = (data, nombre, data2) => {
         return resp.toLowerCase();
     })
     nombreTabla = nombreTabla.join('_').toLowerCase();
-    // nombreTabla = nombreTabla;
     let createSqlInicio = ``;
     let createSqlFin = ``;
     for (const key in data2.inputForm) {

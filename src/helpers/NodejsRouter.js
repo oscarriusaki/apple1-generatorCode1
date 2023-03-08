@@ -89,22 +89,4 @@ export const NodejsRouter = (data, nombre, data2) => {
     return {
         nodejsRouter,
     }
-}
-/* 
-    const { Router } = require('express');
-const { get${palabra}s, 
-        get${palabra}, 
-        post${palabra}, 
-        put${palabra}, 
-        delete${palabra} } = require('../controller/${palabra}');
-
-const router = Router();
-
-router.get('/', get${palabra}s)
-router.get('/:id', get${palabra})
-router.post('/', post${palabra})
-router.put('/:id', put${palabra})
-router.delete('/:id', delete${palabra})
-
-module.exports = router;
-*/
+} 

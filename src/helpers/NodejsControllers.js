@@ -62,16 +62,6 @@ export const NodejsControllers = (data, nombre, data2) => {
         ){
          password_columna = data[n].trim().toLowerCase();
         }
-        /* if(data[n].trim().toLowerCase().indexOf('correo_') != -1 
-            || data[n].trim().toLowerCase().indexOf('email_') != -1){
-            // email_columna = data[n].trim().toLowerCase();
-        }
-        
-        if((data[n].trim().toLowerCase().indexOf('password_') != -1)
-        || (data[n].trim().toLowerCase().indexOf('pas_') != -1)
-        || (data[n].trim().toLowerCase().indexOf('contrasena_') != -1)){
-            // password_columna = data[`columna${count}`].trim().toLowerCase();
-        } */
         count ++;
     } 
     dataAux = dataAux.trim().slice(0,-1);

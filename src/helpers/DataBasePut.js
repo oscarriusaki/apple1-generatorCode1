@@ -86,9 +86,6 @@ export const DataBasePut = (data, nombre, data2) => {
         }
         count ++;
     }
-   /*  sqlPrimeraCorreo2 = sqlPrimeraCorreo2.trim().slice(0,-2);
-    sqlMediaCorreo2 = sqlMediaCorreo2.trim().slice(0,-2);
-    sqlSegundaCorreo2 = sqlSegundaCorreo2.trim().slice(0,-2); */
     columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
     justType = justType.trim().slice(0, -1);
     sqlUpdateColumns = sqlUpdateColumns.trim().slice(0,-1);
@@ -99,7 +96,6 @@ export const DataBasePut = (data, nombre, data2) => {
     if(nombreTabla.trim().toLowerCase() === 'user' || nombreTabla.trim().toLowerCase() === 'usuario'||
         nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
         nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador'){
-    // if(nombreTabla === 'user' || nombreTabla === 'usuario'){
 
     datoTablaUsuario = `
     -- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer, text)
@@ -206,6 +202,3 @@ export const DataBasePut = (data, nombre, data2) => {
     }
 
 }
-/* POR SI ACASO SE ENCESITA
-${(sqlPrimeraId2) && (sqlPrimeraId2)} 
-${(sqlSegundaId2) && sqlSegundaId2} */

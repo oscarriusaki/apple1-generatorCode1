@@ -44,8 +44,6 @@ export const DataBasePost = (data, nombre, data2) => {
     let sqlSegundaCorreo2 = '';
     
     for(const n in data2.inputForm){
-        // columnConTypeDate += 't_'+ data[`columna${count}`].trim() + ' '+ data2[`columna${count}`].trim() +', ';
-        // justType += data2[`columna${count}`].trim() + ', ';
         if((data[n]).length > 3 ){
             if(((data[n].trim().toLowerCase()).slice(0, 3) === 'id_') && (auxNombreTabla != (data[n].trim().toLowerCase()))){
                 
@@ -86,8 +84,6 @@ export const DataBasePost = (data, nombre, data2) => {
             }
         } 
     }
-    // sqlPrimeraId2 = sqlPrimeraId2.trim().slice(0,-2);
-    // sqlPrimeraCorreo2 = sqlPrimeraCorreo2.trim().slice(0,-2);
     columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
     justType = justType.trim().slice(0, -1);
     let userDateSql = '';

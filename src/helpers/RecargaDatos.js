@@ -31,11 +31,6 @@ export const RecargaDatos = ( initial) => {
             dataBasePut: dataBasePut
         })
     }
-
-   /*  useEffect(() => {
-        f(columna1, columna2)
-    }, [])
- */
     return {
         ...returnData,
         returnData,
