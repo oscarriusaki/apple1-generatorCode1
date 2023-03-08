@@ -7,8 +7,8 @@ export const NodejsControllers = (data, nombre, data2) => {
         return resp.toLowerCase();
     });
     let tablaAux = '';
-    tablaAux = nombreTabla.join('_')
-    nombreTabla = 'id_' + nombreTabla.join('_');
+    tablaAux = nombreTabla.join('_').toLowerCase()
+    nombreTabla = 'id_' + nombreTabla.join('_').toLowerCase();
 
     let dataAux = '';
     let dataAux2 = '';
@@ -21,37 +21,57 @@ export const NodejsControllers = (data, nombre, data2) => {
     let postCountDolar = '';
     let putCountDolar = '';
     let contadorAuxiliarReal = 1;
-
     for( const n in data2.inputForm ){
         cantidadDolar += `$${count}, `;
-        if(data[`columna${count}`].trim().toLowerCase() !== nombreTabla){
-            dataAux2 += data[`columna${count}`].trim().toLowerCase() +', ';
+        if(data[n].trim().toLowerCase() !== nombreTabla){
+            dataAux2 += data[n].trim().toLowerCase() +', ';
             cantidadDolar2 += `$${count2}, `;
             count2++;
             contadorAuxiliarReal ++;
         }
-
-        dataAux += data[`columna${count}`].trim().toLowerCase() +', ';
-        if((data[`columna${count}`].trim().toLowerCase().slice(0,7) === 'correo_' + tablaAux)
-            || (data[`columna${count}`].trim().toLowerCase().slice(0,7) === 'email_' + tablaAux)){
-            email_columna = data[`columna${count}`].trim().toLowerCase();
+        dataAux += data[n].trim().toLowerCase() +', ';
+        if(((data[n].trim().toLowerCase() === 'correo_' + tablaAux) || 
+            (data[n].trim().toLowerCase() === 'email_' + tablaAux)  || 
+            (data[n].trim().toLowerCase() === 'email') || 
+            (data[n].trim().toLowerCase() === 'correo')) && (
+            (tablaAux === 'user')           || 
+            (tablaAux === 'usuario')        || 
+            (tablaAux === 'employee')       || 
+            (tablaAux === 'empleado')       || 
+            (tablaAux === 'administrator')  || 
+            (tablaAux === 'administrador')
+            )
+            ){
+            email_columna = data[n].trim().toLowerCase();
         }
        
-        if((data[`columna${count}`].trim().toLowerCase().slice(0,9) === 'password_' + tablaAux)
-            || (data[`columna${count}`].trim().toLowerCase().slice(0,4) === 'pas_' + tablaAux)
-            || (data[`columna${count}`].trim().toLowerCase().slice(0,11) === 'contrasena_' + tablaAux)){
-            password_columna = data[`columna${count}`].trim().toLowerCase();
+        if(((data[n].trim().toLowerCase() === 'password_' + tablaAux)   || 
+            (data[n].trim().toLowerCase() === 'pas_' + tablaAux)        || 
+            (data[n].trim().toLowerCase() === 'contrasena_' + tablaAux) ||
+            (data[n].trim().toLowerCase() === 'password')               ||
+            (data[n].trim().toLowerCase() === 'pas')                    ||
+            (data[n].trim().toLowerCase() === 'contrasena')
+            ) && 
+           ((tablaAux === 'user')           || 
+            (tablaAux === 'usuario')        || 
+            (tablaAux === 'employee')       || 
+            (tablaAux === 'empleado')       || 
+            (tablaAux === 'administrator')  || 
+            (tablaAux === 'administrador')
+           )
+        ){
+         password_columna = data[n].trim().toLowerCase();
         }
-        if(data[`columna${count}`].trim().toLowerCase().indexOf('correo_') != -1 
-            || data[`columna${count}`].trim().toLowerCase().indexOf('email_') != -1){
-            // email_columna = data[`columna${count}`].trim().toLowerCase();
+        /* if(data[n].trim().toLowerCase().indexOf('correo_') != -1 
+            || data[n].trim().toLowerCase().indexOf('email_') != -1){
+            // email_columna = data[n].trim().toLowerCase();
         }
         
-        if((data[`columna${count}`].trim().toLowerCase().indexOf('password_') != -1)
-        || (data[`columna${count}`].trim().toLowerCase().indexOf('pas_') != -1)
-        || (data[`columna${count}`].trim().toLowerCase().indexOf('contrasena_') != -1)){
+        if((data[n].trim().toLowerCase().indexOf('password_') != -1)
+        || (data[n].trim().toLowerCase().indexOf('pas_') != -1)
+        || (data[n].trim().toLowerCase().indexOf('contrasena_') != -1)){
             // password_columna = data[`columna${count}`].trim().toLowerCase();
-        }
+        } */
         count ++;
     } 
     dataAux = dataAux.trim().slice(0,-1);

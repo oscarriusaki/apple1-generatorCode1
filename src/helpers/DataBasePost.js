@@ -60,7 +60,9 @@ export const DataBasePost = (data, nombre, data2) => {
             RETURN '${(data[`columna${count}`].trim().toLowerCase()).slice(3)} not found';
         END IF;`+ sqlSegundaId2;
 
-            }else if((data[`columna${count}`].trim().toLowerCase()).slice(0, 7) === 'correo_'){
+            }else if(((data[`columna${count}`].trim().toLowerCase()).slice(0, 7) === 'correo_')||
+                     ((data[`columna${count}`].trim().toLowerCase()).slice(0, 7) === 'correo')
+            ){
                 sqlPrimeraCorreo2 =sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(7)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())}) THEN \n     `; 
                 sqlSegundaCorreo2 = `
         ELSE
