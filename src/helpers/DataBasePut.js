@@ -12,7 +12,7 @@ export const DataBasePut = (data, nombre, data2) => {
     nombreTabla = nombreTabla.map(resp => {
         return resp.toLowerCase();
     });
-    nombreTabla = nombreTabla.join('_');
+    nombreTabla = nombreTabla.join('_').toLowerCase();
     let nombreTabla2 = 'id_' + nombreTabla;
 
     let count3 = 1;
@@ -21,8 +21,8 @@ export const DataBasePut = (data, nombre, data2) => {
     let sqlUpdateColumns = '';
 
     for(const n in data2.inputForm){
-        columnaRegistrarCampos += data[`columna${count3}`].trim() +', ';
-        columnaRegistrarCamposModify += 't_'+data[`columna${count3}`].trim() +', ';
+        columnaRegistrarCampos += data[n].trim() +', ';
+        columnaRegistrarCamposModify += 't_'+data[n].trim() +', ';
         count3++;
     }
 
@@ -37,34 +37,50 @@ export const DataBasePut = (data, nombre, data2) => {
     
     for(const n in data2.inputForm){
         
-        if(nombreTabla2 != data[`columna${count}`].trim() ){
-            columnConTypeDate += 't_'+ data[`columna${count}`].trim() + ' '+ data2[`columna${count}`].trim() +', ';
-            justType += data2[`columna${count}`].trim() + ', ';
-            sqlUpdateColumns += data[`columna${count}`].trim() +' = '+ `t_${data[`columna${count}`].trim()}, `;
+        if(nombreTabla2 != data[n].trim() ){
+            columnConTypeDate += 't_'+ data[n].trim() + ' '+ data2[n].trim() +', ';
+            justType += data2[n].trim() + ', ';
+            sqlUpdateColumns += data[n].trim() +' = '+ `t_${data[n].trim()}, `;
         }
             
-        if((data[`columna${count}`]).length > 3 ){
-            if((data[`columna${count}`].trim().toLowerCase()).slice(0, 3) === 'id_' && ((data[`columna${count}`].trim().toLowerCase()) != nombreTabla2)){
+        if((data[n]).length > 3 ){
+            if((data[n].trim().toLowerCase()).slice(0, 3) === 'id_' && ((data[n].trim().toLowerCase()) != nombreTabla2)){
                 
-                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(3)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = t_${(data[`columna${count}`].trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[n].trim().toLowerCase()).slice(3)} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
                 sqlSegundaId2 = `
         ELSE
-            RETURN '${(data[`columna${count}`].trim().toLowerCase()).slice(3)} not found';
+            RETURN '${(data[n].trim().toLowerCase()).slice(3)} not found';
         END IF;`+ sqlSegundaId2;
 
-            }else if((data[`columna${count}`].trim().toLowerCase()).slice(0, 7) === 'correo_'){
-                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(7)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
-                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())}) ) THEN  \n    `;
+            }else if(((data[n].trim().toLowerCase() === 'correo_'+nombreTabla)||
+                     (data[n].trim().toLowerCase() === 'correo'))&&
+                     ((nombreTabla === 'user')          || 
+                     (nombreTabla === 'usuario')        || 
+                     (nombreTabla === 'employee')       || 
+                     (nombreTabla === 'empleado')       || 
+                     (nombreTabla === 'administrator')  || 
+                     (nombreTabla === 'administrador'))
+            ){
+                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
+                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())}) ) THEN  \n    `;
                 sqlSegundaCorreo2 = `
         ELSE
-            RETURN '${(data[`columna${count}`].trim().toLowerCase())} already registered';
+            RETURN '${(data[n].trim().toLowerCase())} already registered';
         END IF;\n` +  sqlSegundaCorreo2;
-            }else if((data[`columna${count}`].trim().toLowerCase()).slice(0, 6) === 'email_') {
-                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${(data[`columna${count}`].trim().toLowerCase()).slice(6)} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
-                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[`columna${count}`].trim().toLowerCase())} = e_${(data[`columna${count}`].trim().toLowerCase())}) ) THEN  \n    `;
+            }else if(((data[n].trim().toLowerCase() === 'email_'+nombreTabla) || 
+                     (data[n].trim().toLowerCase() === 'email'))&&
+                     ((nombreTabla === 'user')          || 
+                     (nombreTabla === 'usuario')        || 
+                     (nombreTabla === 'employee')       || 
+                     (nombreTabla === 'empleado')       || 
+                     (nombreTabla === 'administrator')  || 
+                     (nombreTabla === 'administrador'))
+            ) {
+                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
+                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())}) ) THEN  \n    `;
                 sqlSegundaCorreo2 =  `
         ELSE
-            RETURN '${(data[`columna${count}`].trim().toLowerCase())} already registered';
+            RETURN '${(data[n].trim().toLowerCase())} already registered';
         END IF;\n` + sqlSegundaCorreo2;
             }
         }
@@ -86,7 +102,7 @@ export const DataBasePut = (data, nombre, data2) => {
     // if(nombreTabla === 'user' || nombreTabla === 'usuario'){
 
     datoTablaUsuario = `
-    -- FUNCTION: public.fn_put${nombreFuncion}(${justType},  integer, text)
+    -- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer, text)
 
     -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer ,text );
 
@@ -118,7 +134,7 @@ export const DataBasePut = (data, nombre, data2) => {
                 `)}
                 ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
             ELSE
-                RETURN '${nombreFuncion.trim().toLowerCase()} not found';
+                RETURN '${nombreTabla} not found';
             END IF;
         EXCEPTION
         WHEN OTHERS THEN
@@ -166,7 +182,7 @@ export const DataBasePut = (data, nombre, data2) => {
             `)}
             ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
         ELSE
-            RETURN '${nombreFuncion.trim().toLowerCase()} not found';
+            RETURN '${nombreTabla} not found';
         END IF;
         ${(sqlSegundaId2) && sqlSegundaId2}
     EXCEPTION
