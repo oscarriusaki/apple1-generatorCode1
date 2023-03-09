@@ -93,72 +93,70 @@ export const DataBasePost = (data, nombre, data2) => {
         nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
         nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador'){
     // if(nombreTabla === 'user' || nombreTabla === 'usuario') {
-        userDateSql = `
-    -- FUNCTION: public.fn_post${nombreFuncion}(${justType}, text)
+        userDateSql = 
+`-- FUNCTION: public.fn_post${nombreFuncion}(${justType}, text)
 
-    -- DROP FUNCTION IF EXISTS public."fn_post${nombreFuncion}"(${justType}, text);
+-- DROP FUNCTION IF EXISTS public."fn_post${nombreFuncion}"(${justType}, text);
 
-    CREATE OR REPLACE FUNCTION public."fn_post${nombreFuncion}"(
-        ${columnConTypeDate}, t_tokens text
-        )
-        RETURNS character varying
-        LANGUAGE 'plpgsql'
-        COST 100
-        VOLATILE PARALLEL UNSAFE
-    AS $BODY$
+CREATE OR REPLACE FUNCTION public."fn_post${nombreFuncion}"(
+    ${columnConTypeDate}, t_tokens text
+    )
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
 
-    DECLARE error_code character varying;
+DECLARE error_code character varying;
 
-    BEGIN
-        ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
-        ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
-            ${ sql }
-        ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
-        ${(sqlSegundaId2) && sqlSegundaId2}
-        EXCEPTION
-        WHEN OTHERS THEN
-            error_code = SQLSTATE;
-            RETURN 'Error: '||error_code;
-    END;
-    $BODY$;
+BEGIN
+    ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
+    ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
+        ${ sql }
+    ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
+    ${(sqlSegundaId2) && sqlSegundaId2}
+    EXCEPTION
+    WHEN OTHERS THEN
+        error_code = SQLSTATE;
+        RETURN 'Error: '||error_code;
+END;
+$BODY$;
 
-    ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType}, text)
-        OWNER TO postgres;
-    `;
+ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType}, text)
+    OWNER TO postgres;`;
     }else{
 
-    dataBasePost = `
-    -- FUNCTION: public.fn_post${nombreFuncion}(${justType})
+    dataBasePost = 
+`-- FUNCTION: public.fn_post${nombreFuncion}(${justType})
 
-    -- DROP FUNCTION IF EXISTS public."fn_post${nombreFuncion}"(${justType});
+-- DROP FUNCTION IF EXISTS public."fn_post${nombreFuncion}"(${justType});
 
-    CREATE OR REPLACE FUNCTION public."fn_post${nombreFuncion}"(
-        ${columnConTypeDate}
-        )
-        RETURNS character varying
-        LANGUAGE 'plpgsql'
-        COST 100
-        VOLATILE PARALLEL UNSAFE
-    AS $BODY$
+CREATE OR REPLACE FUNCTION public."fn_post${nombreFuncion}"(
+    ${columnConTypeDate}
+    )
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
 
-    DECLARE error_code character varying;
+DECLARE error_code character varying;
 
-    BEGIN
-        ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
-            ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
-                ${ sql2 }
-            ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
-        ${(sqlSegundaId2) && sqlSegundaId2}
-        EXCEPTION
-        WHEN OTHERS THEN
-            error_code = SQLSTATE;
-            RETURN 'Error: '||error_code;
-    END;
-    $BODY$;
+BEGIN
+    ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
+        ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
+            ${ sql2 }
+        ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
+    ${(sqlSegundaId2) && sqlSegundaId2}
+    EXCEPTION
+    WHEN OTHERS THEN
+        error_code = SQLSTATE;
+        RETURN 'Error: '||error_code;
+END;
+$BODY$;
 
-    ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType})
-        OWNER TO postgres;
-    `;
+ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType})
+    OWNER TO postgres;`;
     }
     if(nombreTabla.trim().toLowerCase() === 'user' || nombreTabla.trim().toLowerCase() === 'usuario'||
         nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||

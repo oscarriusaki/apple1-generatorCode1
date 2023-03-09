@@ -21,31 +21,30 @@ export const DataBaseGet = (data, nombre, data2) => {
     });
     nombreTabla = nombreTabla.join('_')
 
-    const dataBaseGet = `
-    -- FUNCTION: public.fn_get${palabra}(integer)
+    const dataBaseGet = 
+`-- FUNCTION: public.fn_get${palabra}(integer)
 
-    -- DROP FUNCTION IF EXISTS public."fn_get${palabra}"(integer);
+-- DROP FUNCTION IF EXISTS public."fn_get${palabra}"(integer);
 
-    CREATE OR REPLACE FUNCTION public."fn_get${palabra}"(
-        t_id_search integer)
-        RETURNS SETOF ${nombreTabla}
-        LANGUAGE 'plpgsql'
-        COST 100
-        VOLATILE PARALLEL UNSAFE
-        ROWS 1000
+CREATE OR REPLACE FUNCTION public."fn_get${palabra}"(
+    t_id_search integer)
+    RETURNS SETOF ${nombreTabla}
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
 
-    AS $BODY$
-    BEGIN
-        RETURN QUERY
-        SELECT *
-        FROM ${nombreTabla} 
-        WHERE id_${nombreTabla} = t_id_search AND estadoeliminar = true;
-    END;
-    $BODY$;
+AS $BODY$
+BEGIN
+    RETURN QUERY
+    SELECT *
+    FROM ${nombreTabla} 
+    WHERE id_${nombreTabla} = t_id_search AND estadoeliminar = true;
+END;
+$BODY$;
 
-    ALTER FUNCTION public."fn_get${palabra}"(integer)
-        OWNER TO postgres;
-    `;
+ALTER FUNCTION public."fn_get${palabra}"(integer)
+    OWNER TO postgres;`;
     return {
         dataBaseGet,
     }

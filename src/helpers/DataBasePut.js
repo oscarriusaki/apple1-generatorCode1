@@ -97,82 +97,34 @@ export const DataBasePut = (data, nombre, data2) => {
         nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
         nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador'){
 
-    datoTablaUsuario = `
-    -- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer, text)
+    datoTablaUsuario = 
+`-- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer, text)
 
-    -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer ,text );
+-- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer ,text );
 
-    CREATE OR REPLACE FUNCTION public."fn_put${nombreFuncion}"(
-        ${columnConTypeDate}, 
-        t_id_update integer, t_tokens text )
-        RETURNS character varying                                                                                              
-        LANGUAGE 'plpgsql'                                        
-        COST 100
-        VOLATILE PARALLEL UNSAFE
-    AS $BODY$
+CREATE OR REPLACE FUNCTION public."fn_put${nombreFuncion}"(
+    ${columnConTypeDate}, 
+    t_id_update integer, t_tokens text )
+    RETURNS character varying                                                                                              
+    LANGUAGE 'plpgsql'                                        
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
 
-    DECLARE error_code character varying;
+DECLARE error_code character varying;
 
-    BEGIN
-        
-            IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true) THEN
-                ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
-                    UPDATE ${nombreTabla}  
-                    SET ${sqlUpdateColumns}, tokens = t_tokens
-                    WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
-                    RETURN 'successfully updated';
-                ${(sqlMediaCorreo2) && (sqlMediaCorreo2)}
-                ${(sqlMediaCorreo2) && (` 
-                    UPDATE ${nombreTabla}
-                    SET ${sqlUpdateColumns}, tokens = t_tokens
-                    WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
-                    RETURN 'successfully updated';
-                `)}
-                ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
-            ELSE
-                RETURN '${nombreTabla} not found';
-            END IF;
-        EXCEPTION
-        WHEN OTHERS THEN
-            error_code = SQLSTATE;
-            RETURN 'Error: '||error_code;
-        
-    END;
-    $BODY$;
-
-    ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer ,text )
-        OWNER TO postgres;
-    `;
-    }else{
-        
-    dataBasePut = `
-    -- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer)
-
-    -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer);
-
-    CREATE OR REPLACE FUNCTION public."fn_put${nombreFuncion}"(
-        ${columnConTypeDate},
-        t_id_update integer)
-        RETURNS character varying                                                                                              
-        LANGUAGE 'plpgsql'                                        
-        COST 100
-        VOLATILE PARALLEL UNSAFE
-    AS $BODY$
-
-    DECLARE error_code character varying;
-
-    BEGIN
-        ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
+BEGIN
+    
         IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true) THEN
             ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
                 UPDATE ${nombreTabla}  
-                SET ${sqlUpdateColumns}
+                SET ${sqlUpdateColumns}, tokens = t_tokens
                 WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
                 RETURN 'successfully updated';
             ${(sqlMediaCorreo2) && (sqlMediaCorreo2)}
             ${(sqlMediaCorreo2) && (` 
-                UPDATE ${nombreTabla}  
-                SET ${sqlUpdateColumns}
+                UPDATE ${nombreTabla}
+                SET ${sqlUpdateColumns}, tokens = t_tokens
                 WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
                 RETURN 'successfully updated';
             `)}
@@ -180,17 +132,63 @@ export const DataBasePut = (data, nombre, data2) => {
         ELSE
             RETURN '${nombreTabla} not found';
         END IF;
-        ${(sqlSegundaId2) && sqlSegundaId2}
     EXCEPTION
     WHEN OTHERS THEN
         error_code = SQLSTATE;
         RETURN 'Error: '||error_code;
-    END;
-    $BODY$;
+    
+END;
+$BODY$;
 
-    ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer)
-        OWNER TO postgres;
-    `;
+ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer ,text )
+    OWNER TO postgres;`;
+    }else{
+        
+    dataBasePut = 
+`-- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer)
+
+-- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer);
+
+CREATE OR REPLACE FUNCTION public."fn_put${nombreFuncion}"(
+    ${columnConTypeDate},
+    t_id_update integer)
+    RETURNS character varying                                                                                              
+    LANGUAGE 'plpgsql'                                        
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+
+DECLARE error_code character varying;
+
+BEGIN
+    ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
+    IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true) THEN
+        ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
+            UPDATE ${nombreTabla}  
+            SET ${sqlUpdateColumns}
+            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+            RETURN 'successfully updated';
+        ${(sqlMediaCorreo2) && (sqlMediaCorreo2)}
+        ${(sqlMediaCorreo2) && (` 
+            UPDATE ${nombreTabla}  
+            SET ${sqlUpdateColumns}
+            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+            RETURN 'successfully updated';
+        `)}
+        ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
+    ELSE
+        RETURN '${nombreTabla} not found';
+    END IF;
+    ${(sqlSegundaId2) && sqlSegundaId2}
+EXCEPTION
+WHEN OTHERS THEN
+    error_code = SQLSTATE;
+    RETURN 'Error: '||error_code;
+END;
+$BODY$;
+
+ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer)
+    OWNER TO postgres;`;
     }
     if(nombreTabla.trim().toLowerCase() === 'user' || nombreTabla.trim().toLowerCase() === 'usuario'||
         nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||

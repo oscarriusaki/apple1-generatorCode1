@@ -20,65 +20,66 @@ export const NodejsRouter = (data, nombre, data2) => {
     if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
-      user =`
-    const { Router } = require('express');
-    const { check } = require('express-validator');
-    const { get${palabra}s, 
-            get${palabra}, 
-            post${palabra}, 
-            put${palabra}, 
-            delete${palabra} } = require('../controller/${palabra}');
-    const { validar } = require('../middlewares/validar');
-    const { validarJWT } = require('../middlewares/ValidarJWT');
+      user =
+`const { Router } = require('express');
+const { check } = require('express-validator');
+const { get${palabra}s, 
+        get${palabra}, 
+        post${palabra}, 
+        put${palabra}, 
+        delete${palabra} } = require('../controller/${palabra}');
+const { validar } = require('../middlewares/validar');
+const { validarJWT } = require('../middlewares/ValidarJWT');
 
-    const router = Router();
+const router = Router();
 
-    router.get('/', get${palabra}s);
-    router.get('/:id',[
-        check('id', 'Id no valid').isNumeric(),
-        validar
-    ], get${palabra});
-    router.post('/', post${palabra});
-    router.put('/',[
-        validarJWT,
-        validar
-    ], put${palabra});
-    router.delete('/',[
-        validarJWT,
-        validar
-    ], delete${palabra});
+router.get('/', get${palabra}s);
+router.get('/:id',[
+    check('id', 'Id no valid').isNumeric(),
+    validar
+], get${palabra});
+router.post('/', post${palabra});
+router.put('/',[
+    validarJWT,
+    validar
+], put${palabra});
+router.delete('/',[
+    validarJWT,
+    validar
+], delete${palabra});
 
-    module.exports = router;    
-    `;
+module.exports = router;    
+`;
+
 }else{
-    nodejsRouter = `
-    const { Router } = require('express');
-    const { check } = require('express-validator');
-    const { get${palabra}s, 
-            get${palabra}, 
-            post${palabra}, 
-            put${palabra}, 
-            delete${palabra} } = require('../controller/${palabra}');
-    const { validar } = require('../middlewares/validar');
 
-    const router = Router();
+    nodejsRouter = 
+`const { Router } = require('express');
+const { check } = require('express-validator');
+const { get${palabra}s, 
+        get${palabra}, 
+        post${palabra}, 
+        put${palabra}, 
+        delete${palabra} } = require('../controller/${palabra}');
+const { validar } = require('../middlewares/validar');
 
-    router.get('/', get${palabra}s)
-    router.get('/:id',[
-        check('id', 'The id is not valid').isNumeric(),
-        validar,
-    ], get${palabra})
-    router.post('/', post${palabra})
-    router.put('/:id',[
-        check('id', 'The id is not valid').isNumeric(),
-        validar,
-    ], put${palabra})
-    router.delete('/:id',[
-        check('id', 'The id is not valid').isNumeric(),
-        validar,
-    ], delete${palabra})
-    module.exports = router;
-    `;
+const router = Router();
+
+router.get('/', get${palabra}s)
+router.get('/:id',[
+    check('id', 'The id is not valid').isNumeric(),
+    validar,
+], get${palabra})
+router.post('/', post${palabra})
+router.put('/:id',[
+    check('id', 'The id is not valid').isNumeric(),
+    validar,
+], put${palabra})
+router.delete('/:id',[
+    check('id', 'The id is not valid').isNumeric(),
+    validar,
+], delete${palabra})
+module.exports = router;`;
     }
 
     if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||

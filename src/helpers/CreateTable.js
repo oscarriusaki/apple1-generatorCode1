@@ -40,8 +40,8 @@ export const CreateTable = (data, nombre, data2) => {
             createSqlInicio += `${data.inputForm[key].trim()} ${data2.inputForm[key].trim()} not null,\n`;
         }
     }
-    let createTable = `
-create table ${nombreTabla} (
+    let createTable = 
+`create table ${nombreTabla} (
 ${createSqlInicio}
 ${createSqlFin}
 `;

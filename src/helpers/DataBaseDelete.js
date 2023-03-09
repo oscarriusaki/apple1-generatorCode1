@@ -45,39 +45,38 @@ export const DataBaseDelete = (data, nombre, data2) => {
     }
     columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
     justType = justType.trim().slice(0, -1);
-    const dataBaseDelete = `
-    -- FUNCTION: public.fn_delete${ nombreFuncion}(integer)
+    const dataBaseDelete = 
+`-- FUNCTION: public.fn_delete${ nombreFuncion}(integer)
 
-    -- DROP FUNCTION IF EXISTS public."fn_delete${ nombreFuncion}"(integer);
+-- DROP FUNCTION IF EXISTS public."fn_delete${ nombreFuncion}"(integer);
+
+CREATE OR REPLACE FUNCTION public."fn_delete${ nombreFuncion}"(
+    t_id_update integer)
+    RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+
+DECLARE error_code character varying;
+
+BEGIN
+
+    IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true ) THEN
+        ${ sql }
+    ELSE
+        RETURN '${nombreTabla} not found';
+    END IF;
     
-    CREATE OR REPLACE FUNCTION public."fn_delete${ nombreFuncion}"(
-        t_id_update integer)
-        RETURNS character varying
-        LANGUAGE 'plpgsql'
-        COST 100
-        VOLATILE PARALLEL UNSAFE
-    AS $BODY$
-    
-    DECLARE error_code character varying;
-    
-    BEGIN
-    
-        IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true ) THEN
-            ${ sql }
-        ELSE
-            RETURN '${nombreTabla} not found';
-        END IF;
-        
-        EXCEPTION
-        WHEN OTHERS THEN
-            error_code = SQLSTATE;
-            RETURN 'Error: '||error_code;
-    END;
-    $BODY$;
-    
-    ALTER FUNCTION public."fn_delete${nombreFuncion}"(integer)
-        OWNER TO postgres;
-    `;
+    EXCEPTION
+    WHEN OTHERS THEN
+        error_code = SQLSTATE;
+        RETURN 'Error: '||error_code;
+END;
+$BODY$;
+
+ALTER FUNCTION public."fn_delete${nombreFuncion}"(integer)
+    OWNER TO postgres;`;
     return {
         dataBaseDelete
     }
