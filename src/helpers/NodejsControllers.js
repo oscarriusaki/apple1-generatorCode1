@@ -262,7 +262,7 @@ export const NodejsControllers = (data, nombre, data2) => {
                     }
                 }else{
                     return res.status(500).json({
-                        msg: no ${palabra} found
+                        msg: 'no ${palabra} found'
                     });
                 }
             }
