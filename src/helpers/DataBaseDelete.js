@@ -18,8 +18,8 @@ export const DataBaseDelete = (data, nombre, data2) => {
     let columnaRegistrarCampos = '';
     let columnaRegistrarCamposModify = '';
     for(const n in data2.inputForm){
-        columnaRegistrarCampos += data[`columna${count3}`] +', ';
-        columnaRegistrarCamposModify += 't_'+data[`columna${count3}`] +', ';
+        columnaRegistrarCampos += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
+        columnaRegistrarCamposModify += 't_'+data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
         count3++;
     }
 
@@ -38,8 +38,8 @@ export const DataBaseDelete = (data, nombre, data2) => {
     let justType = ''; 
 
     for(const n in data2.inputForm){
-        columnConTypeDate += 't_'+ data[`columna${count}`].trim() + ' '+ data2[`columna${count}`].trim() +', ';
-        justType += data2[`columna${count}`].trim() + ', ';
+        columnConTypeDate += 't_'+ data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') + ' '+ data2[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
+        justType += data2[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') + ', ';
         count ++;
     }
     columnConTypeDate = columnConTypeDate.trim().slice(0,-1);

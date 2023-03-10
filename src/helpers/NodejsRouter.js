@@ -5,7 +5,7 @@ export const NodejsRouter = (data, nombre, data2) => {
     let dataAux = '';
     let count = 1;
     for( const n in data2.inputForm ){
-      dataAux += data[`columna${count}`] +', ';
+      dataAux += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
       count ++;
     } 
     
@@ -43,7 +43,7 @@ router.put('/',[
     validarJWT,
     validar
 ], put${palabra});
-router.delete('/',[
+router.delete('/:id',[
     validarJWT,
     validar
 ], delete${palabra});

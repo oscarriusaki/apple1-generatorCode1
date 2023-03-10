@@ -23,17 +23,17 @@ export const NodejsControllers = (data, nombre, data2) => {
     let contadorAuxiliarReal = 1;
     for( const n in data2.inputForm ){
         cantidadDolar += `$${count}, `;
-        if(data[n].trim().toLowerCase() !== nombreTabla){
-            dataAux2 += data[n].trim().toLowerCase() +', ';
+        if(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() !== nombreTabla){
+            dataAux2 += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() +', ';
             cantidadDolar2 += `$${count2}, `;
             count2++;
             contadorAuxiliarReal ++;
         }
-        dataAux += data[n].trim().toLowerCase() +', ';
-        if(((data[n].trim().toLowerCase() === 'correo_' + tablaAux) || 
-            (data[n].trim().toLowerCase() === 'email_' + tablaAux)  || 
-            (data[n].trim().toLowerCase() === 'email') || 
-            (data[n].trim().toLowerCase() === 'correo')) && (
+        dataAux += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() +', ';
+        if(((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'correo_' + tablaAux) || 
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email_' + tablaAux)  || 
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email') || 
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'correo')) && (
             (tablaAux === 'user')           || 
             (tablaAux === 'usuario')        || 
             (tablaAux === 'employee')       || 
@@ -42,15 +42,15 @@ export const NodejsControllers = (data, nombre, data2) => {
             (tablaAux === 'administrador')
             )
             ){
-            email_columna = data[n].trim().toLowerCase();
+            email_columna = data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase();
         }
        
-        if(((data[n].trim().toLowerCase() === 'password_' + tablaAux)   || 
-            (data[n].trim().toLowerCase() === 'pas_' + tablaAux)        || 
-            (data[n].trim().toLowerCase() === 'contrasena_' + tablaAux) ||
-            (data[n].trim().toLowerCase() === 'password')               ||
-            (data[n].trim().toLowerCase() === 'pas')                    ||
-            (data[n].trim().toLowerCase() === 'contrasena')
+        if(((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'password_' + tablaAux)   || 
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'pas_' + tablaAux)        || 
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'contrasena_' + tablaAux) ||
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'password')               ||
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'pas')                    ||
+            (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'contrasena')
             ) && 
            ((tablaAux === 'user')           || 
             (tablaAux === 'usuario')        || 
@@ -60,7 +60,7 @@ export const NodejsControllers = (data, nombre, data2) => {
             (tablaAux === 'administrador')
            )
         ){
-         password_columna = data[n].trim().toLowerCase();
+         password_columna = data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase();
         }
         count ++;
     } 

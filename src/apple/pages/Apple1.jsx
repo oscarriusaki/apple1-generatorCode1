@@ -146,7 +146,7 @@ export const Apple1 = () => {
       document.removeEventListener('keydown', handlekeyDowm);
     }
   }, [onInputSubmit]);
-   let f = nombreTabla.trim();
+  let f = nombreTabla.trim();
   return (
     <>
     <div className='cuerpoBoton2'>  
@@ -156,7 +156,7 @@ export const Apple1 = () => {
               className='inputStyle'
               placeholder='Nombre de la tabla separado'
               name='nombreTabla'
-              value={nombreTabla || resto.inputForm.nombreTabla}
+              value={nombreTabla.replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') || resto.inputForm.nombreTabla.replace(/[^a-zA-Z0-9_ ]/g, '')}
               onChange={onInputChange}
               ref={ref4}
             /> 
@@ -247,8 +247,7 @@ export const Apple1 = () => {
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado. </p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Generar llaves PRIMARIAS "ID_NOMBRE_TABLA_ACTUAL" y llaves FORNEAS poner "ID_NOMBRE_OTRA_TABLA y se pone automaticamente tipo de valor INTEGER, no poner "ID_" para ningun otra columna que no tenga que ver con un ID de una tabla. </p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  Generar la restriccion UNIQUE solo para correo poner "CORREO_NOMBRE_TABLA" o para "EMAIL_NOMBRE_TABLA" o "CORREO" o "EMAIL" solo para tablas en el NOTA 2.</p>
-          {/* <p className='tarejetaMensaje'> <span className='notaStyle'>Nota9:</span>  Genera automaticamente "VARCHAR&#40;255&#41;".</p>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota10:</span>  Poner tipo de valor real que tiene no poner cualquier valor.</p> */}
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota6:</span>  Todos los campos de entrada son zanitizadas en el APPLE1 y los unicos caracteres permitidos son numeros, letras mayusculas y minusculas tambien los caracteres especiales permitidos son: _ $#@~%[  si desea agregar mas caracter modificar en el .replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')  en todos los archivos que usa apple1</p>
         </div>
       )
     }

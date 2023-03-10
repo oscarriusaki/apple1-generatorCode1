@@ -21,8 +21,8 @@ export const DataBasePut = (data, nombre, data2) => {
     let sqlUpdateColumns = '';
 
     for(const n in data2.inputForm){
-        columnaRegistrarCampos += data[n].trim() +', ';
-        columnaRegistrarCamposModify += 't_'+data[n].trim() +', ';
+        columnaRegistrarCampos += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
+        columnaRegistrarCamposModify += 't_'+data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
         count3++;
     }
 
@@ -37,23 +37,23 @@ export const DataBasePut = (data, nombre, data2) => {
     
     for(const n in data2.inputForm){
         
-        if(nombreTabla2 != data[n].trim() ){
-            columnConTypeDate += 't_'+ data[n].trim() + ' '+ data2[n].trim() +', ';
+        if(nombreTabla2 != data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') ){
+            columnConTypeDate += 't_'+ data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') + ' '+ data2[n].trim() +', ';
             justType += data2[n].trim() + ', ';
-            sqlUpdateColumns += data[n].trim() +' = '+ `t_${data[n].trim()}, `;
+            sqlUpdateColumns += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +' = '+ `t_${data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}, `;
         }
             
         if((data[n]).length > 3 ){
-            if((data[n].trim().toLowerCase()).slice(0, 3) === 'id_' && ((data[n].trim().toLowerCase()) != nombreTabla2)){
+            if((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(0, 3) === 'id_' && ((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()) != nombreTabla2)){
                 
-                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[n].trim().toLowerCase()).slice(3)} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
                 sqlSegundaId2 = `
         ELSE
-            RETURN '${(data[n].trim().toLowerCase()).slice(3)} not found';
+            RETURN '${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} not found';
         END IF;`+ sqlSegundaId2;
 
-            }else if(((data[n].trim().toLowerCase() === 'correo_'+nombreTabla)||
-                     (data[n].trim().toLowerCase() === 'correo'))&&
+            }else if(((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'correo_'+nombreTabla)||
+                     (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'correo'))&&
                      ((nombreTabla === 'user')          || 
                      (nombreTabla === 'usuario')        || 
                      (nombreTabla === 'employee')       || 
@@ -61,14 +61,14 @@ export const DataBasePut = (data, nombre, data2) => {
                      (nombreTabla === 'administrator')  || 
                      (nombreTabla === 'administrador'))
             ){
-                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
-                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())}) THEN  \n    `;
+                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
+                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())}) THEN  \n    `;
                 sqlSegundaCorreo2 = `
         ELSE
-            RETURN '${(data[n].trim().toLowerCase())} already registered';
+            RETURN '${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} already registered';
         END IF;\n` +  sqlSegundaCorreo2;
-            }else if(((data[n].trim().toLowerCase() === 'email_'+nombreTabla) || 
-                     (data[n].trim().toLowerCase() === 'email'))&&
+            }else if(((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email_'+nombreTabla) || 
+                     (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email'))&&
                      ((nombreTabla === 'user')          || 
                      (nombreTabla === 'usuario')        || 
                      (nombreTabla === 'employee')       || 
@@ -76,11 +76,11 @@ export const DataBasePut = (data, nombre, data2) => {
                      (nombreTabla === 'administrator')  || 
                      (nombreTabla === 'administrador'))
             ) {
-                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
-                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())}) ) THEN  \n    `;
+                sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
+                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())}) ) THEN  \n    `;
                 sqlSegundaCorreo2 =  `
         ELSE
-            RETURN '${(data[n].trim().toLowerCase())} already registered';
+            RETURN '${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} already registered';
         END IF;\n` + sqlSegundaCorreo2;
             }
         }

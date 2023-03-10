@@ -49,7 +49,7 @@ export const Navbar = () => {
                 placeholder='search a component'
                 name="component" 
                 autoComplete='off'
-                value={component}
+                value={component.replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}
                 onChange={onInputChange}
                 />
                 <button 
