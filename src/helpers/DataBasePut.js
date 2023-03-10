@@ -62,7 +62,7 @@ export const DataBasePut = (data, nombre, data2) => {
                      (nombreTabla === 'administrador'))
             ){
                 sqlPrimeraCorreo2 = sqlPrimeraCorreo2 + `IF NOT EXISTS( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())} AND id_${nombreTabla} = t_id_update ) THEN \n     `; 
-                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())}) ) THEN  \n    `;
+                sqlMediaCorreo2 = `ELSEIF NOT EXISTS ( SELECT 1 FROM ${nombreTabla} WHERE ${(data[n].trim().toLowerCase())} = t_${(data[n].trim().toLowerCase())}) THEN  \n    `;
                 sqlSegundaCorreo2 = `
         ELSE
             RETURN '${(data[n].trim().toLowerCase())} already registered';

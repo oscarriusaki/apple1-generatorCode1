@@ -118,7 +118,7 @@ const get${palabra}s = async (req, res = response) => {
         });
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         });
     }finally{
         pg.release();
@@ -153,7 +153,7 @@ const get${palabra} = async(req, res = response) => {
         });
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         });
     }finally{
         pg.release();
@@ -201,7 +201,7 @@ const post${palabra} = async(req, res = response) => {
     
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         })
     }finally{
         pg.release();
@@ -252,7 +252,7 @@ const put${palabra} = async (req, res = response) => {
 
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         });
     }finally{
         pg.release();
@@ -295,7 +295,7 @@ const delete${palabra} = async (req, res = response) => {
         });
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         });
     }finally{
         pg.release();
@@ -344,7 +344,7 @@ const  get${palabra}s = async (req, res) => {
 
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         });
     }finally{
         pg.release();
@@ -379,7 +379,7 @@ const get${palabra} = async (req, res) => {
         });
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         });
     }finally{
         pg.release();
@@ -422,7 +422,7 @@ const post${palabra} = async (req, res) => {
         });
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         })
     }finally{
         pg.release();
@@ -465,7 +465,7 @@ const put${palabra} = async (req, res) => {
         });
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         })
     }finally{
         pg.release();
@@ -507,7 +507,7 @@ const delete${palabra} = async (req, res) => {
         });
     }catch(err){
         return res.status(500).json({
-            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+            msg: ${`'There was an error in the server please talt to the administrator' + err`}
         });
     }finally{
         pg.release();
@@ -530,3 +530,17 @@ module.exports = {
         nodejsControllers,
     }
 }
+
+
+
+
+
+
+
+
+
+
+ 
+    
+    
+    

@@ -14,7 +14,6 @@ export const DataBaseDelete = (data, nombre, data2) => {
     });
     nombreTabla = nombreTabla.join('_');
     
-    
     let count3 = 1;
     let columnaRegistrarCampos = '';
     let columnaRegistrarCamposModify = '';
