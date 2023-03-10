@@ -91,182 +91,215 @@ const bcryptjs = require('bcryptjs');
 const { GenerarJWT } = require("../helpers/GenerarJWT");
 
 const get${palabra}s = async (req, res = response) => {
-    const pg = await db;
-    const sql = 'SELECT * from public."fn_get${palabra}s"()';
-    pg.query(sql, (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });
-        }else{
-            if(result.rowCount >= 1){
-                return res.status(200).json(result.rows);
-            }else{
-                return res.status(404).json({
-                    msg: '${palabra} not found'
-                })
-            }
-        }
-    })
 
+    const pg = await db.connect();
+    try {
+
+        const sql = 'SELECT * from public."fn_get${palabra}s"()';
+        pg.query(sql, (err, result) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });
+            }else{
+                if(result.rowCount >= 1){
+                    return res.status(200).json(result.rows);
+                }else{
+                    return res.status(404).json({
+                        msg: '${palabra} not found'
+                    });
+                }
+            }
+        });
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        });
+    }finally{
+        pg.release();
+    }
 }
 const get${palabra} = async(req, res = response) => {
-    const pg = await db;
-    const { id } = req.params;
-    const sql = 'SELECT * from public."fn_get${palabra}"($1)';
-    pg.query(sql, [id], (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });
-        }else{
-            if(result.rowCount === 1){
-                return res.status(200).json(result.rows[0])
+    
+    const pg = await db.connect();
+    try {
+
+        const { id } = req.params;
+        const sql = 'SELECT * from public."fn_get${palabra}"($1)';
+        pg.query(sql, [id], (err, result) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });
             }else{
-                return res.status(404).json({
-                    msg: '${palabra} not found'
-                })
+                if(result.rowCount === 1){
+                    return res.status(200).json(result.rows[0])
+                }else{
+                    return res.status(404).json({
+                        msg: '${palabra} not found'
+                    });
+                }
             }
-        }
-    })
+        });
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        });
+    }finally{
+        pg.release();
+    }
 }
 const post${palabra} = async(req, res = response) => {
     
-    try{
+    const pg = await db.connect();
+    try {
 
-    const pg = await db;
-    let {${dataAux2}} = req.body;
-    const tokens = await GenerarJWT(${email_columna});
-    const salt = bcryptjs.genSaltSync();
-    ${password_columna} = bcryptjs.hashSync(${password_columna}, salt);
-    const sql = 'SELECT public."fn_post${palabra}"(${[postCountDolar]})';
+        let {${dataAux2}} = req.body;
+        const tokens = await GenerarJWT(${email_columna});
+        const salt = bcryptjs.genSaltSync();
+        ${password_columna} = bcryptjs.hashSync(${password_columna}, salt);
+        const sql = 'SELECT public."fn_post${palabra}"(${[postCountDolar]})';
 
-    pg.query(sql, [${dataAux2}, tokens], async (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });
-        }else{
-            if(result.rowCount === 1){
-                if(result.rows[0].fn_post${palabra} === 'successfully registered'){
-                    return res.status(200).json({
-                        msg: result.rows[0].fn_post${palabra} 
-                    })
-                }else{  
-                    return res.status(500).json({
-                        msg: result.rows[0].fn_post${palabra} 
-                    })
-                }
-            }else{
+        pg.query(sql, [${dataAux2}, tokens], async (err, result) => {
+            if(err){
                 return res.status(500).json({
-                    msg: 'there was an error in the query'
-                })
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });
+            }else{
+                if(result.rowCount === 1){
+                    if(result.rows[0].fn_post${palabra} === 'successfully registered'){
+                        return res.status(200).json({
+                            msg: result.rows[0].fn_post${palabra} 
+                        });
+                    }else{  
+                        return res.status(500).json({
+                            msg: result.rows[0].fn_post${palabra} 
+                        });
+                    }
+                }else{
+                    return res.status(500).json({
+                        msg: 'there was an error in the query'
+                    });
+                }
             }
-        }
-    })
+        });
     
     }catch(err){
         return res.status(500).json({
-            msg: 'internal server error'
-        });
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        })
+    }finally{
+        pg.release();
     }
     
 }
 const put${palabra} = async (req, res = response) => {
     
-    try{    
-    const pg = await db;
-    const { id } = req.${tablaAux}.id_${tablaAux};
-    let   {${dataAux2}} = req.body;
-    const tokens = await GenerarJWT(${email_columna});
-    const salt = bcryptjs.genSaltSync();
-    ${password_columna}  = bcryptjs.hashSync(${password_columna}, salt);
-    const sql = 'SELECT public."fn_put${palabra} "(${putCountDolar})';
+    const pg = await db.connect();
+    try {
 
-    pg.query(sql, [${dataAux2}, id, tokens ], async(err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });
-        }else{   
-            if(result.rowCount === 1){
-                if(result.rows[0].fn_put${palabra} === 'successfully updated'){
-                    return res.status(200).json({
-                        msg: result.rows[0].fn_put${palabra} 
-                    })
+        const pg = await db;
+        const { id } = req.${tablaAux}.id_${tablaAux};
+        let   {${dataAux2}} = req.body;
+        const tokens = await GenerarJWT(${email_columna});
+        const salt = bcryptjs.genSaltSync();
+        ${password_columna}  = bcryptjs.hashSync(${password_columna}, salt);
+        const sql = 'SELECT public."fn_put${palabra} "(${putCountDolar})';
+
+        pg.query(sql, [${dataAux2}, id, tokens ], async(err, result) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });
+            }else{   
+                if(result.rowCount === 1){
+                    if(result.rows[0].fn_put${palabra} === 'successfully updated'){
+                        return res.status(200).json({
+                            msg: result.rows[0].fn_put${palabra} 
+                        });
+                    }else{
+                        return res.status(500).json({
+                            msg: result.rows[0].fn_put${palabra} 
+                        });
+                    }
                 }else{
-                    return res.status(500).json({
-                        msg: result.rows[0].fn_put${palabra} 
-                    })
+                    return res.status(404).json({
+                        msg: 'no ${palabra} found'
+                    });
                 }
-            }else{
-                return res.status(404).json({
-                    msg: 'no ${palabra} found'
-                })
             }
-        }
-    });
+        });
 
     }catch(err){
         return res.status(500).json({
-            msg: 'There was an error please talt to the administrator'
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
         });
+    }finally{
+        pg.release();
     }
 }
 const delete${palabra} = async (req, res = response) => {
     
-    const pg = await db;
-    const { id } = req.params;
-    const sql = 'SELECT public."fn_delete${palabra}"($1)';
+    const pg = await db.connect();
+    try {
+        const { id } = req.params;
+        const sql = 'SELECT public."fn_delete${palabra}"($1)';
 
-    pg.query(sql, [id], (err, result ) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });                    
-        }else{
-            if(result.rowCount === 1){
-                if(result.rows[0].fn_delete${palabra} === 'successfully eliminated'){
-                    return res.status(200).json({
-                        msg: result.rows[0].fn_delete${palabra} 
-                    });
+        pg.query(sql, [id], (err, result ) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });                    
+            }else{
+                if(result.rowCount === 1){
+                    if(result.rows[0].fn_delete${palabra} === 'successfully eliminated'){
+                        return res.status(200).json({
+                            msg: result.rows[0].fn_delete${palabra} 
+                        });
+                    }else{
+                        return res.status(500).json({
+                            msg: result.rows[0].fn_delete${palabra} 
+                        });
+                    }
                 }else{
                     return res.status(500).json({
-                        msg: result.rows[0].fn_delete${palabra} 
+                        msg: 'no ${palabra} found'
                     });
                 }
-            }else{
-                return res.status(500).json({
-                    msg: 'no ${palabra} found'
-                });
             }
-        }
-    });
+        });
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        });
+    }finally{
+        pg.release();
+    }
 }
 
 module.exports = {
@@ -278,164 +311,207 @@ module.exports = {
 }`;
 
 }else{
-    
+
     nodejsControllers =      
 `const { db } = require("../database/config")
 
 const  get${palabra}s = async (req, res) => {
-    const pg = await db;
-    const sql = 'SELECT * FROM public."fn_get${palabra}s"()';
     
-        pg.query(sql, (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });                    
-        }else{
-            if(result.rowCount >= 1){
-                return res.status(200).json(result.rows)
+    const pg = await db.connect();
+    try {
+        const sql = 'SELECT * FROM public."fn_get${palabra}s"()';
+        
+            pg.query(sql, (err, result) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });                    
             }else{
-                return res.status(404).json({
-                    msg: 'no ${palabra} found'
-                })
+                if(result.rowCount >= 1){
+                    return res.status(200).json(result.rows);
+                }else{
+                    return res.status(404).json({
+                        msg: 'no ${palabra} found'
+                    });
+                }
             }
-        }
-    })
+        });
+
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        });
+    }finally{
+        pg.release();
+    }
 }
 const get${palabra} = async (req, res) => {
-    const pg = await db;
-    const { id } = req.params;
-    const sql = 'SELECT * FROM public."fn_get${palabra}"($1)';
 
-    pg.query(sql, [id], (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });                    
-        }else{
-            if(result.rowCount === 1){
-                return res.status(200).json(result.rows);
+    const pg = await db.connect();
+    try {
+        const { id } = req.params;
+        const sql = 'SELECT * FROM public."fn_get${palabra}"($1)';
+
+        pg.query(sql, [id], (err, result) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });                    
             }else{
-                return res.status(404).json({
-                    msg: '${palabra} not found'
-                })
+                if(result.rowCount === 1){
+                    return res.status(200).json(result.rows);
+                }else{
+                    return res.status(404).json({
+                        msg: '${palabra} not found'
+                    });
+                }
             }
-        }
-    })
+        });
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        });
+    }finally{
+        pg.release();
+    }
 }
 const post${palabra} = async (req, res) => {
-    const pg = await db;
-    const { ${dataAux2} } = req.body;        
-    
-    const sql = 'SELECT public."fn_post${palabra}"(${cantidadDolar2})';
 
-    pg.query(sql, [ ${dataAux2}] , (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });                    
-        }else{
-            if(result.rowCount === 1){
-                if(result.rows[0].fn_post${palabra} === 'successfully registered'){
-                    return res.status(200).json({
-                        msg: result.rows[0].fn_post${palabra}    
-                    })
-                }else{
-                    return res.status(404).json({
-                        msg: result.rows[0].fn_post${palabra}    
-                    })
-                }
-            }else{
+    const pg = await db.connect();
+    try {
+        const { ${dataAux2} } = req.body;        
+        const sql = 'SELECT public."fn_post${palabra}"(${cantidadDolar2})';
+
+        pg.query(sql, [ ${dataAux2}] , (err, result) => {
+            if(err){
                 return res.status(500).json({
-                    msg: 'there was an error in the query'
-                })
-            }
-        }
-    })
-
-}
-const put${palabra} = async (req, res) => {
-    const pg = await db;
-    const { id } = req.params;
-    const { ${dataAux2} } = req.body;        
-    const sql = 'SELECT public."fn_put${palabra}"(${cantidadDolar2}, $${contadorAuxiliarReal++})';
-    pg.query(sql, [ ${dataAux2}, id ], (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });                    
-        }else{
-            if(result.rowCount === 1){
-                if(result.rows[0].fn_put${palabra} === 'successfully updated'){
-                    return res.status(404).json({
-                        msg: result.rows[0].fn_put${palabra}
-                    })
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });                    
+            }else{
+                if(result.rowCount === 1){
+                    if(result.rows[0].fn_post${palabra} === 'successfully registered'){
+                        return res.status(200).json({
+                            msg: result.rows[0].fn_post${palabra}    
+                        });
+                    }else{
+                        return res.status(404).json({
+                            msg: result.rows[0].fn_post${palabra}    
+                        });
+                    }
                 }else{
                     return res.status(500).json({
-                        msg: result.rows[0].fn_put${palabra}
-                    })
+                        msg: 'there was an error in the query'
+                    });
                 }
-            }else{
-                return res.status(404).json({
-                    msg: 'no ${palabra} found'
-                })
             }
-        }
-    })
+        });
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        })
+    }finally{
+        pg.release();
+    }
 }
-const delete${palabra} = async (req, res) => {
-    const pg = await db;
-    const { id } = req.params;
-    const sql = 'SELECT public."fn_delete${palabra}"($1)';
-    pg.query(sql , [id] , (err, result) => {
-        if(err){
-            return res.status(500).json({
-                code: err.code, 
-                name: err.name, 
-                hint: err.hint,
-                detail: err.detail,
-                where: err.where,   
-                file: err.file,
-            });                    
-        }else{
-            if(result.rowCount === 1){
-                if(result.rows[0].fn_delete${palabra} === 'successfully eliminated'){
-                    return res.status(200).json({
-                        msg: result.rows[0].fn_delete${palabra}
-                    })
+const put${palabra} = async (req, res) => {
+
+    const pg = await db.connect();
+    try {
+        const { id } = req.params;
+        const { ${dataAux2} } = req.body;        
+        const sql = 'SELECT public."fn_put${palabra}"(${cantidadDolar2}, $${contadorAuxiliarReal++})';
+        pg.query(sql, [ ${dataAux2}, id ], (err, result) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });                    
+            }else{
+                if(result.rowCount === 1){
+                    if(result.rows[0].fn_put${palabra} === 'successfully updated'){
+                        return res.status(404).json({
+                            msg: result.rows[0].fn_put${palabra}
+                        });
+                    }else{
+                        return res.status(500).json({
+                            msg: result.rows[0].fn_put${palabra}
+                        });
+                    }
                 }else{
                     return res.status(404).json({
-                        msg: result.rows[0].fn_delete${palabra}
-                    })
+                        msg: 'no ${palabra} found'
+                    });
                 }
-            }else{
-                return res.status(404).json({
-                    msg: 'no ${palabra} found'
-                })
             }
-        }
-    })
+        });
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        })
+    }finally{
+        pg.release();
+    }
+}
+const delete${palabra} = async (req, res) => {
 
+    const pg = await db.connect();
+    try {
+        const { id } = req.params;
+        const sql = 'SELECT public."fn_delete${palabra}"($1)';
+        pg.query(sql , [id] , (err, result) => {
+            if(err){
+                return res.status(500).json({
+                    code: err.code, 
+                    name: err.name, 
+                    hint: err.hint,
+                    detail: err.detail,
+                    where: err.where,   
+                    file: err.file,
+                });                    
+            }else{
+                if(result.rowCount === 1){
+                    if(result.rows[0].fn_delete${palabra} === 'successfully eliminated'){
+                        return res.status(200).json({
+                            msg: result.rows[0].fn_delete${palabra}
+                        });
+                    }else{
+                        return res.status(404).json({
+                            msg: result.rows[0].fn_delete${palabra}
+                        });
+                    }
+                }else{
+                    return res.status(404).json({
+                        msg: 'no ${palabra} found'
+                    });
+                }
+            }
+        });
+    }catch(err){
+        return res.status(500).json({
+            msg: ${`There was an error in the server please talt to the administrator ${err}`}
+        });
+    }finally{
+        pg.release();
+    }
 }
 module.exports = {
     get${palabra}s,

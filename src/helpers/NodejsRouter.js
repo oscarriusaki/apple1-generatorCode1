@@ -80,7 +80,7 @@ router.delete('/:id',[
     validar,
 ], delete${palabra})
 module.exports = router;`;
-    }
+}
 
     if(nombre.trim().toLowerCase() === 'user' || nombre.trim().toLowerCase() === 'usuario'||
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
