@@ -2,7 +2,8 @@ import React from 'react';
 
 export const DataBasePut = (data, nombre, data2) => {
 
-    let nombreFuncion = nombre.trim().replace(/\s+/g, ' ').split(' ');
+    let nombreFuncion = nombre.trim().replace(/[\s_]+/g, ' ').split(' ');
+
     nombreFuncion = nombreFuncion.map(resp => {
         return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
     })

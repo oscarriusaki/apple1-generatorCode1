@@ -9,7 +9,7 @@ export const DataBaseGets = (data, nombre, data2) => {
       count ++;
     }
 
-    let palabra = nombre.trim().replace(/\s+/g, ' ').split(' ');
+    let palabra = nombre.trim().replace(/[\s_]+/g, ' ').split(' ');
     palabra = palabra.map(resp => {
         return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
     })

@@ -10,7 +10,6 @@ import { CreateTable, DataBaseDelete,
           NodejsRouter } from '../../helpers';
 import { useForm } from '../../hooks/useForm';
 import { GeneradorTextoCodigo } from '../../ui/GeneradorTextoCodigo';
-import { Navbar } from '../../ui/components';
 
 export const Apple1 = () => {
  
@@ -24,25 +23,25 @@ export const Apple1 = () => {
 
   const { nombreTabla, active, onInputChange,onInputChange3, activeCode, onReset, ...resto } = useForm(map);
   const { onInputChange2 ,...resto2 } = useForm(map2);
-  let nombreFuncionOriginal = nombreTabla.trim().replace(/\s+/g, ' ').split(' '); /* replace(/\s+/g, ' ') sirve para quitar espacios entre palabras */
+  let nombreFuncionOriginal = nombreTabla.trim().replace(/[\s_]+/g, ' ').split(' '); /* replace(/[\s_]+/g, ' ') sirve para quitar espacios entre palabras y quita guiones bajos y remplaza con un espacio */
   nombreFuncionOriginal = nombreFuncionOriginal.map(resp => {
       return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
   })
   nombreFuncionOriginal = nombreFuncionOriginal.join('');
-  let nombreTableCreate = nombreTabla.trim().replace(/\s+/g, ' ').split(' ');
+  let nombreTableCreate = nombreTabla.trim().replace(/[\s_]+/g, ' ').split(' ');
   nombreTableCreate = nombreTableCreate.map(resp => {
     return resp.toLowerCase();
   })
   nombreTableCreate = nombreTableCreate.join('_');
    
-  const { nodejsControllers } = NodejsControllers(resto, nombreTabla, resto2);
-  const { nodejsRouter } = NodejsRouter(resto, nombreTabla, resto2);
-  const { dataBaseGet } = DataBaseGet(resto, nombreTabla, resto2);
-  const { dataBaseGets } = DataBaseGets(resto, nombreTabla, resto2);
-  const { dataBasePost } = DataBasePost(resto, nombreTabla, resto2);
-  const { dataBasePut } = DataBasePut(resto, nombreTabla, resto2);
-  const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla, resto2);
-  const { createTable } = CreateTable(resto, nombreTabla, resto2);
+  const { nodejsControllers } = NodejsControllers(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { nodejsRouter } = NodejsRouter(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { dataBaseGet } = DataBaseGet(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { dataBaseGets } = DataBaseGets(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { dataBasePost } = DataBasePost(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { dataBasePut } = DataBasePut(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { createTable } = CreateTable(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
 
   const ref2 = useRef();
   const ref4 = useRef();
@@ -68,18 +67,7 @@ export const Apple1 = () => {
 
   const clear = () => { 
     setInputs([])
-    setCount(1) 
-    let c = false;
-    for (const n in resto2.inputForm) {
-      c=true;
-    }
-    if(c){
-      onReset()    
-      setMap({
-        active: false,
-        nombreTabla: ''
-      }) 
-    }
+    setCount(1)
     activeCode(false)
     window.location.reload();
   } 
@@ -146,7 +134,7 @@ export const Apple1 = () => {
       document.removeEventListener('keydown', handlekeyDowm);
     }
   }, [onInputSubmit]);
-  let f = nombreTabla.trim();
+  // let f = nombreTabla.trim();
   return (
     <>
     <div className='cuerpoBoton2'>  
@@ -154,7 +142,7 @@ export const Apple1 = () => {
           <input 
               type='text' 
               className='inputStyle'
-              placeholder='Nombre de la tabla separado'
+              placeholder='Nombre de cada tabla separado sin guion "_"'
               name='nombreTabla'
               value={nombreTabla.replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') || resto.inputForm.nombreTabla.replace(/[^a-zA-Z0-9_ ]/g, '')}
               onChange={onInputChange}
@@ -178,14 +166,14 @@ export const Apple1 = () => {
     {
       (active ) 
       ? (<>
-          <GeneradorTextoCodigo code={createTable} textClass={`${nombreTableCreate}`} typeFile={'Database / Create Table'} />
-          <GeneradorTextoCodigo code={nodejsRouter} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Router'} />
-          <GeneradorTextoCodigo code={nodejsControllers} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / Controller'} />
-          <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${nombreFuncionOriginal}`} typeFile={'Database / Get / id'} />
-          <GeneradorTextoCodigo code={dataBaseGets} textClass={`fn_get${nombreFuncionOriginal}s`} typeFile={'Database / Get'} />
-          <GeneradorTextoCodigo code={dataBasePost} textClass={`fn_post${nombreFuncionOriginal}`} typeFile={'Database / Post'} />
-          <GeneradorTextoCodigo code={dataBasePut} textClass={`fn_put${nombreFuncionOriginal}`} typeFile={'Database / Put'} />
-          <GeneradorTextoCodigo code={dataBaseDelete} textClass={`fn_delete${nombreFuncionOriginal}`} typeFile={'Database / Delete'} />
+          <GeneradorTextoCodigo code={createTable} textClass={`${nombreTableCreate}`} typeFile={'Database / postgres / create table'} dateType={'postgres'} />
+          <GeneradorTextoCodigo code={nodejsRouter} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / javascript / router'} dateType={'javascript'} />
+          <GeneradorTextoCodigo code={nodejsControllers} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / javascript / controller'} dateType={'javascript'} />
+          <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${nombreFuncionOriginal}`} typeFile={'Database / postgres / get / id'} dateType={'postgres'} />
+          <GeneradorTextoCodigo code={dataBaseGets} textClass={`fn_get${nombreFuncionOriginal}s`} typeFile={'Database / postgres / get'} dateType={'postgres'} />
+          <GeneradorTextoCodigo code={dataBasePost} textClass={`fn_post${nombreFuncionOriginal}`} typeFile={'Database / postgres / post'} dateType={'postgres'} />
+          <GeneradorTextoCodigo code={dataBasePut} textClass={`fn_put${nombreFuncionOriginal}`} typeFile={'Database / postgres / put'} dateType={'postgres'} />
+          <GeneradorTextoCodigo code={dataBaseDelete} textClass={`fn_delete${nombreFuncionOriginal}`} typeFile={'Database / postgres / delete'} dateType={'postgres'} />
           <br /><br />
         </>
       )
@@ -245,7 +233,7 @@ export const Apple1 = () => {
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA".</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", hacen login, tiene encriptacion de contrasena , el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo, si necesita que una tabla diferente que tenga login y encriptacion, entonces modificar en el codigo "APPLE1" para generarlo e incluir en las restricciones de las tablas permitidas.</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado. </p>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Generar llaves PRIMARIAS "ID_NOMBRE_TABLA_ACTUAL" y llaves FORNEAS poner "ID_NOMBRE_OTRA_TABLA y se pone automaticamente tipo de valor INTEGER, no poner "ID_" para ningun otra columna que no tenga que ver con un ID de una tabla. </p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Generar llaves PRIMARIAS "ID_NOMBRE_TABLA_ACTUAL" y llaves FORNEAS poner "ID_NOMBRE_OTRA_TABLA, no poner "ID_" para ningun otra columna que no tenga que ver con un ID de una tabla. </p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  Generar la restriccion UNIQUE solo para correo poner "CORREO_NOMBRE_TABLA" o para "EMAIL_NOMBRE_TABLA" o "CORREO" o "EMAIL" solo para tablas en el NOTA 2.</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota6:</span>  Todos los campos de entrada son zanitizadas en el APPLE1 y los unicos caracteres permitidos son numeros, letras mayusculas y minusculas tambien los caracteres especiales permitidos son: _ $#@~%[  si desea agregar mas caracter modificar en el .replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')  en todos los archivos que usa apple1</p>
         </div>

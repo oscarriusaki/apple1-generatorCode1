@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faClipboard } from '@fortawesome/free-regular-svg-icons';
 
-export const GeneradorTextoCodigo = ({code, textClass, typeFile}) => {
+export const GeneradorTextoCodigo = ({code, textClass, typeFile ,dateType}) => {
 
 
     const [text, setText] = useState(code);
@@ -68,7 +68,7 @@ export const GeneradorTextoCodigo = ({code, textClass, typeFile}) => {
             </div>
             <div className='codigoTarjetaCuerpo'>
                 {/* <CopyToClipboard text={text}> */}
-                <SyntaxHighlighter language='javascript' style={monokaiSublime} className='agrandarTextoCodigo' > 
+                <SyntaxHighlighter language={`${dateType}`} style={monokaiSublime} className='agrandarTextoCodigo' > 
                     {text} 
                 </SyntaxHighlighter>
                 {/* </CopyToClipboard> */}

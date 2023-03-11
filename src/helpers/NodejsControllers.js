@@ -2,7 +2,7 @@ import React from 'react';
 
 export const NodejsControllers = (data, nombre, data2) => {
     
-    let nombreTabla = nombre.trim().replace(/\s+/g, ' ').split(' ');
+    let nombreTabla = nombre.trim().split(' ');
     nombreTabla = nombreTabla.map(resp => {
         return resp.toLowerCase();
     });
