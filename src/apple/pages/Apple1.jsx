@@ -1,4 +1,4 @@
-import { faCode, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faPlus, faTable, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
 import { CreateTable, DataBaseDelete, 
@@ -65,6 +65,11 @@ export const Apple1 = () => {
     
   } 
 
+  const showTable = () => {
+    setShowError(false)
+    activeCode(false)
+  }
+
   const clear = () => { 
     setInputs([])
     setCount(1)
@@ -122,6 +127,18 @@ export const Apple1 = () => {
       document.removeEventListener('keydown', handleKeyDowm)
     }
   }, [ addColumn ]);
+  useEffect(() => {
+    const handleKeyDowm  = (event) => {
+      if(event.ctrlKey && event.key === ','){
+        showTable();
+      }
+    }
+    document.addEventListener('keydown', handleKeyDowm);
+   
+    return () => {
+      document.removeEventListener('keydown', handleKeyDowm)
+    }
+  }, [ showTable ]);
 
   useEffect(() => {
     const handlekeyDowm = (event) =>{
@@ -134,7 +151,7 @@ export const Apple1 = () => {
       document.removeEventListener('keydown', handlekeyDowm);
     }
   }, [onInputSubmit]);
-  // let f = nombreTabla.trim();
+
   return (
     <>
     <div className='cuerpoBoton2'>  
@@ -154,6 +171,10 @@ export const Apple1 = () => {
             <span style={{paddingLeft:'2%'}}>&#40; Enter &#41;</span> 
           </button>
         </form>
+      <button type='submit' className='botonShowTable' onClick={showTable}>
+        <FontAwesomeIcon icon={faTable} />
+        <span style={{paddingLeft:'2%'}} >&#40; ctrl + , &#41;</span> 
+      </button> 
       <button type='submit' className='botonAddColumnStyle' onClick={addColumn}>
         <FontAwesomeIcon icon={faPlus} />
         <span style={{paddingLeft:'2%'}} >&#40; ctrl + . &#41;</span> 
@@ -233,7 +254,7 @@ export const Apple1 = () => {
         <div className='mensaje'>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA".</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", hacen login, tiene encriptacion de contrasena , el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo, si necesita que una tabla diferente que tenga login y encriptacion, entonces modificar en el codigo "APPLE1" para generarlo e incluir en las restricciones de las tablas permitidas.</p>
-          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado. </p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado y poner NOW() en la columna "fechacre" cuando se actualice una tabla.</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Generar llaves PRIMARIAS "ID_NOMBRE_TABLA_ACTUAL" y llaves FORNEAS poner "ID_NOMBRE_OTRA_TABLA, no poner "ID_" para ningun otra columna que no tenga que ver con un ID de una tabla. </p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  Generar la restriccion UNIQUE solo para correo poner "CORREO_NOMBRE_TABLA" o para "EMAIL_NOMBRE_TABLA" o "CORREO" o "EMAIL" solo para tablas en el NOTA 2.</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota6:</span>  Todos los campos de entrada son zanitizadas en el APPLE1 y los unicos caracteres permitidos son numeros, letras mayusculas y minusculas tambien los caracteres especiales permitidos son: _ $#@~%[  si desea agregar mas caracter modificar en el .replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')  en todos los archivos que usa apple1</p>
