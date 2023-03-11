@@ -101,7 +101,9 @@ COMMENT ON TABLE public.${nombreTabla} IS 'Tabla que registra informacion de los
 ${comentarioAtributos}
 
 INSERT INTO ${nombreTabla} (${insertTable}) 
-VALUES (${insertTable2})
+VALUES (${insertTable2});
+
+SELECT * FROM ${nombreTabla} ORDER BY id_${nombreTabla} DESC;
 `;
     return {
         createTable

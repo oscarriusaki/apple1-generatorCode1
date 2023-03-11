@@ -214,9 +214,10 @@ export const Apple1 = () => {
                     <option value="varchar">varchar &#40;255&#41;</option>
                     <option value="boolean">boolean</option>
                     <option value="numeric">numeric</option>
-                    <option value="date">date</option>
+                    <option value="timestamp">timestamp</option>
                     <option value="text">text</option>
                     <option value="float">float</option>
+                    <option value="date">date</option>
                     <option value="character varying">character varying</option>
                     <option value="double precision">double precision</option>
                   </select>  
