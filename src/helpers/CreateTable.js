@@ -17,7 +17,7 @@ export const CreateTable = (data, nombre, data2) => {
 
         if(data.inputForm[key].trim().toLowerCase() === 'id_'+nombreTabla){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Es el identificador unico del usuario';\n`
-        }else if((data.inputForm[key].trim().toLowerCase() === 'fechareg') || (data.inputForm[key].trim().toLowerCase() === 'fecharegistro')){
+        }else if((data.inputForm[key].trim().toLowerCase() === 'fechacre') || (data.inputForm[key].trim().toLowerCase() === 'fechacreacion')){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de creacion del registro';\n`
         }else if((data.inputForm[key].trim().toLowerCase() === 'fechamod') || (data.inputForm[key].trim().toLowerCase() === 'fechamodificacion')){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de modificacion del registro';\n`
