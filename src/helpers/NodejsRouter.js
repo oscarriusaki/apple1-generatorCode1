@@ -65,20 +65,20 @@ const { validar } = require('../middlewares/validar');
 
 const router = Router();
 
-router.get('/', get${palabra}s)
+router.get('/', get${palabra}s);
 router.get('/:id',[
     check('id', 'The id is not valid').isNumeric(),
     validar,
-], get${palabra})
-router.post('/', post${palabra})
+], get${palabra});
+router.post('/', post${palabra});
 router.put('/:id',[
     check('id', 'The id is not valid').isNumeric(),
     validar,
-], put${palabra})
+], put${palabra});
 router.delete('/:id',[
     check('id', 'The id is not valid').isNumeric(),
     validar,
-], delete${palabra})
+], delete${palabra});
 module.exports = router;`;
 }
 

@@ -28,13 +28,14 @@ export const DataBasePut = (data, nombre, data2) => {
     }
 
     let columnConTypeDate = '';
-    let count = 1;
+    let count = 0;
     let sqlPrimeraId2 = '';
     let sqlSegundaId2 = '';
     let sqlPrimeraCorreo2 = ''; 
     let sqlMediaCorreo2 = ''; 
     let sqlSegundaCorreo2 = ''; 
     let justType = ''; 
+    let dollars = ''; 
     
     for(const n in data2.inputForm){
         
@@ -42,6 +43,9 @@ export const DataBasePut = (data, nombre, data2) => {
             columnConTypeDate += 't_'+ data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') + ' '+ data2[n].trim() +', ';
             justType += data2[n].trim() + ', ';
             sqlUpdateColumns += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +' = '+ `t_${data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}, `;
+            count++;
+            dollars += ` $${count},`
+
         }
             
         if((data[n]).length > 3 ){
@@ -68,8 +72,8 @@ export const DataBasePut = (data, nombre, data2) => {
         ELSE
             RETURN '${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} already registered';
         END IF;\n` +  sqlSegundaCorreo2;
-            }else if(((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email_'+nombreTabla) || 
-                     (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email'))&&
+            }else if(((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email_' + nombreTabla) || 
+                     (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email')) &&
                      ((nombreTabla === 'user')          || 
                      (nombreTabla === 'usuario')        || 
                      (nombreTabla === 'employee')       || 
@@ -85,8 +89,11 @@ export const DataBasePut = (data, nombre, data2) => {
         END IF;\n` + sqlSegundaCorreo2;
             }
         }
-        count ++;
+        // count ++;
     }
+    count++;
+    dollars = dollars + ` $${count}`;
+
     columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
     justType = justType.trim().slice(0, -1);
     sqlUpdateColumns = sqlUpdateColumns.trim().slice(0,-1);
@@ -97,9 +104,25 @@ export const DataBasePut = (data, nombre, data2) => {
     if(nombreTabla.trim().toLowerCase() === 'user' || nombreTabla.trim().toLowerCase() === 'usuario'||
         nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
         nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador'){
-
+            
+    count++;
+    dollars += `, $${count}`;
     datoTablaUsuario = 
-`-- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer, text)
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
+-- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: file
+-- CREACIÓN DE LA FUNCION: fn_put${nombreFuncion}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT public."fn_put${nombreFuncion}"(${dollars});
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+-- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer, text)
 
 -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer ,text );
 
@@ -146,7 +169,21 @@ ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer ,text )
     }else{
         
     dataBasePut = 
-`-- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer)
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                              FECHA: ${new Date()}
+-- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: file
+-- CREACIÓN DE LA FUNCION: fn_put${nombreFuncion}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT public."fn_put${nombreFuncion}"(${dollars});
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+-- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer)
 
 -- DROP FUNCTION IF EXISTS public."fn_put${nombreFuncion}"(${justType}, integer);
 

@@ -45,7 +45,21 @@ export const DataBaseDelete = (data, nombre, data2) => {
     columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
     justType = justType.trim().slice(0, -1);
     const dataBaseDelete = 
-`-- FUNCTION: public.fn_delete${ nombreFuncion}(integer)
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                              FECHA: ${new Date()}
+-- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: file
+-- CREACIÓN DE LA FUNCION: fn_delete ${ nombreFuncion}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT public."fn_delete${ nombreFuncion}"($1);
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+-- FUNCTION: public.fn_delete${ nombreFuncion}(integer);
 
 -- DROP FUNCTION IF EXISTS public."fn_delete${ nombreFuncion}"(integer);
 

@@ -21,16 +21,23 @@ export const DataBasePost = (data, nombre, data2) => {
     let columnaRegistrarCamposModify = '';
     let columnConTypeDate = '';
     let justType = ''; 
+    let dollars = ''; 
+    let count = 0;
+
     for(const n in data2.inputForm){
         if(auxNombreTabla != data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')){
             columnaRegistrarCampos += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
             columnaRegistrarCamposModify += 't_'+data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +', ';
             columnConTypeDate += 't_'+ data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') + ' '+ data2[n].trim() +', ';
             justType += data2[n].trim() + ', ';
+            count++;
+            dollars += ` $${count},`
         } 
     }
-    columnaRegistrarCampos = columnaRegistrarCampos.trim().slice(0, -1)
-    columnaRegistrarCamposModify = columnaRegistrarCamposModify.trim().slice(0, -1)
+    
+    dollars = dollars.trim().slice(0, -1);
+    columnaRegistrarCampos = columnaRegistrarCampos.trim().slice(0, -1);
+    columnaRegistrarCamposModify = columnaRegistrarCamposModify.trim().slice(0, -1);
     let sql = `
             INSERT INTO ${nombreTabla.trim()} (${columnaRegistrarCampos.trim()}, tokens) 
             VALUES (${columnaRegistrarCamposModify}, t_tokens);
@@ -95,8 +102,25 @@ export const DataBasePost = (data, nombre, data2) => {
         nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
         nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador'){
     // if(nombreTabla === 'user' || nombreTabla === 'usuario') {
-        userDateSql = 
-`-- FUNCTION: public.fn_post${nombreFuncion}(${justType}, text)
+    
+    count ++;
+    dollars += `, $${count}`;
+    userDateSql = 
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                              FECHA: ${new Date()} 
+-- MÓDULO: ${nombreTabla}                   PROYECTO: TIENDA                ACTIVIDAD: file
+-- CREACIÓN DE LA FUNCION: fn_post${nombreFuncion}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT * FROM public."fn_post${nombreFuncion}"(${dollars});
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+-- FUNCTION: public.fn_post${nombreFuncion}(${justType}, text)
 
 -- DROP FUNCTION IF EXISTS public."fn_post${nombreFuncion}"(${justType}, text);
 
@@ -129,7 +153,18 @@ ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType}, text)
     }else{
 
     dataBasePost = 
-`-- FUNCTION: public.fn_post${nombreFuncion}(${justType})
+`----------------------------------------------------------------------------------------------------------------------------
+-- Creado: Oscar Laura Aguirre                                              Fecha: ${new Date()} 
+-- Módulo: ${nombreTabla}                   Proyecto: TIENDA                Actividad: file
+-- Creación de la funcion fn_post${nombreFuncion}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- sentencias de apoyo                                                                  
+
+-- SELECT * FROM public."fn_post${nombreFuncion}"(${dollars.trim().slice(0, -1)})
+----------------------------------------------------------------------------------------------------------------------------
+-- Creamos una nueva funcion fn_post${nombreFuncion}
+
+-- FUNCTION: public.fn_post${nombreFuncion}(${justType})
 
 -- DROP FUNCTION IF EXISTS public."fn_post${nombreFuncion}"(${justType});
 

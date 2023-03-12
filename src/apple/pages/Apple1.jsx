@@ -50,7 +50,7 @@ export const Apple1 = () => {
   const onInputSubmit = (value) => {
     value.preventDefault();
  
-    if(nombreTabla.trim().length < 1 || 
+    if(nombreTabla.trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').length < 1 || 
       ((Object.keys( resto.inputForm).length - 2) != Object.keys( resto2.inputForm).length) ||
       (Object.keys( resto.inputForm).length - 2) === 0 ||
       (Object.keys( resto2.inputForm).length ) === 0

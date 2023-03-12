@@ -22,7 +22,21 @@ export const DataBaseGet = (data, nombre, data2) => {
     nombreTabla = nombreTabla.join('_')
 
     const dataBaseGet = 
-`-- FUNCTION: public.fn_get${palabra}(integer)
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                               FECHA: ${new Date()} 
+-- MÓDULO: ${nombreTabla}                   PROYECTO: TIENDA               ACTIVIDAD: file
+-- CREACIÓN DE LA FUNCION: fn_get${palabra}                                                   
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT * FROM public."fn_get${palabra}"($1);
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+-- FUNCTION: public.fn_get${palabra}(integer)
 
 -- DROP FUNCTION IF EXISTS public."fn_get${palabra}"(integer);
 

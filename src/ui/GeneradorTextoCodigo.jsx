@@ -13,18 +13,28 @@ export const GeneradorTextoCodigo = ({code, textClass, typeFile ,dateType}) => {
     const [botonState, setBotonState] = useState(false);
     const [botonState2, setBotonState2] = useState(false);
     const changeButtonClass = () => {
-        setBotonState2(!botonState2)
-        setBotonState(false)
+        setBotonState2(!botonState2);
+        setBotonState(false);
+        restablecer();
     }
     const changeButton = () => {
-        setBotonState(!botonState)
-        setBotonState2(false)
+        setBotonState(!botonState);
+        setBotonState2(false);
+        restablecer();
     }
 
     useEffect(() => {
-    setText(code)
+        setText(code);
     }, [code])
-    
+
+    const restablecer = () => {
+        setTimeout(restablecerCopy, 2000);
+    }
+    const restablecerCopy = () => {
+        setBotonState(false);
+        setBotonState2(false);
+    }
+
 
   return (
     <>

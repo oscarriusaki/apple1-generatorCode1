@@ -71,7 +71,26 @@ export const CreateTable = (data, nombre, data2) => {
         }
     }
     let createTable = 
-`CREATE TABLE public.${nombreTabla} (
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                            FECHA: ${new Date()} 
+-- MÓDULO: ${nombreTabla}                   PROYECTO: TIENDA              ACTIVIDAD: file
+-- CREACIÓN DE LA TABLA: ${nombreTabla}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT * FROM ${nombreTabla} ORDER BY id_${nombreTabla} DESC;
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS EXTRAS:
+
+-- INSERT INTO ${nombreTabla} (${insertTable}) 
+-- VALUES (${insertTable2});
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE public.${nombreTabla} (
 ${createSqlInicio}
 ${createSqlFin}`; 
 

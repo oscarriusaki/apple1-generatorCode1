@@ -313,7 +313,7 @@ module.exports = {
 }else{
 
     nodejsControllers =      
-`const { db } = require("../database/config")
+`const { db } = require("../database/config");
 
 const  get${palabra}s = async (req, res) => {
     
