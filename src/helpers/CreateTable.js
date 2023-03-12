@@ -34,9 +34,9 @@ export const CreateTable = (data, nombre, data2) => {
                (data2.inputForm[key].trim() === 'text')||
                (data2.inputForm[key].trim() === 'timestamp')||
                (data2.inputForm[key].trim() === 'character varying') ){
-                insertTable2 += " '',";
+                insertTable2 += " '',"; 
             }else{
-                insertTable2 += "  ,";
+                insertTable2 += "  ,"; 
             }
         }
 
