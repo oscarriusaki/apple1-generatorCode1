@@ -32,10 +32,11 @@ export const CreateTable = (data, nombre, data2) => {
             if((data2.inputForm[key].trim() === 'varchar') || 
                (data2.inputForm[key].trim() === 'date') || 
                (data2.inputForm[key].trim() === 'text')||
+               (data2.inputForm[key].trim() === 'timestamp')||
                (data2.inputForm[key].trim() === 'character varying') ){
-                insertTable2 += " '' ,";
+                insertTable2 += " '',";
             }else{
-                insertTable2 += "   ,";
+                insertTable2 += "  ,";
             }
         }
 
@@ -96,7 +97,7 @@ ALTER SEQUENCE public.${nombreTabla}_secuencia OWNED BY public.${nombreTabla}.id
 ALTER TABLE ONLY public.${nombreTabla} ALTER COLUMN id_${nombreTabla} SET DEFAULT nextval('public.${nombreTabla}_secuencia'::regclass);
 
 --Comentamos la tabla public.${nombreTabla}
-COMMENT ON TABLE public.${nombreTabla} IS 'Tabla que registra informacion de los ${nombreTabla}';
+COMMENT ON TABLE public.${nombreTabla} IS 'Tabla que registra informacion de ${nombreTabla}';
 --Comentamos los atributos de la tabla public.${nombreTabla}
 ${comentarioAtributos}
 
