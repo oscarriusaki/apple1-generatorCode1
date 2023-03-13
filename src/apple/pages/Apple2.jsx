@@ -1,26 +1,22 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { useTable } from 'react-table';
 
 export const Apple2 = () => {
 
-  const { inputForm, component, onInputChange} = useForm({
+  const [map, setMap] = useState({
     component: '',
   })
+  const { component, onInputChange, ...resto} = useForm(map)
   const onInputSubmit = (value) => {
     value.preventDefault();
   }
   const [active, setActive] = useState(false);
   const [items, setItems] = useState({
     footer: false,
+    activeOptionGroupColumn: false,
+    groupColumns: false,
   })
-  const handleClick = () => {
-    setActive(true);
-  }
-  const handleRelease = () => {
-    setActive(false);
-  }
-
   const data = [
                   {'id': 1, 'nombre': 'oscar',     'correo': 'oscar1@gmail.com',      'fecha': '1996/05/03', 'phone': '12346547'},    
                   {'id': 2, 'nombre': 'maria',     'correo': 'maria2@gmail.com',      'fecha': '1986/06/04', 'phone': '12346548'},    
@@ -41,7 +37,7 @@ export const Apple2 = () => {
                   {'id': 17, 'nombre': 'tifany',   'correo': 'tifany17@gmail.com',    'fecha': '2023/04/19', 'phone': '12346563'},
                 ];
   
-  const columns = React.useMemo(() => [ 
+  const columns2 = React.useMemo(() => [ 
       {
         Header: 'ID',
         Footer: 'ID',
@@ -67,17 +63,49 @@ export const Apple2 = () => {
         Footer: 'Phone',
         accessor: 'phone',
       },
-
   ],[]);
 
-  const {
-        getTableProps, 
-        getTableBodyProps, 
-        headerGroups, 
-        footerGroups,
-        rows, 
-        prepareRow,
-      } = useTable({columns, data});
+  const GROUPED_COLUMNS = [
+    {
+      Header: 'ID',
+      Footer: 'ID',
+      accessor: 'id',
+    },
+    {
+      Header: 'Name',
+      Footer: 'Name',
+      columns: [
+        {
+          Header: 'Nombre',
+          Footer: 'Nombre',
+          accessor: 'nombre',
+        },
+        {
+          Header: 'Correo',
+          Footer: 'Correo',
+          accessor: 'correo',
+        },
+      ],
+    },
+    {
+      Header: 'Info',
+      Footer: 'Info',
+      columns: [
+        {
+          Header: 'Fecha',
+          Footer: 'Fecha',
+          accessor: 'fecha',
+        },
+        {
+          Header: 'Phone',
+          Footer: 'Phone',
+          accessor: 'phone',
+        },
+      ],
+    }
+  ];
+
+  const columns = useMemo(() => (items.groupColumns ? GROUPED_COLUMNS : columns2), [items.groupColumns])
 
   const agregarFooter = (value) => {
     setItems({
@@ -86,71 +114,159 @@ export const Apple2 = () => {
     });
     console.log(items.footer)
   }
+  const activeOptionGroupColumn = (value) => {
+    setItems({
+      ...items,
+      activeOptionGroupColumn:!value
+    });
+    console.log(items.groupColumns)
+  }
+  const activarAgregarGroupColumns = (value) => {
+    setItems({
+      ...items,
+      groupColumns:!value
+    });
+  }
+
+  const {
+    getTableProps, 
+    getTableBodyProps, 
+    headerGroups, 
+    footerGroups,
+    rows, 
+    prepareRow,
+  } = useTable({columns, data});
+
+  const footerTable = 
+  (<tfoot>
+    {footerGroups.map((footerGroup, index) => (
+      <tr key={index} {...footerGroup.getFooterGroupProps()}>
+        {
+          footerGroup.headers.map((column, index) => (
+            <td key={index} {...column.getFooterProps}>
+              {
+                column.render('Footer')
+              }
+            </td>
+          ))
+        }
+      </tr>
+    ))}
+  </tfoot>);
+ 
+
+  const [inputGroup, setInputGroup] = useState([]);
+  let count = 1;
+  const agregarGrupoColumna = () => {
+    // console.log(count);
+    count ++ ;
+    setInputGroup(inputGroupc => [
+      ...inputGroupc,
+      {
+        id: count,
+        name: `columna${count}`
+    }
+    ]);
+    setMap({
+       tyuytuu: [`data${count}`]
+    })
+    // console.log(inputForm,'siii')
+    console.log(inputGroup, 'nooo');
+    console.log(map, '++++');
+    console.log(resto, 'siiii');
+
+  }
+
   return (
     <>
-      <div className='position-relative'>
-      <nav className='barraApple2'>    
-         
-      <div className='formCentralItems'>
-        <form onSubmit={onInputSubmit} >
+    {
+      (items.activeOptionGroupColumn) && (
+        (
+          inputGroup.map((resp, index) => (
+          <input 
+            key={resp.id}
+            type="input" 
+            className='inputGroup'
+            placeholder={`Group${resp.id}`}
+            name={`${resp.name}`}
+            value={resto[resp.name] ?? ''}
+            onChange={onInputChange}
+            />
+            ))
+        )
+      )
+    }
+    <div className='position-relative'>
+    <nav className='barraApple2'>    
+        
+    <div className='formCentralItems'>
+      <form onSubmit={onInputSubmit} >
+        <input 
+          type="checkbox" 
+          checked={items.footer}
+          onChange={() => agregarFooter(items.footer)}
+          />
+          <span style={{paddingLeft: '4px'}}>agregar footer</span>
+
+        <div>
           <input 
             type="checkbox" 
-            checked={items.footer}
-            onChange={() => agregarFooter(items.footer)}
+            checked={items.activeOptionGroupColumn}
+            onChange={() => activeOptionGroupColumn(items.activeOptionGroupColumn)}
             />
-            <span style={{paddingLeft: '4px'}}>agregar footer</span>
-        </form>
-      </div>
+            <span style={{paddingLeft: '4px'}}>Agrupar Columnas</span>
+          {
+            (items.activeOptionGroupColumn) && (
+            <>
+              <input 
+              type="checkbox" 
+              checked={items.groupColumns}
+              onChange={() => activarAgregarGroupColumns(items.groupColumns)}
+              />
+              <span style={{paddingLeft: '4px'}}>confirm agrupacion de Columns</span>
+              <button className='btn' onClick={agregarGrupoColumna}>agregar grupo</button>
+            </>
+            )
+          }
+        </div>
+      </form>
+    </div>
     </nav>
-        <div className='texto-posicionado'>
-          <table {...getTableProps()} className='table-bordered'>
-            <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>
-                      {column.render('Header')}
-                    </th>
+      <div className='texto-posicionado'>
+        <table {...getTableProps()} className='table-bordered'>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render('Header')}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>  
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) =>(
+                    <td {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </td>
                   ))}
                 </tr>
-              ))}
-            </thead>  
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) =>(
-                      <td {...cell.getCellProps()}>
-                        {cell.render('Cell')}
-                      </td>
-                    ))}
-                  </tr>
-                )
-              })}
-            </tbody>
-            {
-              (items.footer)&&(
-                <tfoot>
-                  {footerGroups.map((footerGroup, index) => (
-                    <tr key={index} {...footerGroup.getFooterGroupProps()}>
-                      {
-                        footerGroup.headers.map((column, index) => (
-                          <td key={index} {...column.getFooterProps}>
-                            {
-                              column.render('Footer')
-                            }
-                          </td>
-                        ))
-                      }
-                    </tr>
-                  ))}
-                </tfoot>
               )
-            }
-          </table>  
-        </div> 
-      </div>
+            })}
+          </tbody>
+          {
+            (items.footer)&&(
+              footerTable
+            )
+          }
+        </table>  
+      </div> 
+    </div>
     </>
   )
 }

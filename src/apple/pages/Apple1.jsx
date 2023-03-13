@@ -21,7 +21,7 @@ export const Apple1 = () => {
   });
   const [map2, setMap2] = useState({})
 
-  const { nombreTabla, active, onInputChange,onInputChange3, activeCode, onReset, ...resto } = useForm(map);
+  const { nombreTabla, active, onInputChange, onInputChange3, activeCode, onReset, ...resto } = useForm(map);
   const { onInputChange2 ,...resto2 } = useForm(map2);
   let nombreFuncionOriginal = nombreTabla.trim().replace(/[\s_]+/g, ' ').split(' '); /* replace(/[\s_]+/g, ' ') sirve para quitar espacios entre palabras y quita guiones bajos y remplaza con un espacio */
   nombreFuncionOriginal = nombreFuncionOriginal.map(resp => {

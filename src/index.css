@@ -502,7 +502,7 @@ table{
     background: rgb(255, 255, 255);
     padding: 10px;
 }
-thead, tfoot{
+thead, tfoot, table thead tr th{
     background: rgb(12, 12, 255);
     text-align: center;
     font-weight: 700;
