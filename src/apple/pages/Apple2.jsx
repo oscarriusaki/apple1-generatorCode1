@@ -368,7 +368,6 @@ export const Apple2 = () => {
       ...items,
       marcaFila: !value,
     })
-    console.log(items.marcaFila);
   }
 
   const { globalFilter, pageIndex, pageSize } = state;
@@ -1090,7 +1089,7 @@ ${
 .botonPag{
     padding-bottom: 3px;
     background: white;
-    border: 1px solid #ddd;;
+    border: 1px solid #ddd;
 }`
   ): (``)
 }
@@ -1411,14 +1410,14 @@ export const CheckBox = React.forwardRef(({indeterminate, ...rest}, ref) => {
                     <th key={index}>
                       <span {...column.getHeaderProps(column.getSortByToggleProps())}>
                       {column.render('Header')}
-                        <span>  
+                        <span>    
                           {
                             (column.isSorted)? 
                               (column.isSortedDesc ? 
                                 <span style={{color: 'none'}}>▾</span> 
                               : <span style={{color: 'none'}}>▴</span>  
-                              )
-                              :``
+                            )
+                            :``
                           }
                         </span>
                       </span>
