@@ -6,6 +6,7 @@ import { Navbar } from './ui/components';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { UserProvider } from './context/UserProvider';
+import { Borrador } from './apple/pages/Borrador';
 
 
 export const App = () => {
@@ -18,6 +19,7 @@ export const App = () => {
           <Route path='/' element={ <Apple1/> } />
           <Route path='/apple2' element={ <Apple2/> } />
           <Route path='/*' element={<Navigate to={'/'} /> } />
+          <Route path='/borrador' element={<Borrador /> } />
         </Routes>
       </div>
     </UserProvider>

@@ -48,11 +48,11 @@
     /* padding-bottom: 1px; */
 }  
 .tarjetaCodigo{
+    display: flex;
     border-radius: 5px;
-    border-bottom-left-radius: 5%;
-    border-bottom-left-radius: 5%;
+    width: 100%;
+    flex-direction: column;
 }
- 
 .codigoTarjetaCabeza{
     width: 100%;
     color: white; 
@@ -106,6 +106,7 @@
     font-weight: 700;
     color: white;
     white-space: nowrap;
+    overflow: hidden;
 }
 .botonGenerateStyle:hover{
     background-color: rgb(46, 46, 255);
@@ -120,6 +121,36 @@
     color: white;
     outline: 1px solid rgb(0, 0, 255);
 }
+.botonGenerateStyleApple2{
+    background: blue;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    width: 30vh;
+    height: 50px;
+    cursor: pointer;
+    font-size: 3vh;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    align-items: end;
+    justify-content: end;
+    white-space: nowrap;
+}
+.botonGenerateStyleApple2:hover{
+    background-color: rgb(46, 46, 255);
+    font-size: 3vh;
+    font-weight: 700;
+    color: white;
+}
+.botonGenerateStyleApple2:focus{
+    background-color: rgb(64, 64, 253);
+    font-size: 3vh;
+    font-weight: 700;
+    color: white;
+    outline: 1px solid rgb(0, 0, 255);
+} 
 .botonAddColumnStyle{
     background: rgb(59, 59, 59);
     outline: none;
@@ -151,7 +182,7 @@
     outline: none;
     border: none;
     border-radius: 5px;
-    width: 100%;
+    width: 20vh;
     height: 50px;
     cursor: pointer;
     font-size: 3vh;
@@ -166,6 +197,32 @@
     color: white;
 }
 .botonShowTable:focus{
+    background-color: rgb(56, 169, 255);
+    font-size: 3vh;
+    font-weight: 700;
+    color: white;
+    outline: 1px solid rgb(56, 169, 255);
+}
+.botonShowTable2{
+    background: rgb(30, 157, 255);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    width: 20vh;
+    height: 50px;
+    cursor: pointer;
+    font-size: 3vh;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+}
+.botonShowTable2:hover{
+    background-color:rgb(56, 169, 255);
+    font-size: 3vh;
+    font-weight: 700;
+    color: white;
+}
+.botonShowTable2:focus{
     background-color: rgb(56, 169, 255);
     font-size: 3vh;
     font-weight: 700;
@@ -290,6 +347,10 @@ height: 5px;
     border-radius: 5px;
     background-color: rgb(69, 69, 69);
     width: 100%;
+/*     width: 1550px;
+    align-items: center;
+    justify-items: center;
+    text-align: center; */
 } 
 .textoClaseCopy{
     display: flex;
@@ -351,6 +412,29 @@ height: 5px;
     border-radius: 10px;
 } 
 .tabla::-webkit-scrollbar-thumb {
+    background: #3d3d3d;
+    border-radius: 10px;
+} 
+.tabla2 {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    text-align: center;
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.tabla2::-webkit-scrollbar{
+    height: 8px;
+}
+.tabla2::-webkit-scrollbar-track {
+    background: #ff0000;
+    border-radius: 10px;
+} 
+.tabla2::-webkit-scrollbar-thumb {
     background: #3d3d3d;
     border-radius: 10px;
 } 
@@ -417,20 +501,24 @@ a{
     display: flex;
     position: fixed; 
     width: 100%;
+    height: 80px;
     /* bottom: 0; */
     /* justify-content: center; */
     /* align-items: center; */
     z-index: 1;
 }
 .barraApple2{
-    background: #2d2d2d;
-    padding: 1%;
     display: flex;
+    background: #2d2d2d;
+    color: white;
+    padding: 1%;
     position: fixed;
     width: 100%;
     bottom: 0;
-    /* justify-content: center; */
-    /* align-items: center; */
+    height: 80px;
+    /* white-space: nowrap; */
+    justify-content: start;
+    align-items: start;
     z-index: 1;
 }
 .formCentral{
@@ -457,7 +545,7 @@ a{
     top: 0%;
     overflow-y: auto;
     overflow-x: auto;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
 }
 .inputCode{
     border: none;
@@ -500,17 +588,19 @@ a{
 }
 table{
     background: rgb(255, 255, 255);
-    padding: 10px;
 }
 thead, tfoot, table thead tr th{
-    background: rgb(12, 12, 255);
+    background: #ebebeb;
     text-align: center;
-    font-weight: 700;
-    color: white;
+    font-weight: 400;
+    color: black;
 }
 table tr:nth-child(even){
     background-color: #ebebeb;
 } 
+tbody{
+    text-align: center;
+}
 th, td{
     padding: 20px;
     border: 1 solid #ffffff;
@@ -529,4 +619,150 @@ table tbody tr:hover {
     color: rgb(255, 255, 255);
     padding-left: 5px;
     padding-right: 5px;
+}
+.contenedorCodeApple2{
+    display: flex;
+    width: 100%;
+    flex-direction: column;   
+}
+.itemTableAdd{
+    padding-left: 15px;
+    padding-top: 1%;
+    white-space: nowrap;
+}
+.centrarNavbarApple2Tabla{
+    /* flex-direction: row; */
+    width: 100%;
+    white-space: nowrap;
+}
+.inputBusquedaTabla{
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 5px;
+    outline: rgb(175, 175, 175);
+    padding-left: 5px;
+    align-items: end;
+    justify-content: end;
+    background: rgb(255, 255, 255);
+    padding-bottom: 4px;
+    width: 150px;   
+}
+.inputBusquedaTabla:focus{
+    border: 1px solid rgb(65, 65, 65);
+    border-radius: 5px;
+    outline: rgb(56, 56, 56);
+}
+.dataj{
+    width: 1000px;
+    background: red;
+}
+.alignTableDecoration{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: end;
+    text-align: end;
+}
+.alignTableDecoration1{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: end;
+}
+.alignTableDecoration2{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: start;
+    /* padding: 5px */
+}
+.alignTableDecoration3{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: end;
+    /* padding: 5px */
+}
+.anchoOption{
+    width: 40px;
+    text-align: end;
+    font-size: 13px;
+    margin-left: 10px;
+}
+.spacioCom{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.botonPag{
+    padding-bottom: 3px;
+    background: white;
+    height: 32px;
+    border: 1px solid #ddd;
+} 
+
+
+.pagination{
+    /* contenedor de la paginacion */
+    display: flex;
+    padding-bottom: 3px; /* <-- modificar esto si pierde el border de bajo de la paginacion se pierde*/
+    overflow: hidden;
+    align-items: center;   
+}
+.pagination-container{
+    /* contenedor de cada elemento cada numero */
+    margin: 0;
+    border: 1px solid #ddd;
+    color: black;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 6px;
+}
+.pagination-container:hover{
+    background: #b2b2b2;    
+    color: black;
+}
+.pagination-next-link{
+    border: 1px solid #ddd;
+    color: black;
+    text-decoration: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 2px;
+    padding-bottom: 6px;
+    margin: 0;
+}
+.pagination-previous-link{
+    border: 1px solid #ddd;
+    color: black;
+    text-decoration: none;
+    margin: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 2px;
+    padding-bottom: 6px;
+}
+.pagination-next-link:hover{
+    color: black;
+    margin: 0;
+    background: #b2b2b2;
+}
+.pagination-previous-link:hover{
+    color: black;
+    margin: 0;
+    background: #b2b2b2;
+}
+.react-paginate__page--selected{ 
+    /* contenedor de la pagina actual seleccionada */
+    background: #b2b2b2;
+    margin-bottom: -3px;
+    width: 100%;
+    height: 100%; 
+    padding-top: 2px;
+    padding-bottom: 7px;
+}
+.break-me{
+    /* margin: 0; */
+    padding-bottom: 5px;
+    margin-right: -5px;
 }

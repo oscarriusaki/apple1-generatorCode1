@@ -38,6 +38,10 @@ export const Navbar = () => {
           to={'/apple2'} onClick={() => activarApple2(true)}>
           apple2
         </NavLink>
+        <NavLink className={({isActive}) => `nav-link ${isActive ? 'active navItem': 'navItem'}`}
+          to={'/borrador'} onClick={() => activarApple2(true)}>
+          Borrador
+        </NavLink>
       </div>
       {
         activeApple2 && (

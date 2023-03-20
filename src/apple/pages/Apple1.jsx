@@ -10,6 +10,7 @@ import { CreateTable, DataBaseDelete,
           NodejsRouter } from '../../helpers';
 import { useForm } from '../../hooks/useForm';
 import { GeneradorTextoCodigo } from '../../ui/GeneradorTextoCodigo';
+import { Borrador } from './Borrador';
 
 export const Apple1 = () => {
  
@@ -260,7 +261,7 @@ export const Apple1 = () => {
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota6:</span>  Todos los campos de entrada son zanitizadas en el APPLE1 y los unicos caracteres permitidos son numeros, letras mayusculas y minusculas tambien los caracteres especiales permitidos son: _ $#@~%[  si desea agregar mas caracter modificar en el .replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')  en todos los archivos que usa apple1</p>
         </div>
       )
-    }
+    } 
     </>
   )
 }
