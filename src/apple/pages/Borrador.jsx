@@ -6,10 +6,10 @@
   /*  */
 
   import React, { useEffect, useMemo, useState } from 'react';
-  import { useFilters, useGlobalFilter, usePagination, useRowSelect, useSortBy,useTable } from 'react-table';
+  import { useFilters, useGlobalFilter, usePagination, useSortBy,useTable } from 'react-table';
   import { ColumnFilter } from './ColumnFilter';
   import ReactPaginate from 'react-paginate';
-  import { CheckBox } from './CheckBox';
+  
 
   export const Borrador = () => {
 
@@ -313,8 +313,6 @@
     pageCount,
     setPageSize,
     
-    selectedFlatRows
-    
   } = useTable(
     {
       columns, 
@@ -326,24 +324,6 @@
     useGlobalFilter, 
     useSortBy,
     usePagination,
-    
-    useRowSelect,
-    (hooks) => {
-      hooks.visibleColumns.push((columns) => {
-        return [
-          {
-            id: 'selection',
-            Header: ({getToggleAllRowsSelectedProps}) => (
-              <CheckBox {...getToggleAllRowsSelectedProps()} />
-            ),
-            Cell: ({row}) => (
-              <CheckBox {...row.getToggleRowSelectedProps()} />
-            )
-          },
-          ...columns
-        ]
-      })
-    } 
     
     );
     
@@ -502,19 +482,6 @@
             </span>
           
         
-          <pre>
-              <code>
-                {
-                  JSON.stringify(
-                    {
-                      selectedFlatRows: selectedFlatRows.map((row) => row.original),
-                    },
-                    null,  
-                    2
-                    )
-                  }
-              </code>
-            </pre>
       </div> 
     </div> 
     </>
