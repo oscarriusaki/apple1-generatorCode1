@@ -6,11 +6,11 @@
   /*  */
 
   import React, { useEffect, useMemo, useState } from 'react';
-  import { useFilters, useGlobalFilter, usePagination, useSortBy,useTable } from 'react-table';
-  import { ColumnFilter } from './ColumnFilter';
+  import { useFilters, useGlobalFilter, usePagination, useRowSelect, useSortBy,useTable } from 'react-table';
+  import { ColumnFilter } from '../components/ColumnFilter';
   import ReactPaginate from 'react-paginate';
+  import { CheckBox } from '../components/CheckBox';
   
-
   export const Borrador = () => {
 
     const data = useMemo(() => [
@@ -313,6 +313,8 @@
     pageCount,
     setPageSize,
     
+    selectedFlatRows
+    
   } = useTable(
     {
       columns, 
@@ -324,6 +326,24 @@
     useGlobalFilter, 
     useSortBy,
     usePagination,
+    
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => {
+        return [
+          {
+            id: 'selection',
+            Header: ({getToggleAllRowsSelectedProps}) => (
+              <CheckBox {...getToggleAllRowsSelectedProps()} />
+            ),
+            Cell: ({row}) => (
+              <CheckBox {...row.getToggleRowSelectedProps()} />
+            )
+          },
+          ...columns
+        ]
+      })
+    } 
     
     );
     
@@ -391,7 +411,7 @@
                               }
                             </span>
                           </span>
-                      <div>{column.canFilter? column.render('Filter'): null }</div>
+                      
                       </th>
                     ))
                   }
@@ -482,6 +502,19 @@
             </span>
           
         
+          <pre>
+              <code>
+                {
+                  JSON.stringify(
+                    {
+                      selectedFlatRows: selectedFlatRows.map((row) => row.original),
+                    },
+                    null,
+                    2
+                    )
+                  }
+              </code>
+            </pre>
       </div> 
     </div> 
     </>
