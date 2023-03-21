@@ -73,7 +73,7 @@ export const CreateTable = (data, nombre, data2) => {
     let createTable = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                            FECHA: ${new Date()} 
--- MÓDULO: ${nombreTabla}                   PROYECTO: TIENDA              ACTIVIDAD: file
+-- MÓDULO: ${nombreTabla}                   PROYECTO: TIENDA              ACTIVIDAD: set-app-1
 -- CREACIÓN DE LA TABLA: ${nombreTabla}                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:

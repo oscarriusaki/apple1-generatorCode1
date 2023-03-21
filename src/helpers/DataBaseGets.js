@@ -24,7 +24,7 @@ export const DataBaseGets = (data, nombre, data2) => {
     const dataBaseGets = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                            FECHA: ${new Date()} 
--- MÓDULO: ${nombreTabla}                   Proyecto: TIENDA                ACTIVIDAD: file
+-- MÓDULO: ${nombreTabla}                   Proyecto: TIENDA                ACTIVIDAD: set-app-1
 -- CREACIÓN DE LA FUNCION: fn_get${palabra}s                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:                                                              

@@ -108,7 +108,7 @@ export const DataBasePost = (data, nombre, data2) => {
     userDateSql = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                              FECHA: ${new Date()} 
--- MÓDULO: ${nombreTabla}                   PROYECTO: TIENDA                ACTIVIDAD: file
+-- MÓDULO: ${nombreTabla}                   PROYECTO: TIENDA                ACTIVIDAD: set-app-1
 -- CREACIÓN DE LA FUNCION: fn_post${nombreFuncion}                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:
@@ -155,7 +155,7 @@ ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType}, text)
     dataBasePost = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- Creado: Oscar Laura Aguirre                                              Fecha: ${new Date()} 
--- Módulo: ${nombreTabla}                   Proyecto: TIENDA                Actividad: file
+-- Módulo: ${nombreTabla}                   Proyecto: TIENDA                Actividad: set-app-1
 -- Creación de la funcion fn_post${nombreFuncion}                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- sentencias de apoyo                                                                  

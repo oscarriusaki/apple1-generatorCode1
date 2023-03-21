@@ -110,7 +110,7 @@ export const DataBasePut = (data, nombre, data2) => {
     datoTablaUsuario = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
--- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: file
+-- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
 -- CREACIÓN DE LA FUNCION: fn_put${nombreFuncion}                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:
@@ -171,7 +171,7 @@ ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer ,text )
     dataBasePut = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                              FECHA: ${new Date()}
--- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: file
+-- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
 -- CREACIÓN DE LA FUNCION: fn_put${nombreFuncion}                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:

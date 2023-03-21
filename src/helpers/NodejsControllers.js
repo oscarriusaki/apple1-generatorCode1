@@ -12,6 +12,7 @@ export const NodejsControllers = (data, nombre, data2) => {
 
     let dataAux = '';
     let dataAux2 = '';
+    let dataAux3 = '';
     let count = 1;
     let count2 = 1; 
     let email_columna = '';
@@ -21,8 +22,21 @@ export const NodejsControllers = (data, nombre, data2) => {
     let postCountDolar = '';
     let putCountDolar = '';
     let contadorAuxiliarReal = 1;
+    let insertTable2 = '';
     for( const n in data2.inputForm ){
         cantidadDolar += `$${count}, `;
+        if(data.inputForm[n].trim() !== 'id_'+nombreTabla){
+            // insertTable +=  data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +  ", ";
+            if((data2.inputForm[n].trim() === 'varchar') || 
+               (data2.inputForm[n].trim() === 'date') || 
+               (data2.inputForm[n].trim() === 'text')||
+               (data2.inputForm[n].trim() === 'timestamp')||
+               (data2.inputForm[n].trim() === 'character varying') ){
+                insertTable2 += `"${data2.inputForm[n].trim()}": '', \n`; 
+            }else{
+                insertTable2 += `"${data2.inputForm[n].trim()}":  , \n`; 
+            }
+        }
         if(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() !== nombreTabla){
             dataAux2 += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() +', ';
             cantidadDolar2 += `$${count2}, `;
@@ -64,6 +78,7 @@ export const NodejsControllers = (data, nombre, data2) => {
         }
         count ++;
     } 
+    insertTable2 = insertTable2.trim().slice(0 ,-1);
     dataAux = dataAux.trim().slice(0,-1);
     dataAux2 = dataAux2.trim().slice(0,-1);
     cantidadDolar = cantidadDolar.trim().slice(0, -1);
@@ -84,7 +99,32 @@ export const NodejsControllers = (data, nombre, data2) => {
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
         usuario =     
-`const { response } = require("express");
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
+-- MÓDULO: ${palabra}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
+-- CREACIÓN DEL MODULO CONTROLLER: ${palabra}                                                   
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+--GET http://localhost:8080/${nombreTabla}
+--GET http://localhost:8080/${nombreTabla}/2
+--POST http://localhost:8080/${nombreTabla}     
+{
+${insertTable2}
+}
+--PUT http://localhost:8080/${nombreTabla}/2
+{
+${insertTable2}
+}
+--PUT http://localhost:8080/${nombreTabla}/2
+
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+const { response } = require("express");
 
 const { db } = require("../database/config");
 const bcryptjs = require('bcryptjs');
@@ -313,7 +353,32 @@ module.exports = {
 }else{
 
     nodejsControllers =      
-`const { db } = require("../database/config");
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
+-- MÓDULO: ${palabra}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
+-- CREACIÓN DEL MODULO CONTROLLER: ${palabra}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+--GET http://localhost:8080/${nombreTabla}
+--GET http://localhost:8080/${nombreTabla}/2
+--POST http://localhost:8080/${nombreTabla}     
+{
+${insertTable2}
+}
+--PUT http://localhost:8080/${nombreTabla}/2
+{
+${insertTable2}
+}
+--PUT http://localhost:8080/${nombreTabla}/2
+
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+const { db } = require("../database/config");
 
 const  get${palabra}s = async (req, res) => {
     

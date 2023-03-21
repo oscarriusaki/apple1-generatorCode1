@@ -47,7 +47,7 @@ export const DataBaseDelete = (data, nombre, data2) => {
     const dataBaseDelete = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                              FECHA: ${new Date()}
--- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: file
+-- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
 -- CREACIÓN DE LA FUNCION: fn_delete ${ nombreFuncion}                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:

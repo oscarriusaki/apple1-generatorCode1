@@ -392,12 +392,27 @@ export const Lista = () => {
     ))}
   </tfoot>);
 let code = 
-`/*  */
+`
+/* ----------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                            FECHA: ${new Date()}
+-- MÓDULO: departamento                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
+-- Creación de la funcion fn_deleteDepartamento                                                  
+------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO                                                                  
 
-  /* Instalation Yarn: yarn add react-table */
-  /* Instalation Yarn: yarn add react-paginate*/
+-- SELECT public."fn_deleteDepartamento"($1)
 
-  /*  */
+-- Instalation Yarn: yarn add react-table
+-- Instalation Yarn: yarn add react-paginate
+------------------------------------------------------------------------------------------
+-- Creamos una nueva funcion fn_deleteDepartamento
+
+-- FUNCTION: public.fn_deleteDepartamento(integer)
+
+-- DROP FUNCTION IF EXISTS public."fn_deleteDepartamento"(integer);
+------------------------------------------------------------------------------------------
+
+*/
 
   import React, { useEffect, useMemo, useState } from 'react';
   import { useFilters, useGlobalFilter, usePagination, ${(items.marcaFila) ? (`useRowSelect, `) : (``)}useSortBy,useTable } from 'react-table';
@@ -405,7 +420,7 @@ let code =
   ${ (items.paginacion || items.paginacion2) ? (`import ReactPaginate from 'react-paginate';`):(``) }
   ${ (items.marcaFila) ? (`import { CheckBox } from '../components/CheckBox';`):(``) }
   
-  export const Borrador = () => {
+  export const Lista = () => {
 
     const data = useMemo(() => [
       {'id': 1, 'nombre': 'oscar',     'correo': 'oscar1@gmail.com',      'fecha': '1996/05/03', 'phone': '12346547', 'image':'https://i.pinimg.com/236x/85/9e/6b/859e6b028d922d5120d14ceddc7e2b6f.jpg'}, 

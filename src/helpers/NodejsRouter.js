@@ -21,7 +21,21 @@ export const NodejsRouter = (data, nombre, data2) => {
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
       user =
-`const { Router } = require('express');
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
+-- MÓDULO: ${palabra}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
+-- CREACIÓN DEL ROUTER: ${palabra}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT public."fn_get${palabra}s"();
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+const { Router } = require('express');
 const { check } = require('express-validator');
 const { get${palabra}s, 
         get${palabra}, 
@@ -54,7 +68,21 @@ module.exports = router;
 }else{
 
     nodejsRouter = 
-`const { Router } = require('express');
+`----------------------------------------------------------------------------------------------------------------------------
+-- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
+-- MÓDULO: ${palabra}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
+-- CREACIÓN DEL ROUTE: ${palabra}                                                  
+----------------------------------------------------------------------------------------------------------------------------
+-- SENTENCIAS DE APOYO:
+
+-- SELECT public."fn_get${palabra}s"();
+----------------------------------------------------------------------------------------------------------------------------
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
+
+const { Router } = require('express');
 const { check } = require('express-validator');
 const { get${palabra}s, 
         get${palabra}, 
