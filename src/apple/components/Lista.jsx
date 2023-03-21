@@ -1286,6 +1286,7 @@ export const CheckBox = React.forwardRef(({indeterminate, ...rest}, ref) => {
  */
   return (
     <>    
+    
     <div className='position-relative'>
     <nav className='barraApple2'> 
       <div className='tabla2'>
@@ -1372,8 +1373,16 @@ export const CheckBox = React.forwardRef(({indeterminate, ...rest}, ref) => {
             <GeneradorTextoCodigo code={code} textClass={'Lista.jsx'} typeFile={'react'} dateType={'javascript'} />
           </div>
         ) : ( 
+          
     <div className='texto-posicionado'>
+      <div className='mensaje'>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1: </span> No se puede agregar buscador general, 
+           buscador de columnas y selector de filas al mismo tiempo solo se puede buscador general y selector de filas o 
+           buscador de columas y selector de filas, no se puede poner los tres componentes al mismo tiempo cuido, si esta 
+           permitido buscador general y buscador de columnas al mismo tiempo y todo lo demas esta permitido.</p>
+      </div>
       <div className='alignTableDecoration'>
+
         {
           (items.marcaFila)? (
             <p style={{background:'blue', textAlign: 'center'}}>si se agrego el checkbox de cada columna solo que no se ve</p>
