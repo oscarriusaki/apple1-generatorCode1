@@ -162,7 +162,10 @@ ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType}, text)
 
 -- SELECT * FROM public."fn_post${nombreFuncion}"(${dollars.trim().slice(0, -1)})
 ----------------------------------------------------------------------------------------------------------------------------
--- Creamos una nueva funcion fn_post${nombreFuncion}
+-- DESCRIPCION:
+
+-- 
+----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_post${nombreFuncion}(${justType})
 

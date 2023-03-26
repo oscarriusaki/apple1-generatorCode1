@@ -99,30 +99,31 @@ export const NodejsControllers = (data, nombre, data2) => {
         nombre.trim().toLowerCase() === 'employee' || nombre.trim().toLowerCase() === 'empleado'||
         nombre.trim().toLowerCase() === 'administrator' || nombre.trim().toLowerCase() === 'administrador'){
         usuario =     
-`----------------------------------------------------------------------------------------------------------------------------
+`/*----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
 -- MÓDULO: ${palabra}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
 -- CREACIÓN DEL MODULO CONTROLLER: ${palabra}                                                   
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:
 
---GET http://localhost:8080/${nombreTabla}
---GET http://localhost:8080/${nombreTabla}/2
---POST http://localhost:8080/${nombreTabla}     
+ -GET http://localhost:8080/${nombreTabla}
+ -GET http://localhost:8080/${nombreTabla}/2
+ -POST http://localhost:8080/${nombreTabla}     
 {
 ${insertTable2}
 }
---PUT http://localhost:8080/${nombreTabla}/2
+ -PUT http://localhost:8080/${nombreTabla}/2
 {
 ${insertTable2}
 }
---PUT http://localhost:8080/${nombreTabla}/2
+ -PUT http://localhost:8080/${nombreTabla}/2
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+ - Se implementaron todas las funciones get${palabra}s, get${palabra}, post${palabra}, put${palabra}, delete${palabra}.
 ----------------------------------------------------------------------------------------------------------------------------
+*/
 
 const { response } = require("express");
 
@@ -353,30 +354,31 @@ module.exports = {
 }else{
 
     nodejsControllers =      
-`----------------------------------------------------------------------------------------------------------------------------
+`/*----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
 -- MÓDULO: ${palabra}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
 -- CREACIÓN DEL MODULO CONTROLLER: ${palabra}                                                  
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:
 
---GET http://localhost:8080/${nombreTabla}
---GET http://localhost:8080/${nombreTabla}/2
---POST http://localhost:8080/${nombreTabla}     
+ -GET http://localhost:8080/${nombreTabla}
+ -GET http://localhost:8080/${nombreTabla}/2
+ -POST http://localhost:8080/${nombreTabla}     
 {
 ${insertTable2}
 }
---PUT http://localhost:8080/${nombreTabla}/2
+ -PUT http://localhost:8080/${nombreTabla}/2
 {
 ${insertTable2}
 }
---PUT http://localhost:8080/${nombreTabla}/2
+ -PUT http://localhost:8080/${nombreTabla}/2
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+ - Se implementaro todas las funciones get${palabra}s, get${palabra}, post${palabra}, put${palabra}, delete${palabra}.
 ----------------------------------------------------------------------------------------------------------------------------
+*/
 
 const { db } = require("../database/config");
 

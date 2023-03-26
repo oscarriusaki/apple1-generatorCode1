@@ -18,28 +18,69 @@ export const CreateTable = (data, nombre, data2) => {
         if(data.inputForm[key].trim().toLowerCase() === 'id_'+nombreTabla){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Es el identificador unico de la tabla ${nombreTabla}';\n`
         }else if((data.inputForm[key].trim().toLowerCase() === 'fechacre') || (data.inputForm[key].trim().toLowerCase() === 'fechacreacion')){
-            comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de creacion del registro';\n`
+                comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de creacion del registro';\n`
         }else if((data.inputForm[key].trim().toLowerCase() === 'fechamod') || (data.inputForm[key].trim().toLowerCase() === 'fechamodificacion')){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de modificacion del registro';\n`
         }else if(data.inputForm[key].trim().toLowerCase() === 'estadoeliminar'){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Estado logico del registro';\n`
         }else{
-            comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS '';\n`
-        }
-
-        if(data.inputForm[key].trim() !== 'id_'+nombreTabla){
-            insertTable +=  data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +  ", ";
-            if((data2.inputForm[key].trim() === 'varchar') || 
-               (data2.inputForm[key].trim() === 'date') || 
-               (data2.inputForm[key].trim() === 'text')||
-               (data2.inputForm[key].trim() === 'timestamp')||
-               (data2.inputForm[key].trim() === 'character varying') ){
-                insertTable2 += " '',"; 
+            if((data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `correo_${nombreTabla}`|| /* falta para numero de serie de producto  */
+            data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `correo`||
+            data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `email`||
+            data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `email_${nombreTabla}`)&&(
+            nombreTabla === 'user' || 
+            nombreTabla === 'usuario'||
+            nombreTabla === 'employee'||
+            nombreTabla === 'empleado'||
+            nombreTabla === 'administrator'||
+            nombreTabla === 'administrador'
+            )){
+                comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS '';\n`
+                comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.tokens IS 'Es el token el cual se genera luego de hacer el login';\n`    
             }else{
-                insertTable2 += "  ,"; 
+                comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS '';\n`
             }
         }
+        if(data.inputForm[key].trim() !== 'id_'+nombreTabla){
 
+            if((data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `correo_${nombreTabla}`|| /* falta para numero de serie de producto  */
+                data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `correo`||
+                data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `email`||
+                data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === `email_${nombreTabla}`)&&(
+                nombreTabla === 'user' || 
+                nombreTabla === 'usuario'||
+                nombreTabla === 'employee'||
+                nombreTabla === 'empleado'||
+                nombreTabla === 'administrator'||
+                nombreTabla === 'administrador'
+                )){
+                    insertTable +=  data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +  ", ";
+                    insertTable +=  'tokens ' +  ", ";
+                    if((data2.inputForm[key].trim() === 'varchar') || 
+                    (data2.inputForm[key].trim() === 'date') || 
+                    (data2.inputForm[key].trim() === 'text')||
+                    (data2.inputForm[key].trim() === 'timestamp')||
+                    (data2.inputForm[key].trim() === 'character varying') ){
+                        insertTable2 += " '',"; 
+                    }else{
+                        insertTable2 += "  ,"; 
+                    }
+                    insertTable2 += " '' ,";
+
+                }else{
+
+                    insertTable += data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +  ", ";
+                    if((data2.inputForm[key].trim() === 'varchar') || 
+                    (data2.inputForm[key].trim() === 'date') || 
+                    (data2.inputForm[key].trim() === 'text')||
+                    (data2.inputForm[key].trim() === 'timestamp')||
+                    (data2.inputForm[key].trim() === 'character varying') ){
+                        insertTable2 += " '',"; 
+                    }else{
+                        insertTable2 += "  ,"; 
+                    }
+                }
+        }
         if(data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') === 'id_'+nombreTabla){
             createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} ${data2.inputForm[key].trim().toUpperCase()} NOT NULL,\n`;
             createSqlFin = createSqlFin + `constraint pk_${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} primary key (${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}),\n`;
@@ -59,8 +100,10 @@ export const CreateTable = (data, nombre, data2) => {
                 nombreTabla === 'administrator'||
                 nombreTabla === 'administrador'
                 
-                )){   /* y otros columnas unicas */
-            createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} VARCHAR(255) NOT NULL,\n`;
+                )){   /* Aqui se puede poner otros tipos nombre de tablas si se requiere restricciones con encriptacion y tokens y otros columnas unicas */
+            // createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} VARCHAR(255) NOT NULL,\n`;  // <-- esto estaba originalmente
+            createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} ${data2.inputForm[key].trim().toUpperCase()} NOT NULL,\n`;
+            createSqlInicio += `tokens TEXT NOT NULL,\n`;
             createSqlFin = createSqlFin + `constraint unique_${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} unique(${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}),\n`;
 
         }else if(data2.inputForm[key].trim() === `varchar`) {
@@ -70,6 +113,10 @@ export const CreateTable = (data, nombre, data2) => {
             createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} ${data2.inputForm[key].trim().toUpperCase()} NOT NULL,\n`;
         }
     }
+
+    insertTable = insertTable.trim().slice( 0, -1);
+    insertTable2 = insertTable2.trim().slice( 0, -1);
+
     let createTable = 
 `----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                            FECHA: ${new Date()} 
@@ -87,16 +134,17 @@ export const CreateTable = (data, nombre, data2) => {
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se creo la tabla ${nombreTabla} con los campos:
+/*
+${createSqlInicio.trim().slice(0,-1)}
+*/
 ----------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE public.${nombreTabla} (
 ${createSqlInicio}
 ${createSqlFin}`; 
 
-    insertTable = insertTable.trim().slice( 0, -1);
-    insertTable2 = insertTable2.trim().slice( 0, -1);
-    createTable = createTable.trim().slice(0,-1) + `\n);
+createTable = createTable.trim().slice(0,-1) + `\n);
 
 -- Agregamos permisos de ${nombreTabla}
 ALTER TABLE public.${nombreTabla} OWNER to postgres;
