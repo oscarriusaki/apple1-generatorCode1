@@ -53,7 +53,7 @@ const { get${palabra}s,
         put${palabra}, 
         delete${palabra} } = require('../controller/${palabra}');
 const { validar } = require('../middlewares/validar');
-const { validarJWT } = require('../middlewares/ValidarJWT');
+const { validarJWT${palabra} } = require('../middlewares/ValidarJWT${palabra}');
 
 const router = Router();
 
@@ -64,11 +64,11 @@ router.get('/:id',[
 ], get${palabra});
 router.post('/', post${palabra});
 router.put('/',[
-    validarJWT,
+    validarJWT${palabra},
     validar
 ], put${palabra});
 router.delete('/:id',[
-    validarJWT,
+    validarJWT${palabra},
     validar
 ], delete${palabra});
 

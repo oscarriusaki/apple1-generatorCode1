@@ -8,6 +8,7 @@ import { CreateTable, DataBaseDelete,
           DataBasePut, 
           NodejsControllers, 
           NodejsRouter } from '../../helpers';
+import { ValidarJWT } from '../../helpers/ValidarJWT';
 import { useForm } from '../../hooks/useForm';
 import { GeneradorTextoCodigo } from '../../ui/GeneradorTextoCodigo';
 import { Borrador } from './Borrador';
@@ -43,6 +44,7 @@ export const Apple1 = () => {
   const { dataBasePut } = DataBasePut(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
   const { dataBaseDelete } = DataBaseDelete(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
   const { createTable } = CreateTable(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
+  const { validarJWT } = ValidarJWT(resto, nombreTabla.replace(/[\s_]+/g, ' '), resto2);
 
   const ref2 = useRef();
   const ref4 = useRef();
@@ -189,6 +191,18 @@ export const Apple1 = () => {
       (active ) 
       ? (<>
           <GeneradorTextoCodigo code={createTable} textClass={`${nombreTableCreate}`} typeFile={'Database / postgres / create table'} dateType={'postgres'} />
+          {
+            ( (nombreFuncionOriginal.toLowerCase() === 'user')         || 
+              (nombreFuncionOriginal.toLowerCase() === 'usuario')      || 
+              (nombreFuncionOriginal.toLowerCase() === 'employee')     || 
+              (nombreFuncionOriginal.toLowerCase() === 'empleado')     || 
+              (nombreFuncionOriginal.toLowerCase() === 'administrator')|| 
+              (nombreFuncionOriginal.toLowerCase() === 'administrador')) ? 
+            (
+              <GeneradorTextoCodigo code={validarJWT} textClass={`${'ValidarJWT'+nombreFuncionOriginal}.js`} typeFile={'Nodejs / javascript / middlewares'} dateType={'javascript'} />
+              ) : 
+            (``)
+          }
           <GeneradorTextoCodigo code={nodejsRouter} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / javascript / router'} dateType={'javascript'} />
           <GeneradorTextoCodigo code={nodejsControllers} textClass={`${nombreFuncionOriginal}.js`} typeFile={'Nodejs / javascript / controller'} dateType={'javascript'} />
           <GeneradorTextoCodigo code={dataBaseGet} textClass={`fn_get${nombreFuncionOriginal}`} typeFile={'Database / postgres / get / id'} dateType={'postgres'} />
