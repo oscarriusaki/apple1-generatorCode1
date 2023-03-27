@@ -119,7 +119,7 @@ export const DataBasePut = (data, nombre, data2) => {
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se crea la funcion fn_put${nombreFuncion} para actualizar los datos de la tabla ${nombreTabla}.
 ----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer, text)

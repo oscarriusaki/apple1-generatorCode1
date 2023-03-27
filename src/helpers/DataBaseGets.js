@@ -33,7 +33,7 @@ export const DataBaseGets = (data, nombre, data2) => {
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se crea la funcion fn_get${palabra}s Para obtener todos los datos de la tabla ${nombreTabla}
 ----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_get${palabra}s()

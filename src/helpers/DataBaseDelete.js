@@ -56,7 +56,7 @@ export const DataBaseDelete = (data, nombre, data2) => {
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se crea la fucnion para eliminar un registro de la tabla ${nombreTabla}
 ----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_delete${ nombreFuncion}(integer);

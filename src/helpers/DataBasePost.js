@@ -117,7 +117,7 @@ export const DataBasePost = (data, nombre, data2) => {
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se crea la funcion fn_put${nombreFuncion} para registrar en la tabla ${nombreTabla}.
 ----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_post${nombreFuncion}(${justType}, text)
@@ -164,7 +164,7 @@ ALTER FUNCTION public."fn_post${nombreFuncion}"(${justType}, text)
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se crea la funcion fn_put${nombreFuncion} para registrar en la tabla ${nombreTabla}.
 ----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_post${nombreFuncion}(${justType})

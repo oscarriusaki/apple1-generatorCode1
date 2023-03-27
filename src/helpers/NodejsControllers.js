@@ -255,12 +255,12 @@ const put${palabra} = async (req, res = response) => {
     try {
 
         const pg = await db;
-        const { id } = req.${tablaAux}.id_${tablaAux};
+        const id = req.${tablaAux}.id_${tablaAux};
         let   {${dataAux2}} = req.body;
         const tokens = await GenerarJWT(${email_columna});
         const salt = bcryptjs.genSaltSync();
         ${password_columna}  = bcryptjs.hashSync(${password_columna}, salt);
-        const sql = 'SELECT public."fn_put${palabra} "(${putCountDolar})';
+        const sql = 'SELECT public."fn_put${palabra}"(${putCountDolar})';
 
         pg.query(sql, [${dataAux2}, id, tokens ], async(err, result) => {
             if(err){

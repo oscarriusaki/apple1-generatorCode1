@@ -6,6 +6,10 @@ export const ValidarJWT = (data, nombre, data2) => {
     nuevoNombre = nuevoNombre.map(resp =>{
         return resp.toLowerCase();
     });
+    let nuevoNombre2 = nombre.trim().split(' ');
+    nuevoNombre2 = nuevoNombre2.map(resp =>{
+        return resp.charAt(0).toUpperCase() + resp.slice(1).toLowerCase();
+    });
     let verifica = '';
     for (const key in data.inputForm) {
         if((data.inputForm[key]+''.trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'correo' || 
@@ -35,7 +39,7 @@ export const ValidarJWT = (data, nombre, data2) => {
 const jwt = require('jsonwebtoken');
 const { db } = require('../database/config');
 
-const validarJWT = async(req, res, next) => {
+const validarJWT${nuevoNombre2} = async(req, res, next) => {
     
     try{
 
@@ -83,7 +87,7 @@ const validarJWT = async(req, res, next) => {
     }
 }
 module.exports = {
-    validarJWT,
+    validarJWT${nuevoNombre2},
 }`;
 
   return {

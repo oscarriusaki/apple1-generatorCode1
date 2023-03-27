@@ -33,7 +33,7 @@ export const DataBaseGet = (data, nombre, data2) => {
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se crea la funcion fn_get${palabra} para obtener el ${nombreTabla} con un id especifico
 ----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_get${palabra}(integer)
