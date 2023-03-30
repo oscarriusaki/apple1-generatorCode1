@@ -104,7 +104,7 @@ export const CreateTable = (data, nombre, data2) => {
             // createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} VARCHAR(255) NOT NULL,\n`;  // <-- esto estaba originalmente
             createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} ${data2.inputForm[key].trim().toUpperCase()} NOT NULL,\n`;
             createSqlInicio += `tokens TEXT NOT NULL,\n`;
-            createSqlFin = createSqlFin + `constraint unique_${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} unique(${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}),\n`;
+            createSqlFin = createSqlFin + `constraint unique_${nombreTabla}_${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} unique(${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}),\n`;
 
         }else if(data2.inputForm[key].trim() === `varchar`) {
             createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} VARCHAR(255) NOT NULL,\n`;
