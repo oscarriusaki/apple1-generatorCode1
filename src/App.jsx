@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { UserProvider } from './context/UserProvider';
 import { Borrador } from './apple/pages/Borrador';
+import { VentanaPdf } from './apple/components/VentanaPdf';
 
 
 export const App = () => {
@@ -18,8 +19,9 @@ export const App = () => {
         <Routes>
           <Route path='/' element={ <Apple1/> } />
           <Route path='/apple2' element={ <Apple2/> } />
-          <Route path='/*' element={<Navigate to={'/'} /> } />
           <Route path='/borrador' element={<Borrador /> } />
+          <Route path='/ventana' element={<VentanaPdf />} />
+          <Route path='/*' element={<Navigate to={'/'} /> } />
         </Routes>
       </div>
     </UserProvider>
