@@ -23,7 +23,7 @@ export const PdfComponent = () => {
 -- Genera pdf
 ----------------------------------------------------------------------------------------------------------------------------
 -- NOMBRE: react-pdf
--- INSTALACION: npm install reac-pdf
+-- INSTALACION: yarn add reac-pdf
 -- USO:         import { PDFDownloadLink } from '@react-pdf/renderer';
                 import { Pdf } from './pdf';
 -----------------------------------------------------------------------------------------------*/
