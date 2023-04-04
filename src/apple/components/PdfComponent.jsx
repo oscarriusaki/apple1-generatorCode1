@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { GeneradorTextoCodigo } from '../../ui/GeneradorTextoCodigo';
+import { Button } from 'bootstrap';
 
 export const PdfComponent = () => {
 
@@ -521,7 +522,7 @@ const styles = StyleSheet.create({
                 (!validate.validate1) && (<>
                     <button onClick={increment}>view pdf</button>
                     <PDFDownloadLink document={<Pdf />} fileName='example1.pdf'>
-                        <button>download</button>
+                        <button>download</button> {/*  OJO AQUI PONER OTRO BOTON PORQUE SALE UN WARNING BUSCAR EN INTERNET */}
                     </PDFDownloadLink>
                     <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span> Se generara codigo de el boton que se muestra y el pdf todo</p>
                 </>

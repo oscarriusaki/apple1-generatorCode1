@@ -2,7 +2,7 @@ import React from 'react';
 import { Document, Image, Page, Text, View, PDFDownloadLink, StyleSheet} from '@react-pdf/renderer';
 // import { Table, TableRow, TableCell } from '@react-pdf/table';
 
-export const Pdf = ( ) => {
+export const Pdf = () => {
   
 const styles = StyleSheet.create({
     table: {  // <- esta tabla solo tiene borde a la izquierda y arriba 
@@ -165,9 +165,7 @@ const styles = StyleSheet.create({
                         justifyContent: 'center',
                         alignItems: 'center',  
                     }}>
-                   
                     <Text style={{marginTop: '-2.5cm'}}>Por Oscar</Text>
-
                     <Image src="Picsart_23-03-19_00-47-52-416.jpg" style={{marginTop: '-2.5cm'}} />
                     <Text style={{textAlign: 'center'}}>
                         holaaa  
@@ -370,6 +368,7 @@ const styles = StyleSheet.create({
                     </View>
                 </View>
             </Page>
+            {/* PARA ADICIONAR OTRA PAGINA AL PDF SOLO DEBES PONER LA ETIQUETA <Page></Page> Y TODO LO DEMAS COMO ESTA ARRIBA */}
             {/* <Page  style={{width: '21.6cm', height: '27.9cm', paddingTop: '2.5cm', paddingBottom: '2.5cm', paddingLeft: '2.5cm', paddingRight: '2.5cm'}}>
                 <Text>
                 Como estas  
