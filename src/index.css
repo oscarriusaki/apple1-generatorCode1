@@ -766,3 +766,57 @@ table tbody tr:hover {
     padding-bottom: 5px;
     margin-right: -5px;
 }
+.estiloN{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* justify-content: end;    */
+    align-items: center;
+}
+.estiloItemsNavbar{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+}
+.btnGenerateCode{
+    background-color: #452afa;
+    color: white;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 10px;
+}
+.btnGenerateCode:hover{
+    background-color: #2200ff;
+    color: white;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 10px;
+}
+.btnGenerateCode2{
+    background-color: #452afa;
+    color: white;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 10px;
+}   
+.btnGenerateCode2:hover{
+    background-color: #402bff;
+    color: white;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 10px;
+}   

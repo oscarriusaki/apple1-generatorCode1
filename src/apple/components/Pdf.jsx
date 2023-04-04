@@ -3,13 +3,7 @@ import { Document, Image, Page, Text, View, PDFDownloadLink, StyleSheet} from '@
 // import { Table, TableRow, TableCell } from '@react-pdf/table';
 
 export const Pdf = ( ) => {
-    const pdfG = 
-`-----------------------------------------------------------------------------------------------
-NOMBRE: react-pdf
-INSTALACION: npm install reac-pdf
-USO:         const pdfMake = require('pdfmake');
-DESCRIPCION: generar pdf
-`;
+  
 const styles = StyleSheet.create({
     table: {  // <- esta tabla solo tiene borde a la izquierda y arriba 
       display: 'table',

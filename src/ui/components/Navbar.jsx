@@ -28,7 +28,8 @@ export const Navbar = () => {
   return (
     <>
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark barraApple3'>    
-      <Link className="navbar-brand" to={'/'}><FontAwesomeIcon icon={faAppleAlt} /> <span className='textoApple'>Apple</span></Link>
+      <Link className="navbar-brand" to={'/'}><FontAwesomeIcon icon={faAppleAlt} /> 
+      <span className='textoApple'>Apple</span></Link>
       <div className='navRow'>
         <NavLink className={({isActive}) => `nav-link ${isActive ? 'active navItem': 'navItem'}`}
           to={'/'} onClick={() => activarApple2(false)}>
