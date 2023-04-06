@@ -53,7 +53,7 @@ BEGIN
     RETURN QUERY
     SELECT *
     FROM ${nombreTabla}
-    WHERE estadoeliminar = true
+    WHERE estadoeliminar = 'TRUE'
     ORDER BY id_${nombreTabla} DESC;
 END;
 $BODY$;

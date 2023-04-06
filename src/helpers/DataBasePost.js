@@ -56,7 +56,7 @@ export const DataBasePost = (data, nombre, data2) => {
         if((data[n]).length > 3 ){
             if(((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(0, 3) === 'id_') && (auxNombreTabla != (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()))){
                 
-                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} AND estadoeliminar = 'TRUE' ) THEN \n     ` ;
                 sqlSegundaId2 = `
         ELSE
             RETURN '${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} not found';

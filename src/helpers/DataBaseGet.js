@@ -53,7 +53,7 @@ BEGIN
     RETURN QUERY
     SELECT *
     FROM ${nombreTabla} 
-    WHERE id_${nombreTabla} = t_id_search AND estadoeliminar = true;
+    WHERE id_${nombreTabla} = t_id_search AND estadoeliminar = 'TRUE';
 END;
 $BODY$;
 

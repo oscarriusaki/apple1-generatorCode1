@@ -17,8 +17,12 @@ export const CreateTable = (data, nombre, data2) => {
 
         if(data.inputForm[key].trim().toLowerCase() === 'id_'+nombreTabla){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Es el identificador unico de la tabla ${nombreTabla}';\n`
+        }else if((data.inputForm[key].trim().toLowerCase() === 'usuariocre') || (data.inputForm[key].trim().toLowerCase() === 'usuariocreacion')){
+            comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Es el usuario de creacion del registro';\n`
+        }else if((data.inputForm[key].trim().toLowerCase() === 'usuariomod') || (data.inputForm[key].trim().toLowerCase() === 'usuariomodificacion')){
+            comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Es el usuario de modificacion del registro';\n`
         }else if((data.inputForm[key].trim().toLowerCase() === 'fechacre') || (data.inputForm[key].trim().toLowerCase() === 'fechacreacion')){
-                comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de creacion del registro';\n`
+            comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de creacion del registro';\n`
         }else if((data.inputForm[key].trim().toLowerCase() === 'fechamod') || (data.inputForm[key].trim().toLowerCase() === 'fechamodificacion')){
             comentarioAtributos += `COMMENT ON COLUMN public.${nombreTabla}.${data.inputForm[key].trim().toLowerCase()} IS 'Fecha de modificacion del registro';\n`
         }else if(data.inputForm[key].trim().toLowerCase() === 'estadoeliminar'){
@@ -65,12 +69,14 @@ export const CreateTable = (data, nombre, data2) => {
                     }else{
                         insertTable2 += "  ,"; 
                     }
-                    insertTable2 += " '' ,";
+                    insertTable2 += " '',";
 
                 }else{
 
                     insertTable += data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') +  ", ";
-                    if((data2.inputForm[key].trim() === 'varchar') || 
+                    if((data.inputForm[key].trim() === `usuariocre`) || (data.inputForm[key].trim() === `usuariocreacion`)) {
+                        insertTable2 += " current_user,";
+                    } else if((data2.inputForm[key].trim() === 'varchar') || 
                     (data2.inputForm[key].trim() === 'date') || 
                     (data2.inputForm[key].trim() === 'text')||
                     (data2.inputForm[key].trim() === 'timestamp')||
@@ -99,12 +105,17 @@ export const CreateTable = (data, nombre, data2) => {
                 nombreTabla === 'empleado'||
                 nombreTabla === 'administrator'||
                 nombreTabla === 'administrador'
-                
                 )){   /* Aqui se puede poner otros tipos nombre de tablas si se requiere restricciones con encriptacion y tokens y otros columnas unicas */
             // createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} VARCHAR(255) NOT NULL,\n`;  // <-- esto estaba originalmente
             createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} ${data2.inputForm[key].trim().toUpperCase()} NOT NULL,\n`;
             createSqlInicio += `tokens TEXT NOT NULL,\n`;
             createSqlFin = createSqlFin + `constraint unique_${nombreTabla}_${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} unique(${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')}),\n`;
+
+        }else if((data.inputForm[key].trim() === `usuariocre`) || (data.inputForm[key].trim() === `usuariocreacion`)) {
+            createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} VARCHAR NOT NULL DEFAULT "current_user"(),\n`;
+
+        }else if((data.inputForm[key].trim() === `fechacre`)||(data.inputForm[key].trim() === `fechacreacion`)) {
+            createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} TIMESTAMP NOT NULL DEFAULT NOW(),\n`;
 
         }else if(data2.inputForm[key].trim() === `varchar`) {
             createSqlInicio += `${data.inputForm[key].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')} VARCHAR(255) NOT NULL,\n`;

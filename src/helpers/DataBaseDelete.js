@@ -25,8 +25,8 @@ export const DataBaseDelete = (data, nombre, data2) => {
 
     let sql = `
             UPDATE ${nombreTabla} 
-            SET estadoeliminar = false 
-            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+            SET estadoeliminar = 'FALSE' 
+            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE';
             RETURN 'successfully eliminated';`;
 
     let columnConTypeDate = '';
@@ -75,7 +75,7 @@ DECLARE error_code character varying;
 
 BEGIN
 
-    IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true ) THEN
+    IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE' ) THEN
         ${ sql }
     ELSE
         RETURN '${nombreTabla} not found';

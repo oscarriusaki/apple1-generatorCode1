@@ -162,7 +162,7 @@ export const Apple1 = () => {
           <input 
               type='text' 
               className='inputStyle'
-              placeholder='Nombre de cada tabla separado sin guion "_"'
+              placeholder='Nombre de la tabla con guiones o sin guiones "_"'
               name='nombreTabla'
               value={nombreTabla.replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') || resto.inputForm.nombreTabla.replace(/[^a-zA-Z0-9_ ]/g, '')}
               onChange={onInputChange}
@@ -273,6 +273,8 @@ export const Apple1 = () => {
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota4:</span>  Generar llaves PRIMARIAS "ID_NOMBRE_TABLA_ACTUAL" y llaves FORNEAS poner "ID_NOMBRE_OTRA_TABLA, no poner "ID_" para ningun otra columna que no tenga que ver con un ID de una tabla. </p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota5:</span>  Generar la restriccion UNIQUE solo para correo poner "CORREO_NOMBRE_TABLA" o para "EMAIL_NOMBRE_TABLA" o "CORREO" o "EMAIL" solo para tablas en el NOTA 2.</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota6:</span>  Todos los campos de entrada son zanitizadas en el APPLE1 y los unicos caracteres permitidos son numeros, letras mayusculas y minusculas tambien los caracteres especiales permitidos son: _ $#@~%[  si desea agregar mas caracter modificar en el .replace(/[^a-zA-Z0-9_ $#@~%[]/g, '')  en todos los archivos que usa apple1</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota7:</span>  Las columnas "usuariocre" y "fechacre" se establece su tipo de valor automatico con 'NOT NULL "CURREN_USER"()' y 'NOT NULL DEFAULT NOW()' respectivamente</p>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Nota8:</span>  Estas columnas deben estar en cada tabla "ID_NOMBRE_TABLA", "USUARIOCRE", "USUARIOMOD", "FECHACRE", "FECHAMOD", "ESTADOELIMINAR"</p>
         </div>
       )
     } 

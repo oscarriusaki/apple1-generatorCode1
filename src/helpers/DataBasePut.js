@@ -51,7 +51,7 @@ export const DataBasePut = (data, nombre, data2) => {
         if((data[n]).length > 3 ){
             if((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(0, 3) === 'id_' && ((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()) != nombreTabla2)){
                 
-                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} AND estadoeliminar = true ) THEN \n     ` ;
+                sqlPrimeraId2 =sqlPrimeraId2 + `IF EXISTS (SELECT 1 FROM ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} WHERE ${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} = t_${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase())} AND estadoeliminar = 'TRUE' ) THEN \n     ` ;
                 sqlSegundaId2 = `
         ELSE
             RETURN '${(data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase()).slice(3)} not found';
@@ -139,17 +139,17 @@ DECLARE error_code character varying;
 
 BEGIN
     
-        IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true) THEN
+        IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE') THEN
             ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
                 UPDATE ${nombreTabla}  
                 SET ${sqlUpdateColumns}, tokens = t_tokens
-                WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+                WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE';
                 RETURN 'successfully updated';
             ${(sqlMediaCorreo2) && (sqlMediaCorreo2)}
             ${(sqlMediaCorreo2) && (` 
                 UPDATE ${nombreTabla}
                 SET ${sqlUpdateColumns}, tokens = t_tokens
-                WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+                WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE';
                 RETURN 'successfully updated';
             `)}
             ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
@@ -200,17 +200,17 @@ DECLARE error_code character varying;
 
 BEGIN
     ${(sqlPrimeraId2) && (sqlPrimeraId2)} 
-    IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true) THEN
+    IF EXISTS (SELECT 1 FROM ${nombreTabla} WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE') THEN
         ${(sqlPrimeraCorreo2) && (sqlPrimeraCorreo2) } 
             UPDATE ${nombreTabla}  
             SET ${sqlUpdateColumns}
-            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE';
             RETURN 'successfully updated';
         ${(sqlMediaCorreo2) && (sqlMediaCorreo2)}
         ${(sqlMediaCorreo2) && (` 
             UPDATE ${nombreTabla}  
             SET ${sqlUpdateColumns}
-            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = true;
+            WHERE id_${nombreTabla} = t_id_update AND estadoeliminar = 'TRUE';
             RETURN 'successfully updated';
         `)}
         ${(sqlSegundaCorreo2) && sqlSegundaCorreo2} 
