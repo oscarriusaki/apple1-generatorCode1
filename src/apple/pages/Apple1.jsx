@@ -267,6 +267,7 @@ export const Apple1 = () => {
     {
       (!active) && (
         <div className='mensaje'>
+          <p className='tarejetaMensaje'> <span className='notaStyle'>Codigo generado en: </span>  Nodejs</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota1:</span>  Tablas con sintaxis obligatoria en caso de necesitar alguna de estas propiedades "ID_NOMBRE_LA_TABLA", "CORREO_NOMBRE_DE_LA_TABLA", "EMAIL_NOMBRE_DE_LA_TABLA" , "PASSWORD_NOMBRE_LA_TABLA", "PAS_NOMBRE_DE_LA_TABLA", "CONTRASENA_NOMBRETABLA".</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota2:</span>  Tabla "USER","USUARIO","EMPLOYEE","EMPLEADO","ADMINISTRATOR","ADMINISTRADOR", hacen login, tiene encriptacion de contrasena , el token que se genera automaticamente siempre sera el ultimo parametro automatico ya puesto en el codigo y al momento de crear una tabla tendra el nombre "TOKENS", si necesita que una tabla diferente que tenga login y encriptacion, entonces modificar en el codigo "APPLE1" y tambien modificar el codigo en los otros archivo donde tengan estos nombres ya mencionados, para generarlo e incluir en las restricciones de las tablas permitidas.</p>
           <p className='tarejetaMensaje'> <span className='notaStyle'>Nota3:</span>  Las TABLAS tienen que tener una columna "ESTADOELIMINAR" para que tenga un estado de eliminado y poner NOW() en la columna "fechacre" cuando se actualice una tabla.</p>

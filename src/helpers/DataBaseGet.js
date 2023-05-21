@@ -2,9 +2,30 @@ import React from 'react';
 
 export const DataBaseGet = (data, nombre, data2) => {
 
+    let nombreTabla = nombre.trim().replace(/\s+/g, ' ').split(' ');
+    nombreTabla = nombreTabla.map(resp => {
+        return resp.toLowerCase();
+    });
+    nombreTabla = nombreTabla.join('_')
+
+
     let dataAux = '';
     let count = 1;
+    let columnConTypeDate = '';
+
     for(const n in data2.inputForm){
+        if((nombreTabla.trim().toLowerCase() === 'user' || nombreTabla.trim().toLowerCase() === 'usuario'||
+          nombreTabla.trim().toLowerCase() === 'employee' || nombreTabla.trim().toLowerCase() === 'empleado'||
+          nombreTabla.trim().toLowerCase() === 'administrator' || nombreTabla.trim().toLowerCase() === 'administrador')&&
+         ((data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'correo_'+nombreTabla)||
+         (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'correo') ||
+         (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email_'+nombreTabla) ||
+         (data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '').toLowerCase() === 'email'))){
+
+        columnConTypeDate += 'o'+ data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') + ' '+ data2[n].trim() +', t_tokens text, ';
+      }else{
+        columnConTypeDate += 'o'+ data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '') + ' '+ data2[n].trim() +', ';
+      }
         dataAux += data[n].trim().replace(/[^a-zA-Z0-9_ $#@~%[]/g, '');
         count ++;
     }
@@ -15,11 +36,7 @@ export const DataBaseGet = (data, nombre, data2) => {
     })
     palabra = palabra.join('');
 
-    let nombreTabla = nombre.trim().replace(/\s+/g, ' ').split(' ');
-    nombreTabla = nombreTabla.map(resp => {
-        return resp.toLowerCase();
-    });
-    nombreTabla = nombreTabla.join('_')
+    columnConTypeDate = columnConTypeDate.trim().slice(0,-1);
 
     const dataBaseGet = 
 `----------------------------------------------------------------------------------------------------------------------------
@@ -42,7 +59,7 @@ export const DataBaseGet = (data, nombre, data2) => {
 
 CREATE OR REPLACE FUNCTION public."fn_get${palabra}"(
     t_id_search integer)
-    RETURNS SETOF ${nombreTabla}
+    RETURNS TABLE (${columnConTypeDate})
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE PARALLEL UNSAFE

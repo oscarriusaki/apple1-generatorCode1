@@ -820,3 +820,10 @@ table tbody tr:hover {
     border-radius: 5px;
     padding: 10px;
 }   
+.styleChoice{
+    display: flex;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 30px;
+}

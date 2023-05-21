@@ -180,7 +180,7 @@ ALTER FUNCTION public."fn_put${nombreFuncion}"(${justType}, integer ,text )
 ----------------------------------------------------------------------------------------------------------------------------
 -- DESCRIPCION:
 
--- 
+-- Se crea la funcion fn_put${nombreFuncion} para registrar en la tabla ${nombreTabla}.
 ----------------------------------------------------------------------------------------------------------------------------
 
 -- FUNCTION: public.fn_put${nombreFuncion}(${justType}, integer)

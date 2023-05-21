@@ -101,7 +101,7 @@ export const NodejsControllers = (data, nombre, data2) => {
         usuario =     
 `/*----------------------------------------------------------------------------------------------------------------------------
 -- CREADO: Oscar Laura Aguirre                                             FECHA: ${new Date()}
--- MÓDULO: ${palabra}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
+-- MÓDULO: ${nombreTabla}                    PROYECTO: TIENDA               ACTIVIDAD: set-app-1
 -- CREACIÓN DEL MODULO CONTROLLER: ${palabra}                                                   
 ----------------------------------------------------------------------------------------------------------------------------
 -- SENTENCIAS DE APOYO:
