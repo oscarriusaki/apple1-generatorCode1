@@ -13,7 +13,7 @@ export const Navbar = () => {
     value.preventDefault();
   }
   const [active, setActive] = useState(false);
-  const [activeApple2, setActiveApple2] = useState(localStorage.getItem('apple2') === 'true');
+  const [activeApple2, setActiveApple2] = useState(localStorage.getItem('apple2') || '');
 
   const handleClick = () => {
     setActive(true);
@@ -32,15 +32,20 @@ export const Navbar = () => {
       <span className='textoApple'>Apple</span></Link>
       <div className='navRow'>
         <NavLink className={({isActive}) => `nav-link ${isActive ? 'active navItem': 'navItem'}`}
-          to={'/'} onClick={() => activarApple2(false)}>
+          to={'/'} onClick={() => activarApple2('apple1')}>
           apple1
         </NavLink>
         <NavLink className={({isActive}) => `nav-link ${isActive ? 'active navItem': 'navItem'}`}
-          to={'/apple2'} onClick={() => activarApple2(true)}>
+          to={'/apple2'} onClick={() => activarApple2('apple2')}>
           apple2
         </NavLink>
         <NavLink className={({isActive}) => `nav-link ${isActive ? 'active navItem': 'navItem'}`}
-          to={'/borrador'} onClick={() => activarApple2(true)}>
+          to={'/apple3'} onClick={() => activarApple2('apple3')}
+        >
+          apple3
+        </NavLink>
+        <NavLink className={({isActive}) => `nav-link ${isActive ? 'active navItem': 'navItem'}`}
+          to={'/borrador'} onClick={() => activarApple2('borrador')}>
           Borrador
         </NavLink>
       </div>

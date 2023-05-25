@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 import { UserProvider } from './context/UserProvider';
 import { Borrador } from './apple/pages/Borrador';
 import { VentanaPdf } from './apple/components/VentanaPdf';
+import { Apple3 } from './apple/pages/Apple3';
 
 
 export const App = () => {
@@ -19,6 +20,7 @@ export const App = () => {
         <Routes>
           <Route path='/' element={ <Apple1/> } />
           <Route path='/apple2' element={ <Apple2/> } />
+          <Route path='/apple3' element={<Apple3 /> } />
           <Route path='/borrador' element={<Borrador /> } />
           <Route path='/ventana' element={<VentanaPdf />} />
           <Route path='/*' element={<Navigate to={'/'} /> } />
